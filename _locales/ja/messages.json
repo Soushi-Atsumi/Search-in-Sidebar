@@ -1,0 +1,21 @@
+﻿{
+  "extensionDescription": {
+    "message": "サイドバーの中で検索を行います。",
+    "description": "拡張機能説明。"
+  },
+
+  "extensionName": {
+    "message": "サイドバーで検索",
+    "description": "拡張機能名。"
+  },
+
+  "url_index.html": {
+    "message": "/index_ja.html",
+    "description": "拡張機能の使い方。"
+  },
+
+  "tutorial": {
+    "message": "使い方を開く",
+    "description": "拡張機能の使い方へのリンクを開く"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "extensionDescription": {
+    "message": "Search text in the sidebar.",
+    "description": "Description of the extension."
+  },
+
+  "extensionName": {
+    "message": "Search in Sidebar",
+    "description": "Name of the extension."
+  },
+
+  "url_index.html": {
+    "message": "/index.html",
+    "description": "A tutorial of the extension."
+  },
+
+  "tutorial": {
+    "message": "Open a tutorial",
+    "description": "Open a link of a tutorial"
+  }
+}
