@@ -1,5 +1,5 @@
-# Search In Sidebar
-[“ú–{Œê‚ÌREADME.md‚ğ“Ç‚İ‚½‚¢ê‡‚Í‚±‚±‚ğƒNƒŠƒbƒN‚µ‚Ä‚­‚¾‚³‚¢](README_ja.md)
+ï»¿# Search in Sidebar
+[æ—¥æœ¬èªã®README.mdã‚’èª­ã¿ãŸã„å ´åˆã¯ã“ã“ã‚’ã‚¯ãƒªãƒƒã‚¯ã—ã¦ãã ã•ã„](README_ja.md)
 
 More useful searching extension than Built-in features. You can search words with various search engines in the sidebar.
 

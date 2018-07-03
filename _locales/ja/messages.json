@@ -1,21 +1,123 @@
 ﻿{
-  "extensionDescription": {
-    "message": "サイドバーの中で検索を行います。",
-    "description": "拡張機能説明。"
-  },
+	"ask": {
+		"message": "尋ねる"
+	},
 
-  "extensionName": {
-    "message": "サイドバーで検索",
-    "description": "拡張機能名。"
-  },
+	"alwaysUseBing": {
+		"message": "常にBingを使用する"
+	},
 
-  "url_index.html": {
-    "message": "/index_ja.html",
-    "description": "拡張機能の使い方。"
-  },
+	"alwaysUseDuckDuckGo": {
+		"message": "常にDuckDuckGoを使用する"
+	},
 
-  "tutorial": {
-    "message": "使い方を開く",
-    "description": "拡張機能の使い方へのリンクを開く"
-  }
+	"alwaysUseGoogle": {
+		"message": "常にGoogleを使用する"
+	},
+
+	"alwaysUseYahoo": {
+		"message": "常にYahooを使用する"
+	},
+
+	"alwaysUseYahooJapan": {
+		"message": "常にYahoo Japanを使用する"
+	},
+
+	"extensionDescription": {
+		"message": "サイドバーの中で検索を行います。",
+		"description": "拡張機能説明。"
+	},
+
+	"extensionName": {
+		"message": "サイドバーで検索",
+		"description": "拡張機能名。"
+	},
+
+	"iconImageAlt": {
+		"message": "拡張機能のアイコン。",
+		"description": "この拡張機能の代替説明。"
+	},
+
+	"indexHTMLCaution": {
+		"message": "注意: DuckDuckGoはページを正しく表示しません。ページは表示されますがスクロールバーが表示されません。",
+		"description": "この拡張機能の注意。"
+	},
+
+	"indexHTMLHeading1": {
+		"message": "1.文字を選択する",
+		"description": "index.htmlの1番目の見出し。"
+	},
+
+	"indexHTMLHeading2": {
+		"message": "2.右クリックして「サイドバーで検索」を選択する",
+		"description": "index.htmlの2番目の見出し。"
+	},
+
+	"indexHTMLHeading3": {
+		"message": "3.使用したい検索エンジンを選択する",
+		"description": "index.htmlの3番目の見出し。"
+	},
+
+	"indexHTMLTitle": {
+		"message": "使い方",
+		"description": "index.htmlの題名。"
+	},
+
+	"indexHTMLTutorialVideo": {
+		"message": "https://drive.google.com/file/d/1MfYGXKJMe6aGZFVfQMIGf5NxeAkzIMeE/view",
+		"description": "使い方の動画のURL。"
+	},
+
+	"optionsHTMLTitle": {
+		"message": "設定",
+		"description": "options.htmlの題名。"
+	},
+
+	"searchEngines": {
+		"message": "検索エンジン"
+	},
+
+	"searchInBing": {
+		"message": "Bingで検索"
+	},
+
+	"searchInDuckDuckgo": {
+		"message": "DuckDuckgoで検索"
+	},
+
+	"searchInGoogle": {
+		"message": "Googleで検索"
+	},
+
+	"searchInYahoo!": {
+		"message": "Yahoo!で検索"
+	},
+
+	"searchInYahooJapan": {
+		"message": "Yahoo Japanで検索"
+	},
+
+	"sidebarHTMLTitle": {
+		"message": "使い方",
+		"description": "sidebar.htmlの題名。"
+	},
+
+	"tutorial": {
+		"message": "使い方を開く",
+		"description": "拡張機能の使い方へのリンクを開く"
+	},
+
+	"tutorialTitle": {
+		"message": "サイドバーで検索 - 使い方",
+		"description": "使い方の題名。"
+	},
+
+	"url_index.html": {
+		"message": "/index_ja.html",
+		"description": "拡張機能の使い方。"
+	},
+
+	"watchTheVideo": {
+		"message": "動画を観る"
+	}
 }

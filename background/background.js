@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Search in Sidebar - More useful searching extension than Built-in features.
  * Copyright (c) 2018 Soushi Atsumi. All rights reserved.
  *
@@ -11,54 +11,38 @@
  */
 'use strict';
 
-browser.contextMenus.create({
-	contexts: ['selection'],
-	id: 'bing',
-	title: 'Bing'
-});
+var xmlHttpRequest = new XMLHttpRequest();
+xmlHttpRequest.open('GET', browser.extension.getURL('/_values/SearchEngines.json'), false);
+xmlHttpRequest.send();
+const searchEngines = JSON.parse(xmlHttpRequest.responseText);
+xmlHttpRequest.open('GET', browser.extension.getURL('/_values/StorageKeys.json'), false);
+xmlHttpRequest.send();
+const storageKeys = JSON.parse(xmlHttpRequest.responseText);
 
-//DuckDuckGo does not show a scrollbar correctly
-browser.contextMenus.create({
-	contexts: ['selection'],
-	id: 'duckduckgo',
-	title: 'DuckDuckGo'
-});
-
-browser.contextMenus.create({
-	contexts: ['selection'],
-	id: 'google',
-	title: 'Google'
-});
-
-browser.contextMenus.create({
-	contexts: ['selection'],
-	id: 'yahoo',
-	title: 'Yahoo!'
-});
-
-browser.contextMenus.create({
-	contexts: ['selection'],
-	id: 'yahoo-japan',
-	title: 'Yahoo Japan'
-});
+const tutorialMenuItemId = 'tutorial';
+const bingMenuItemId = 'bing';
+const duckduckgoMenuItemId = 'duckduckgo';
+const googleMenuItemId = 'google';
+const yahooMenuItemId = 'yahoo';
+const yahooJapanMenuItemId = 'yahooJapan';
 
 browser.contextMenus.onClicked.addListener((info, tab) => {
 	var searchEngine = '';
 	switch (info.menuItemId) {
-		case 'bing':
-			searchEngine = 'https://www.bing.com/search?q=';
+		case bingMenuItemId:
+			searchEngine = searchEngines.bing.url;
 			break;
-		case 'duckduckgo':
-			searchEngine = 'https://duckduckgo.com/?q=';
+		case duckduckgoMenuItemId:
+			searchEngine = searchEngines.duckduckgo.url;
 			break;
-		case 'google':
-			searchEngine = 'https://www.google.com/search?q=';
+		case googleMenuItemId:
+			searchEngine = searchEngines.google.url;
 			break;
-		case 'yahoo':
-			searchEngine = 'https://search.yahoo.com/search?p=';
+		case yahooMenuItemId:
+			searchEngine = searchEngines.yahoo.url;
 			break;
-		case 'yahoo-japan':
-			searchEngine = 'https://search.yahoo.co.jp/search?p=';
+		case yahooJapanMenuItemId:
+			searchEngine = searchEngines.yahooJapan.url;
 			break;
 	}
 
@@ -68,3 +52,54 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
 
 	browser.sidebarAction.open();
 });
+
+browser.contextMenus.onShown.addListener(function (info, tab) {
+	browser.contextMenus.removeAll();
+	browser.storage.local.get(storageKeys.searchEngine).then((item) => {
+		createContextMenus(item[storageKeys.searchEngine] === undefined ? searchEngines.ask.name : item[storageKeys.searchEngine]);
+	});
+});
+
+function createContextMenus(searchEngine) {
+	if (searchEngine === searchEngines.ask.name || searchEngine === searchEngines.bing.name) {
+		browser.contextMenus.create({
+			contexts: ['selection'],
+			id: bingMenuItemId,
+			title: browser.i18n.getMessage("searchInBing")
+		});
+	}
+
+	if (searchEngine === searchEngines.ask.name || searchEngine === searchEngines.duckduckgo.name) {
+		browser.contextMenus.create({
+			contexts: ['selection'],
+			id: duckduckgoMenuItemId,
+			title: browser.i18n.getMessage("searchInDuckDuckgo")
+		});
+	}
+
+	if (searchEngine === searchEngines.ask.name || searchEngine === searchEngines.google.name) {
+		browser.contextMenus.create({
+			contexts: ['selection'],
+			id: googleMenuItemId,
+			title: browser.i18n.getMessage("searchInGoogle")
+		});
+	}
+
+	if (searchEngine === searchEngines.ask.name || searchEngine === searchEngines.yahoo.name) {
+		browser.contextMenus.create({
+			contexts: ['selection'],
+			id: yahooMenuItemId,
+			title: browser.i18n.getMessage("searchInYahoo!")
+		});
+	}
+
+	if (searchEngine === searchEngines.ask.name || searchEngine === searchEngines.yahooJapan.name) {
+		browser.contextMenus.create({
+			contexts: ['selection'],
+			id: yahooJapanMenuItemId,
+			title: browser.i18n.getMessage("searchInYahooJapan")
+		});
+	}
+
+	browser.contextMenus.refresh();
+}

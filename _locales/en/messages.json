@@ -1,21 +1,123 @@
-{
-  "extensionDescription": {
-    "message": "Search text in the sidebar.",
-    "description": "Description of the extension."
-  },
+﻿{
+	"ask": {
+		"message": "Ask"
+	},
 
-  "extensionName": {
-    "message": "Search in Sidebar",
-    "description": "Name of the extension."
-  },
+	"alwaysUseBing": {
+		"message": "Always use Bing"
+	},
 
-  "url_index.html": {
-    "message": "/index.html",
-    "description": "A tutorial of the extension."
-  },
+	"alwaysUseDuckDuckGo": {
+		"message": "Always use DuckDuckGo"
+	},
 
-  "tutorial": {
-    "message": "Open a tutorial",
-    "description": "Open a link of a tutorial"
-  }
+	"alwaysUseGoogle": {
+		"message": "Always use Google"
+	},
+
+	"alwaysUseYahoo": {
+		"message": "Always use Yahoo"
+	},
+
+	"alwaysUseYahooJapan": {
+		"message": "Always use Yahoo Japan"
+	},
+
+	"extensionDescription": {
+		"message": "Search text in the sidebar.",
+		"description": "Description of the extension."
+	},
+
+	"extensionName": {
+		"message": "Search in Sidebar",
+		"description": "Name of the extension."
+	},
+
+	"iconImageAlt": {
+		"message": "The icon of this extension.",
+		"description": "The alternate description of the icon of this extention."
+	},
+
+	"indexHTMLCaution": {
+		"message": "Caution: DuckDuckGo does not show a page correctly. It shows a page but there is no scroll bar.",
+		"description": "Cautions of this extention."
+	},
+
+	"indexHTMLHeading1": {
+		"message": "1.Select characters",
+		"description": "The first heading of index.html."
+	},
+
+	"indexHTMLHeading2": {
+		"message": "2.Right click and choose \"Search in Sidebar\"",
+		"description": "The second heading of index.html."
+	},
+
+	"indexHTMLHeading3": {
+		"message": "3.Choose a search engine what you want to use",
+		"description": "The third heading of index.html."
+	},
+
+	"indexHTMLTitle": {
+		"message": "Tutorial",
+		"description": "The title of index.html."
+	},
+
+	"indexHTMLTutorialVideo": {
+		"message": "https://drive.google.com/file/d/13WugIj-2FZGndOxdPrXUrkvB-J64lUaJ/view",
+		"description": "The url of tutorial video."
+	},
+
+	"optionsHTMLTitle": {
+		"message": "Options",
+		"description": "The title of options.html."
+	},
+
+	"searchEngines": {
+		"message": "Search Engines"
+	},
+
+	"searchInBing": {
+		"message": "Search in Bing"
+	},
+
+	"searchInDuckDuckgo": {
+		"message": "Search in DuckDuckgo"
+	},
+
+	"searchInGoogle": {
+		"message": "Search in Google"
+	},
+
+	"searchInYahoo!": {
+		"message": "Search in Yahoo!"
+	},
+
+	"searchInYahooJapan": {
+		"message": "Search in Yahoo Japan"
+	},
+
+	"sidebarHTMLTitle": {
+		"message": "Tutorial",
+		"description": "The title of sidebar.html."
+	},
+
+	"tutorial": {
+		"message": "Open a tutorial",
+		"description": "Open a link of a tutorial"
+	},
+
+	"tutorialTitle": {
+		"message": "Search in Sidebar - Tutorial",
+		"description": "The title of the tutorial."
+	},
+
+	"url_index.html": {
+		"message": "/index.html",
+		"description": "A tutorial of the extension."
+	},
+
+	"watchTheVideo": {
+		"message": "Watch the Video"
+	}
 }
