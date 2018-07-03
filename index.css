@@ -9,14 +9,23 @@
  * This Source Code Form is "Incompatible With Secondary Licenses", as
  * defined by the Mozilla Public License, v. 2.0.
  */
-'use strict';
 
-document.getElementsByTagName('html')[0].lang = browser.i18n.getUILanguage();
-document.title = browser.i18n.getMessage('sidebarHTMLTitle');
+#tutorialTitleDivision {
+    font-size: 64px;
+    text-align: center;
+}
 
-browser.sidebarAction.getPanel({}).then((sidebarUrl) => {
-	if (sidebarUrl === browser.extension.getURL(`sidebar/sidebar.html`)) {
-		window.location = browser.extension.getURL("index.html");
-	}
-});
+#tutorialVideoDescriptionLabel {
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+}
 
+#cautionDivision {
+    background-color: black;
+    color: yellow;
+}
+
+footer {
+    text-align: center;
+}
