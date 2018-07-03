@@ -4,7 +4,6 @@
 More useful searching extension than Built-in features. You can search words with various search engines in the sidebar.
 
 # Installing
-**_Extension-Link_**
 Go to [Search in Sidebar](https://addons.mozilla.org/en-US/firefox/addon/search-in-sidebar/) and Install this extension on Firefox.
 
 # Usage
