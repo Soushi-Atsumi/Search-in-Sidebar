@@ -23,6 +23,10 @@
 		"message": "Always use Yahoo Japan"
 	},
 
+	"behaviorOfPageAction": {
+		"message": "Behavior of the icon"
+	},
+
 	"extensionDescription": {
 		"message": "Search text in the sidebar.",
 		"description": "Description of the extension."
@@ -31,6 +35,10 @@
 	"extensionName": {
 		"message": "Search in Sidebar",
 		"description": "Name of the extension."
+	},
+
+	"goBackToHome": {
+		"message": "Go back to home(Depending on Search Engines)"
 	},
 
 	"iconImageAlt": {
@@ -71,6 +79,10 @@
 	"optionsHTMLTitle": {
 		"message": "Options",
 		"description": "The title of options.html."
+	},
+
+	"reload": {
+		"message": "Reload"
 	},
 
 	"searchEngines": {

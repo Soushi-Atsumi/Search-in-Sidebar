@@ -1,3 +1,5 @@
 ﻿{
-	"searchEngine": "SearchEngine"
+	"searchEngine": "SearchEngine",
+
+	"pageAction": "PageAction"
 }

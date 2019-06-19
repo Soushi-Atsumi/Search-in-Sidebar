@@ -5,26 +5,31 @@
 
 	"bing": {
 		"name": "Bing",
-		"url": "https://www.bing.com/search?q="
+		"url": "https://www.bing.com",
+		"query": "/search?q="
 	},
 
 	"duckduckgo": {
 		"name": "DuckDuckGo",
-		"url": "https://duckduckgo.com/?q="
+		"url": "https://duckduckgo.com",
+		"query": "/?q="
 	},
 
 	"google": {
 		"name": "Google",
-		"url": "https://www.google.com/search?q="
+		"url": "https://www.google.com",
+		"query": "/search?q="
 	},
 
 	"yahoo": {
 		"name": "Yahoo!",
-		"url": "https://search.yahoo.com/search?p="
+		"url": "https://search.yahoo.com",
+		"query": "/search?p="
 	},
 
 	"yahooJapan": {
 		"name": "Yahoo Japan",
-		"url": "https://search.yahoo.co.jp/search?p="
+		"url": "https://search.yahoo.co.jp",
+		"query": "/search?p="
 	}
 }
