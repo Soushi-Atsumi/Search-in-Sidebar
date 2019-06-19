@@ -23,6 +23,10 @@
 		"message": "常にYahoo Japanを使用する"
 	},
 
+	"behaviorOfPageAction": {
+		"message": "アイコンの動作"
+	},
+
 	"extensionDescription": {
 		"message": "サイドバーの中で検索を行います。",
 		"description": "拡張機能説明。"
@@ -31,6 +35,10 @@
 	"extensionName": {
 		"message": "サイドバーで検索",
 		"description": "拡張機能名。"
+	},
+
+	"goBackToHome": {
+		"message": "最初に戻る（検索エンジンに依存）"
 	},
 
 	"iconImageAlt": {
@@ -71,6 +79,10 @@
 	"optionsHTMLTitle": {
 		"message": "設定",
 		"description": "options.htmlの題名。"
+	},
+
+	"reload": {
+		"message": "更新"
 	},
 
 	"searchEngines": {

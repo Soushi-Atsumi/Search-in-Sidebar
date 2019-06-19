@@ -20,13 +20,18 @@
 <body>
 	<form name="options">
 		<fieldset>
-			<legend id="SearchEngines"></legend>
+			<legend id="searchEnginesLegend"></legend>
 			<input type="radio" id="searcheEngineAsk" name="searchEngine" checked="checked"><label id="askSearchEngineLabel"></label><br />
 			<input type="radio" id="searcheEngineBing" name="searchEngine"><label id="alwaysUseBingLabel"></label><br />
 			<input type="radio" id="searcheEngineDuckDuckGo" name="searchEngine"><label id="alwaysUseDuckDuckGoLabel"></label><br />
 			<input type="radio" id="searcheEngineGoogle" name="searchEngine"><label id="alwaysUseGoogleLabel"></label><br />
 			<input type="radio" id="searcheEngineYahoo" name="searchEngine"><label id="alwaysUseYahooLabel"></label><br />
 			<input type="radio" id="searcheEngineYahooJapan" name="searchEngine"><label id="alwaysUseYahooJapanLabel"></label>
+		</fieldset><br />
+		<fieldset>
+			<legend id="pageActionLegend"></legend>
+			<input type="radio" id="pageActionReload" name="pageAction" checked="checked"><label id="pageActionReloadLabel"></label><br />
+			<input type="radio" id="pageActionGoBackToHome" name="pageAction"><label id="pageActionGoBackToHomeLabel"></label>
 		</fieldset><br />
 	</form>
 	<script src="options.js"></script>

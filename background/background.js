@@ -12,6 +12,9 @@
 'use strict';
 
 var xmlHttpRequest = new XMLHttpRequest();
+xmlHttpRequest.open('GET', browser.extension.getURL('/_values/PageActions.json'), false);
+xmlHttpRequest.send();
+const pageActions = JSON.parse(xmlHttpRequest.responseText);
 xmlHttpRequest.open('GET', browser.extension.getURL('/_values/SearchEngines.json'), false);
 xmlHttpRequest.send();
 const searchEngines = JSON.parse(xmlHttpRequest.responseText);
@@ -27,27 +30,34 @@ const yahooMenuItemId = 'yahoo';
 const yahooJapanMenuItemId = 'yahooJapan';
 
 browser.contextMenus.onClicked.addListener((info, tab) => {
-	var searchEngine = '';
+	let searchEngine = '';
+	let searchEngineQuery = '';
+
 	switch (info.menuItemId) {
 		case bingMenuItemId:
 			searchEngine = searchEngines.bing.url;
+			searchEngineQuery = searchEngines.bing.query;
 			break;
 		case duckduckgoMenuItemId:
 			searchEngine = searchEngines.duckduckgo.url;
+			searchEngineQuery = searchEngines.duckduckgo.query;
 			break;
 		case googleMenuItemId:
 			searchEngine = searchEngines.google.url;
+			searchEngineQuery = searchEngines.google.query;
 			break;
 		case yahooMenuItemId:
 			searchEngine = searchEngines.yahoo.url;
+			searchEngineQuery = searchEngines.yahoo.query;
 			break;
 		case yahooJapanMenuItemId:
 			searchEngine = searchEngines.yahooJapan.url;
+			searchEngineQuery = searchEngines.yahooJapan.query;
 			break;
 	}
 
 	browser.sidebarAction.setPanel({
-		panel: `${searchEngine}${info.selectionText.trim()}`
+		panel: `${searchEngine}${searchEngineQuery}${info.selectionText.trim()}`
 	});
 
 	browser.sidebarAction.open();
@@ -58,6 +68,42 @@ browser.contextMenus.onShown.addListener(function (info, tab) {
 	browser.storage.local.get(storageKeys.searchEngine).then((item) => {
 		createContextMenus(item[storageKeys.searchEngine] === undefined ? searchEngines.ask.name : item[storageKeys.searchEngine]);
 	});
+});
+
+browser.browserAction.onClicked.addListener((tab) => {
+	browser.sidebarAction.getPanel({}).then((sidebarUrl) => {
+		browser.storage.local.get([storageKeys.pageAction, storageKeys.searchEngine]).then((item) => {
+			if (item !== undefined && sidebarUrl !== browser.extension.getURL(`sidebar/sidebar.html`) && item[storageKeys.pageAction] === pageActions.goBackToHome) {
+				let panelUrl;
+
+				switch (item[storageKeys.searchEngine]) {
+					case searchEngines.bing.name:
+						panelUrl = searchEngines.bing.url;
+						break;
+					case searchEngines.duckduckgo.name:
+						panelUrl = searchEngines.duckduckgo.url;
+						break;
+					case searchEngines.google.name:
+						panelUrl = searchEngines.google.url;
+						break;
+					case searchEngines.yahoo.name:
+						panelUrl = searchEngines.yahoo.url;
+						break;
+					case searchEngines.yahooJapan.name:
+						panelUrl = searchEngines.yahooJapan.url;
+						break;
+					default:
+						panelUrl = browser.extension.getURL("index.html");
+				}
+
+				browser.sidebarAction.setPanel({
+					panel: panelUrl
+				});
+			}
+		});
+	});
+
+	browser.sidebarAction.open();
 });
 
 function createContextMenus(searchEngine) {
