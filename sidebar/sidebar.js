@@ -27,7 +27,7 @@ document.title = browser.i18n.getMessage('sidebarHTMLTitle');
 
 browser.storage.local.get([storageKeys.pageAction, storageKeys.searchEngine]).then((item) => {
 	if (item === undefined) {
-		window.location = browser.extension.getURL("index.html");
+		window.location = browser.extension.getURL('index.html');
 	} else if (item[storageKeys.pageAction] === pageActions.goBackToHome) {
 		switch (item[storageKeys.searchEngine]) {
 			case searchEngines.bing.name:
@@ -46,11 +46,11 @@ browser.storage.local.get([storageKeys.pageAction, storageKeys.searchEngine]).th
 				window.location = searchEngines.yahooJapan.url;
 				break;
 			default:
-				window.location = browser.extension.getURL("index.html");
+				window.location = browser.extension.getURL('index.html');
 		}
 	} else {
-		window.location = browser.extension.getURL("index.html");
+		window.location = browser.extension.getURL('index.html');
 	}
 }).catch(() => {
-	window.location = browser.extension.getURL("index.html");
+	window.location = browser.extension.getURL('index.html');
 });

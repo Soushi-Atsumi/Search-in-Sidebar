@@ -1,6 +1,22 @@
 ﻿{
+	"add": {
+		"message": "Add"
+	},
+
+	"additionalSearchEngines": {
+		"message": "Additional Search Engines"
+	},
+
+	"additionalSearchEngineCaution": {
+		"message": "A Search Engine must support https."
+	},
+
 	"ask": {
 		"message": "Ask"
+	},
+
+	"alwaysUseAdditionalSearchEngine": {
+		"message": "Always use an additional Search Engine"
 	},
 
 	"alwaysUseBing": {
@@ -25,6 +41,14 @@
 
 	"behaviorOfPageAction": {
 		"message": "Behavior of the icon"
+	},
+
+	"delete": {
+		"message": "Delete"
+	},
+
+	"doYouReallyWantToDelete": {
+		"message": "Do you really want to delete?"
 	},
 
 	"extensionDescription": {
@@ -62,7 +86,7 @@
 	},
 
 	"indexHTMLHeading3": {
-		"message": "3.Choose a search engine what you want to use",
+		"message": "3.Choose a Search Engine what you want to use",
 		"description": "The third heading of index.html."
 	},
 
@@ -76,9 +100,21 @@
 		"description": "The url of tutorial video."
 	},
 
+	"main": {
+		"message": "Main"
+	},
+
+	"nameOfSearchEngine": {
+		"message": "Name of Search Engines"
+	},
+
 	"optionsHTMLTitle": {
 		"message": "Options",
 		"description": "The title of options.html."
+	},
+
+	"queryOfSearchEngine": {
+		"message": "Query of Search Engine"
 	},
 
 	"reload": {
@@ -89,24 +125,12 @@
 		"message": "Search Engines"
 	},
 
-	"searchInBing": {
-		"message": "Search in Bing"
+	"searchEngineWhichHasBeenAdded": {
+		"message": "Search Engine which has been added"
 	},
 
-	"searchInDuckDuckgo": {
-		"message": "Search in DuckDuckgo"
-	},
-
-	"searchInGoogle": {
-		"message": "Search in Google"
-	},
-
-	"searchInYahoo!": {
-		"message": "Search in Yahoo!"
-	},
-
-	"searchInYahooJapan": {
-		"message": "Search in Yahoo Japan"
+	"searchEngineWhichIsWantedToBeAdded": {
+		"message": "Search Engine which is wanted to be added"
 	},
 
 	"sidebarHTMLTitle": {
@@ -114,9 +138,8 @@
 		"description": "The title of sidebar.html."
 	},
 
-	"tutorial": {
-		"message": "Open a tutorial",
-		"description": "Open a link of a tutorial"
+	"thisSearchEngineHasAlreadyBeenAdded": {
+		"message": "This Search Engine has already been added."
 	},
 
 	"tutorialTitle": {
@@ -124,9 +147,8 @@
 		"description": "The title of the tutorial."
 	},
 
-	"url_index.html": {
-		"message": "/index.html",
-		"description": "A tutorial of the extension."
+	"urlOfSearchEngine": {
+		"message": "Url of Search Engine"
 	},
 
 	"watchTheVideo": {

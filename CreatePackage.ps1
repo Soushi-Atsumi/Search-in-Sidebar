@@ -1,0 +1,1 @@
+Compress-Archive -DestinationPath SearchInSidebar.zip -LiteralPath .\_locales, .\_values, .\background, .\icons, .\options, .\sidebar, .\index.css, .\index.html, .\index.js, .\LICENSE.txt, .\manifest.json, .\README.md, .\README_ja.md

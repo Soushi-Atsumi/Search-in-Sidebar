@@ -26,8 +26,14 @@ const tutorialMenuItemId = 'tutorial';
 const bingMenuItemId = 'bing';
 const duckduckgoMenuItemId = 'duckduckgo';
 const googleMenuItemId = 'google';
+const mainAdditionalSearchEngineMenuItemId = 'mainAdditionalSearchEngine';
 const yahooMenuItemId = 'yahoo';
 const yahooJapanMenuItemId = 'yahooJapan';
+
+const additionalSearchEngine = {
+	all: [],
+	get main() { return this.all.filter(e => e.isMain)[0]; }
+}
 
 browser.contextMenus.onClicked.addListener((info, tab) => {
 	let searchEngine = '';
@@ -46,6 +52,10 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
 			searchEngine = searchEngines.google.url;
 			searchEngineQuery = searchEngines.google.query;
 			break;
+		case mainAdditionalSearchEngineMenuItemId:
+			searchEngine = additionalSearchEngine.main.url;
+			searchEngineQuery = additionalSearchEngine.main.query;
+			break;
 		case yahooMenuItemId:
 			searchEngine = searchEngines.yahoo.url;
 			searchEngineQuery = searchEngines.yahoo.query;
@@ -54,6 +64,9 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
 			searchEngine = searchEngines.yahooJapan.url;
 			searchEngineQuery = searchEngines.yahooJapan.query;
 			break;
+		default:
+			searchEngine = additionalSearchEngine.all[info.menuItemId].url;
+			searchEngineQuery = additionalSearchEngine.all[info.menuItemId].query;
 	}
 
 	browser.sidebarAction.setPanel({
@@ -65,7 +78,10 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
 
 browser.contextMenus.onShown.addListener(function (info, tab) {
 	browser.contextMenus.removeAll();
-	browser.storage.local.get(storageKeys.searchEngine).then((item) => {
+	browser.storage.local.get([storageKeys.additionalSearchEngine, storageKeys.searchEngine]).then((item) => {
+		if (Object.keys(item).includes(storageKeys.additionalSearchEngine)) {
+			additionalSearchEngine.all = item[storageKeys.additionalSearchEngine];
+		}
 		createContextMenus(item[storageKeys.searchEngine] === undefined ? searchEngines.ask.name : item[storageKeys.searchEngine]);
 	});
 });
@@ -73,10 +89,13 @@ browser.contextMenus.onShown.addListener(function (info, tab) {
 browser.browserAction.onClicked.addListener((tab) => {
 	browser.sidebarAction.getPanel({}).then((sidebarUrl) => {
 		browser.storage.local.get([storageKeys.pageAction, storageKeys.searchEngine]).then((item) => {
-			if (item !== undefined && sidebarUrl !== browser.extension.getURL(`sidebar/sidebar.html`) && item[storageKeys.pageAction] === pageActions.goBackToHome) {
+			if (item !== undefined && sidebarUrl !== browser.extension.getURL('sidebar/sidebar.html') && item[storageKeys.pageAction] === pageActions.goBackToHome) {
 				let panelUrl;
 
 				switch (item[storageKeys.searchEngine]) {
+					case searchEngines.additional.name:
+						panelUrl = additionalSearchEngine.main.url;
+						break;
 					case searchEngines.bing.name:
 						panelUrl = searchEngines.bing.url;
 						break;
@@ -93,7 +112,7 @@ browser.browserAction.onClicked.addListener((tab) => {
 						panelUrl = searchEngines.yahooJapan.url;
 						break;
 					default:
-						panelUrl = browser.extension.getURL("index.html");
+						panelUrl = browser.extension.getURL('index.html');
 				}
 
 				browser.sidebarAction.setPanel({
@@ -111,7 +130,7 @@ function createContextMenus(searchEngine) {
 		browser.contextMenus.create({
 			contexts: ['selection'],
 			id: bingMenuItemId,
-			title: browser.i18n.getMessage("searchInBing")
+			title: searchEngines.bing.name
 		});
 	}
 
@@ -119,7 +138,7 @@ function createContextMenus(searchEngine) {
 		browser.contextMenus.create({
 			contexts: ['selection'],
 			id: duckduckgoMenuItemId,
-			title: browser.i18n.getMessage("searchInDuckDuckgo")
+			title: searchEngines.duckduckgo.name
 		});
 	}
 
@@ -127,7 +146,7 @@ function createContextMenus(searchEngine) {
 		browser.contextMenus.create({
 			contexts: ['selection'],
 			id: googleMenuItemId,
-			title: browser.i18n.getMessage("searchInGoogle")
+			title: searchEngines.google.name
 		});
 	}
 
@@ -135,7 +154,7 @@ function createContextMenus(searchEngine) {
 		browser.contextMenus.create({
 			contexts: ['selection'],
 			id: yahooMenuItemId,
-			title: browser.i18n.getMessage("searchInYahoo!")
+			title: searchEngines.yahoo.name
 		});
 	}
 
@@ -143,7 +162,25 @@ function createContextMenus(searchEngine) {
 		browser.contextMenus.create({
 			contexts: ['selection'],
 			id: yahooJapanMenuItemId,
-			title: browser.i18n.getMessage("searchInYahooJapan")
+			title: searchEngines.yahooJapan.name
+		});
+	}
+
+	if (searchEngine === searchEngines.ask.name) {
+		for (let i in additionalSearchEngine.all) {
+			browser.contextMenus.create({
+				contexts: ['selection'],
+				id: i,
+				title: additionalSearchEngine.all[i].name
+			});
+		}
+	}
+
+	if (searchEngine === searchEngines.additional.name) {
+		browser.contextMenus.create({
+			contexts: ['selection'],
+			id: mainAdditionalSearchEngineMenuItemId,
+			title: additionalSearchEngine.main.name
 		});
 	}
 

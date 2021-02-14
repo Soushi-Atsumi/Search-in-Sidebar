@@ -1,11 +1,80 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2037
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1EDDE9AD-DD48-4E8B-8A96-08C4012F90CA}"
+	ProjectSection(SolutionItems) = preProject
+		index.css = index.css
+		index.html = index.html
+		index.js = index.js
+		LICENSE.txt = LICENSE.txt
+		manifest.json = manifest.json
+		README.md = README.md
+		README_ja.md = README_ja.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_locales", "_locales", "{306B31B8-F8B6-40A0-834E-48ADDB9004B9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en", "en", "{3564AA77-438B-4730-B15D-6314545D0E64}"
+	ProjectSection(SolutionItems) = preProject
+		_locales\en\messages.json = _locales\en\messages.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ja", "ja", "{DEA59900-0EC4-483D-8071-AB2EE54E4BB7}"
+	ProjectSection(SolutionItems) = preProject
+		_locales\ja\messages.json = _locales\ja\messages.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_values", "_values", "{88823CD0-81BE-4B54-BD96-FA15941BCE71}"
+	ProjectSection(SolutionItems) = preProject
+		_values\PageActions.json = _values\PageActions.json
+		_values\SearchEngines.json = _values\SearchEngines.json
+		_values\StorageKeys.json = _values\StorageKeys.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "background", "background", "{CFF5DEB2-5055-4401-B1C6-C0A709DD5E8D}"
+	ProjectSection(SolutionItems) = preProject
+		background\background.js = background\background.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "icons", "icons", "{6E558DB1-C9B8-4487-B8EF-B962EAE681A1}"
+	ProjectSection(SolutionItems) = preProject
+		icons\icon-1536.png = icons\icon-1536.png
+		icons\icon-192.png = icons\icon-192.png
+		icons\icon-24.png = icons\icon-24.png
+		icons\icon-384.png = icons\icon-384.png
+		icons\icon-48.png = icons\icon-48.png
+		icons\icon-768.png = icons\icon-768.png
+		icons\icon-96.png = icons\icon-96.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "options", "options", "{661713F2-7EA3-4BCE-A715-C5D1946455B8}"
+	ProjectSection(SolutionItems) = preProject
+		options\options.css = options\options.css
+		options\options.html = options\options.html
+		options\options.js = options\options.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sidebar", "sidebar", "{E3D4831D-0D4D-4DA5-A889-F025BA6EE8CD}"
+	ProjectSection(SolutionItems) = preProject
+		sidebar\sidebar.html = sidebar\sidebar.html
+		sidebar\sidebar.js = sidebar\sidebar.js
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{306B31B8-F8B6-40A0-834E-48ADDB9004B9} = {1EDDE9AD-DD48-4E8B-8A96-08C4012F90CA}
+		{3564AA77-438B-4730-B15D-6314545D0E64} = {306B31B8-F8B6-40A0-834E-48ADDB9004B9}
+		{DEA59900-0EC4-483D-8071-AB2EE54E4BB7} = {306B31B8-F8B6-40A0-834E-48ADDB9004B9}
+		{88823CD0-81BE-4B54-BD96-FA15941BCE71} = {1EDDE9AD-DD48-4E8B-8A96-08C4012F90CA}
+		{CFF5DEB2-5055-4401-B1C6-C0A709DD5E8D} = {1EDDE9AD-DD48-4E8B-8A96-08C4012F90CA}
+		{6E558DB1-C9B8-4487-B8EF-B962EAE681A1} = {1EDDE9AD-DD48-4E8B-8A96-08C4012F90CA}
+		{661713F2-7EA3-4BCE-A715-C5D1946455B8} = {1EDDE9AD-DD48-4E8B-8A96-08C4012F90CA}
+		{E3D4831D-0D4D-4DA5-A889-F025BA6EE8CD} = {1EDDE9AD-DD48-4E8B-8A96-08C4012F90CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6D1C22B7-06AE-4BDA-94B7-9195472DEA0A}
