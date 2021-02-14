@@ -1,4 +1,6 @@
 ﻿{
+	"additionalSearchEngine": "additionalSearchEngine",
+
 	"searchEngine": "SearchEngine",
 
 	"pageAction": "PageAction"

@@ -1,6 +1,22 @@
 ﻿{
+	"add": {
+		"message": "追加"
+	},
+
+	"additionalSearchEngines": {
+		"message": "追加の検索エンジン"
+	},
+
+	"additionalSearchEngineCaution": {
+		"message": "検索エンジンは https をサポートしていなければなりません。"
+	},
+
 	"ask": {
 		"message": "尋ねる"
+	},
+
+	"alwaysUseAdditionalSearchEngine": {
+		"message": "常に追加の検索エンジンを使用する"
 	},
 
 	"alwaysUseBing": {
@@ -25,6 +41,14 @@
 
 	"behaviorOfPageAction": {
 		"message": "アイコンの動作"
+	},
+
+	"delete": {
+		"message": "削除"
+	},
+
+	"doYouReallyWantToDelete": {
+		"message": "本当に削除しますか？"
 	},
 
 	"extensionDescription": {
@@ -76,9 +100,21 @@
 		"description": "使い方の動画のURL。"
 	},
 
+	"main": {
+		"message": "主要"
+	},
+
+	"nameOfSearchEngine": {
+		"message": "検索エンジンの名前"
+	},
+
 	"optionsHTMLTitle": {
 		"message": "設定",
 		"description": "options.htmlの題名。"
+	},
+
+	"queryOfSearchEngine": {
+		"message": "検索エンジンのクエリ"
 	},
 
 	"reload": {
@@ -89,24 +125,12 @@
 		"message": "検索エンジン"
 	},
 
-	"searchInBing": {
-		"message": "Bingで検索"
+	"searchEngineWhichHasBeenAdded": {
+		"message": "追加した検索エンジン"
 	},
 
-	"searchInDuckDuckgo": {
-		"message": "DuckDuckgoで検索"
-	},
-
-	"searchInGoogle": {
-		"message": "Googleで検索"
-	},
-
-	"searchInYahoo!": {
-		"message": "Yahoo!で検索"
-	},
-
-	"searchInYahooJapan": {
-		"message": "Yahoo Japanで検索"
+	"searchEngineWhichIsWantedToBeAdded": {
+		"message": "追加したい検索エンジン"
 	},
 
 	"sidebarHTMLTitle": {
@@ -114,9 +138,8 @@
 		"description": "sidebar.htmlの題名。"
 	},
 
-	"tutorial": {
-		"message": "使い方を開く",
-		"description": "拡張機能の使い方へのリンクを開く"
+	"thisSearchEngineHasAlreadyBeenAdded": {
+		"message": "この検索エンジンは既に追加されています。"
 	},
 
 	"tutorialTitle": {
@@ -124,9 +147,8 @@
 		"description": "使い方の題名。"
 	},
 
-	"url_index.html": {
-		"message": "/index_ja.html",
-		"description": "拡張機能の使い方。"
+	"urlOfSearchEngine": {
+		"message": "検索エンジンのURL"
 	},
 
 	"watchTheVideo": {

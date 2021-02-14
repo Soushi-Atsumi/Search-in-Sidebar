@@ -15,24 +15,61 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="options.css" />
 	<title></title>
 </head>
 <body>
 	<form name="options">
 		<fieldset>
 			<legend id="searchEnginesLegend"></legend>
-			<input type="radio" id="searcheEngineAsk" name="searchEngine" checked="checked"><label id="askSearchEngineLabel"></label><br />
-			<input type="radio" id="searcheEngineBing" name="searchEngine"><label id="alwaysUseBingLabel"></label><br />
-			<input type="radio" id="searcheEngineDuckDuckGo" name="searchEngine"><label id="alwaysUseDuckDuckGoLabel"></label><br />
-			<input type="radio" id="searcheEngineGoogle" name="searchEngine"><label id="alwaysUseGoogleLabel"></label><br />
-			<input type="radio" id="searcheEngineYahoo" name="searchEngine"><label id="alwaysUseYahooLabel"></label><br />
-			<input type="radio" id="searcheEngineYahooJapan" name="searchEngine"><label id="alwaysUseYahooJapanLabel"></label>
-		</fieldset><br />
+			<input type="radio" id="searcheEngineAskInputRadio" name="searchEngine"><label id="askSearchEngineLabel"></label><br>
+			<input type="radio" id="searcheEngineBingInputRadio" name="searchEngine"><label id="alwaysUseBingLabel"></label><br>
+			<input type="radio" id="searcheEngineDuckDuckGoInputRadio" name="searchEngine"><label id="alwaysUseDuckDuckGoLabel"></label><br>
+			<input type="radio" id="searcheEngineGoogleInputRadio" name="searchEngine"><label id="alwaysUseGoogleLabel"></label><br>
+			<input type="radio" id="searcheEngineYahooInputRadio" name="searchEngine"><label id="alwaysUseYahooLabel"></label><br>
+			<input type="radio" id="searcheEngineYahooJapanInputRadio" name="searchEngine"><label id="alwaysUseYahooJapanLabel"></label><br>
+			<input type="radio" id="searcheEngineAdditionalInputRadio" name="searchEngine" disabled><label id="alwaysUseAdditionalSearchEngineLabel"></label><br>
+		</fieldset><br>
+		<fieldset>
+			<legend id="additionalSearchEngineDescriptionLegend"></legend>
+			<table>
+				<thead>
+					<tr>
+						<th id="additionalSearchEngineTableHeaderCell"></th>
+						<th id="additionalSearchEngineUrlTableHeaderCell"></th>
+						<th id="additionalSearchEngineQueryTableHeaderCell"></th>
+						<th id="additionalSearchEngineMainTableHeaderCell"></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th id="searchEngineWhichHasBeenAddedTableHeaderCell" colspan="5"></th>
+					</tr>
+				</tbody>
+				<tbody id="searchEngineWhichHasBeenAddedTableBody"></tbody>
+				<tbody>
+					<tr>
+						<th id="searchEngineWhichIsWantedToBeAddedTableHeaderCell" colspan="5"></th>
+					</tr>
+				</tbody>
+				<tbody id="searchEngineWhichIsWantedToBeAddedTableBody">
+					<tr>
+						<td><input type="text" class="tableInputText" id="searchEngineWhichIsWantedToBeAddedNameInputText" name="searchEngineWhichIsWantedToBeAdded" placeholder="Google"></td>
+						<td><input type="text" class="tableInputText" id="searchEngineWhichIsWantedToBeAddedUrlInputText" name="searchEngineWhichIsWantedToBeAdded" placeholder="www.google.com"></td>
+						<td><input type="text" class="tableInputText" id="searchEngineWhichIsWantedToBeAddedQueryInputText" name="searchEngineWhichIsWantedToBeAdded" placeholder="/search?q="></td>
+						<td><input type="checkbox" id="searchEngineWhichIsWantedToBeAddedMainCheckbox"></td>
+						<td><button type="button" id="addSearchEngineButton"></button></td>
+					</tr>
+				</tbody>
+			</table><br>
+			<div class="caution" id="additionalSearchEngineCautionDivision"></div>
+		</fieldset><br>
 		<fieldset>
 			<legend id="pageActionLegend"></legend>
-			<input type="radio" id="pageActionReload" name="pageAction" checked="checked"><label id="pageActionReloadLabel"></label><br />
-			<input type="radio" id="pageActionGoBackToHome" name="pageAction"><label id="pageActionGoBackToHomeLabel"></label>
-		</fieldset><br />
+			<input type="radio" id="pageActionReloadInputRadio" name="pageAction" checked="checked"><label id="pageActionReloadLabel"></label><br>
+			<input type="radio" id="pageActionGoBackToHomeInputRadio" name="pageAction"><label id="pageActionGoBackToHomeLabel"></label>
+		</fieldset><br>
 	</form>
 	<script src="options.js"></script>
 </body>
