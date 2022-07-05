@@ -12,13 +12,13 @@
 'use strict';
 
 var xmlHttpRequest = new XMLHttpRequest();
-xmlHttpRequest.open('GET', browser.extension.getURL('/_values/PageActions.json'), false);
+xmlHttpRequest.open('GET', browser.runtime.getURL('/_values/PageActions.json'), false);
 xmlHttpRequest.send();
 const pageActions = JSON.parse(xmlHttpRequest.responseText);
-xmlHttpRequest.open('GET', browser.extension.getURL('/_values/SearchEngines.json'), false);
+xmlHttpRequest.open('GET', browser.runtime.getURL('/_values/SearchEngines.json'), false);
 xmlHttpRequest.send();
 const searchEngines = JSON.parse(xmlHttpRequest.responseText);
-xmlHttpRequest.open('GET', browser.extension.getURL('/_values/StorageKeys.json'), false);
+xmlHttpRequest.open('GET', browser.runtime.getURL('/_values/StorageKeys.json'), false);
 xmlHttpRequest.send();
 const storageKeys = JSON.parse(xmlHttpRequest.responseText);
 

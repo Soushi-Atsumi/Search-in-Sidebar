@@ -90,6 +90,16 @@
 		"description": "index.htmlの3番目の見出し。"
 	},
 
+	"indexHTMLHeading4": {
+		"message": "4.ショートカットキーで検索もできる（既定はCtrl+Alt+S）",
+		"description": "index.htmlの4番目の見出し。"
+	},
+
+	"indexHTMLInformation": {
+		"message": "拡張機能の管理（about:addons）で検索エンジンの編集ができます。ショートカットキーの編集をしたい場合は以下のリンクを参考にしてください。既定は「Ctrl+Alt+S」です。",
+		"description": "この拡張機能の情報。"
+	},
+
 	"indexHTMLTitle": {
 		"message": "使い方",
 		"description": "index.htmlの題名。"
@@ -111,6 +121,16 @@
 	"optionsHTMLTitle": {
 		"message": "設定",
 		"description": "options.htmlの題名。"
+	},
+
+	"permissionErrorTabs": {
+		"message": "追加の許可設定が必要です。",
+		"description": "tabs権限が許可されていない時に表示するページの題名。"
+	},
+
+	"permissionErrorTabsDescription": {
+		"message": "ショートカットキーを使った検索には権限が必要です。拡張機能の管理（about:addons）でこのアドオンの許可設定を開いて許可してください。この権限は選択した文字を検索するためだけに使用されます。",
+		"description": "tabs権限が許可されていない時に表示するページの説明。"
 	},
 
 	"queryOfSearchEngine": {
