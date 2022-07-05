@@ -62,6 +62,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sidebar", "sidebar", "{E3D4
 		sidebar\sidebar.js = sidebar\sidebar.js
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "error", "error", "{4ACEC2FE-E522-42C9-B0B3-A134FFE01492}"
+	ProjectSection(SolutionItems) = preProject
+		error\permission_error.html = error\permission_error.html
+		error\permission_error.js = error\permission_error.js
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{6E558DB1-C9B8-4487-B8EF-B962EAE681A1} = {1EDDE9AD-DD48-4E8B-8A96-08C4012F90CA}
 		{661713F2-7EA3-4BCE-A715-C5D1946455B8} = {1EDDE9AD-DD48-4E8B-8A96-08C4012F90CA}
 		{E3D4831D-0D4D-4DA5-A889-F025BA6EE8CD} = {1EDDE9AD-DD48-4E8B-8A96-08C4012F90CA}
+		{4ACEC2FE-E522-42C9-B0B3-A134FFE01492} = {1EDDE9AD-DD48-4E8B-8A96-08C4012F90CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6D1C22B7-06AE-4BDA-94B7-9195472DEA0A}

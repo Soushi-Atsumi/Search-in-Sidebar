@@ -62,7 +62,7 @@
 	},
 
 	"goBackToHome": {
-		"message": "Go back to home(Depending on Search Engines)"
+		"message": "Go back to home (Depending on Search Engines)"
 	},
 
 	"iconImageAlt": {
@@ -90,6 +90,16 @@
 		"description": "The third heading of index.html."
 	},
 
+	"indexHTMLHeading4": {
+		"message": "4.You can search with a shortcut key also (the default is Ctrl+Alt+S)",
+		"description": "The fourth heading of index.html."
+	},
+
+	"indexHTMLInformation": {
+		"message": "You can manage Search Engine in a manager of extensions (about:addons). If you want to edit the shortcut key, refer to the following site. The default is \"Ctrl+Alt+S\".",
+		"description": "Information of this extention."
+	},
+
 	"indexHTMLTitle": {
 		"message": "Tutorial",
 		"description": "The title of index.html."
@@ -111,6 +121,16 @@
 	"optionsHTMLTitle": {
 		"message": "Options",
 		"description": "The title of options.html."
+	},
+
+	"permissionErrorTabs": {
+		"message": "An additional permission is required.",
+		"description": "A title of a page which is displayed when a user have not allowed tabs permission."
+	},
+
+	"permissionErrorTabsDescription": {
+		"message": "Seaching with a shortcut key requires a permission. Open permissions of this extension in a manager of extensions (about:addons) and allow permissions. This permission is used to get a selected text for searching.",
+		"description": "Description of a page which is displayed when a user have not allowed tabs permission."
 	},
 
 	"queryOfSearchEngine": {

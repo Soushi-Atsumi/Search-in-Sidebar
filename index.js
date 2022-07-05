@@ -18,8 +18,10 @@ document.getElementById('icon').alt = browser.i18n.getMessage('iconImageAlt');
 document.getElementById('heading1').innerText = browser.i18n.getMessage('indexHTMLHeading1');
 document.getElementById('heading2').innerText = browser.i18n.getMessage('indexHTMLHeading2');
 document.getElementById('heading3').innerText = browser.i18n.getMessage('indexHTMLHeading3');
+document.getElementById('heading4').innerText = browser.i18n.getMessage('indexHTMLHeading4');
 
 var tutorialVideoLabel = document.getElementById('tutorialVideoDescriptionLabel');
 tutorialVideoAnchor.innerText = browser.i18n.getMessage('watchTheVideo');
 tutorialVideoAnchor.href = browser.i18n.getMessage('indexHTMLTutorialVideo');
+document.getElementById('informationDivision').innerText = browser.i18n.getMessage('indexHTMLInformation');
 document.getElementById('cautionDivision').innerText = browser.i18n.getMessage('indexHTMLCaution');

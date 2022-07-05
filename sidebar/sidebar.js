@@ -12,13 +12,13 @@
 'use strict';
 
 var xmlHttpRequest = new XMLHttpRequest();
-xmlHttpRequest.open('GET', browser.extension.getURL('/_values/PageActions.json'), false);
+xmlHttpRequest.open('GET', browser.runtime.getURL('/_values/PageActions.json'), false);
 xmlHttpRequest.send();
 const pageActions = JSON.parse(xmlHttpRequest.responseText);
-xmlHttpRequest.open('GET', browser.extension.getURL('/_values/SearchEngines.json'), false);
+xmlHttpRequest.open('GET', browser.runtime.getURL('/_values/SearchEngines.json'), false);
 xmlHttpRequest.send();
 const searchEngines = JSON.parse(xmlHttpRequest.responseText);
-xmlHttpRequest.open('GET', browser.extension.getURL('/_values/StorageKeys.json'), false);
+xmlHttpRequest.open('GET', browser.runtime.getURL('/_values/StorageKeys.json'), false);
 xmlHttpRequest.send();
 const storageKeys = JSON.parse(xmlHttpRequest.responseText);
 
@@ -27,7 +27,7 @@ document.title = browser.i18n.getMessage('sidebarHTMLTitle');
 
 browser.storage.local.get([storageKeys.pageAction, storageKeys.searchEngine]).then((item) => {
 	if (item === undefined) {
-		window.location = browser.extension.getURL('index.html');
+		window.location = browser.runtime.getURL('index.html');
 	} else if (item[storageKeys.pageAction] === pageActions.goBackToHome) {
 		switch (item[storageKeys.searchEngine]) {
 			case searchEngines.bing.name:
@@ -46,11 +46,11 @@ browser.storage.local.get([storageKeys.pageAction, storageKeys.searchEngine]).th
 				window.location = searchEngines.yahooJapan.url;
 				break;
 			default:
-				window.location = browser.extension.getURL('index.html');
+				window.location = browser.runtime.getURL('index.html');
 		}
 	} else {
-		window.location = browser.extension.getURL('index.html');
+		window.location = browser.runtime.getURL('index.html');
 	}
 }).catch(() => {
-	window.location = browser.extension.getURL('index.html');
+	window.location = browser.runtime.getURL('index.html');
 });

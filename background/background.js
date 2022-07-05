@@ -12,13 +12,13 @@
 'use strict';
 
 var xmlHttpRequest = new XMLHttpRequest();
-xmlHttpRequest.open('GET', browser.extension.getURL('/_values/PageActions.json'), false);
+xmlHttpRequest.open('GET', browser.runtime.getURL('/_values/PageActions.json'), false);
 xmlHttpRequest.send();
 const pageActions = JSON.parse(xmlHttpRequest.responseText);
-xmlHttpRequest.open('GET', browser.extension.getURL('/_values/SearchEngines.json'), false);
+xmlHttpRequest.open('GET', browser.runtime.getURL('/_values/SearchEngines.json'), false);
 xmlHttpRequest.send();
 const searchEngines = JSON.parse(xmlHttpRequest.responseText);
-xmlHttpRequest.open('GET', browser.extension.getURL('/_values/StorageKeys.json'), false);
+xmlHttpRequest.open('GET', browser.runtime.getURL('/_values/StorageKeys.json'), false);
 xmlHttpRequest.send();
 const storageKeys = JSON.parse(xmlHttpRequest.responseText);
 
@@ -89,7 +89,7 @@ browser.contextMenus.onShown.addListener(function (info, tab) {
 browser.browserAction.onClicked.addListener((tab) => {
 	browser.sidebarAction.getPanel({}).then((sidebarUrl) => {
 		browser.storage.local.get([storageKeys.pageAction, storageKeys.searchEngine]).then((item) => {
-			if (item !== undefined && sidebarUrl !== browser.extension.getURL('sidebar/sidebar.html') && item[storageKeys.pageAction] === pageActions.goBackToHome) {
+			if (item !== undefined && sidebarUrl !== browser.runtime.getURL('sidebar/sidebar.html') && item[storageKeys.pageAction] === pageActions.goBackToHome) {
 				let panelUrl;
 
 				switch (item[storageKeys.searchEngine]) {
@@ -112,7 +112,7 @@ browser.browserAction.onClicked.addListener((tab) => {
 						panelUrl = searchEngines.yahooJapan.url;
 						break;
 					default:
-						panelUrl = browser.extension.getURL('index.html');
+						panelUrl = browser.runtime.getURL('index.html');
 				}
 
 				browser.sidebarAction.setPanel({
@@ -186,3 +186,46 @@ function createContextMenus(searchEngine) {
 
 	browser.contextMenus.refresh();
 }
+
+browser.commands.onCommand.addListener(command => {
+        if (command === 'open_and_search') {
+            let tabId = browser.tabs.query({ currentWindow: true, active: true }).id;
+            browser.tabs.executeScript(tabId, {
+                code: 'window.getSelection().toString().trim();',
+            }).then(text => {
+                let selectedText = text[0].trim();
+
+                if (selectedText.length !== 0) {
+                    browser.storage.local.get([storageKeys.additionalSearchEngine, storageKeys.searchEngine]).then((item) => {
+                        let searchEngine = '';
+                        let searchEngineQuery = '';
+                        if (Object.keys(item).includes(storageKeys.additionalSearchEngine)) {
+                            additionalSearchEngine.all = item[storageKeys.additionalSearchEngine];
+                        }
+
+                        if (item[storageKeys.searchEngine] === undefined || item[storageKeys.searchEngine] === searchEngines.ask.name) {
+                            searchEngine = searchEngines.google.url;
+                            searchEngineQuery = searchEngines.google.query;
+                        } else if (item[storageKeys.searchEngine] === searchEngines.additional.name) {
+                            searchEngine = additionalSearchEngine.main.url;
+                            searchEngineQuery = additionalSearchEngine.main.query;
+                        } else {
+                            const key = Object.keys(searchEngines).filter(key => searchEngines[key].name === item[storageKeys.searchEngine]);
+                            searchEngine = searchEngines[key].url;
+                            searchEngineQuery = searchEngines[key].query;
+                        }
+
+                        browser.sidebarAction.setPanel({
+                            panel: `${searchEngine}${searchEngineQuery}${selectedText}`
+                        });
+                    });
+                }
+            }, error => {
+                console.error(error);
+                browser.sidebarAction.setPanel({
+                    panel: browser.runtime.getURL('error/permission_error.html')
+                });
+            });
+            browser.sidebarAction.open();
+        }
+    });
