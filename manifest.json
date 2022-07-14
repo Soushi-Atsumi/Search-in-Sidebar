@@ -3,7 +3,7 @@
 
 	"applications": {
 		"gecko": {
-			"strict_min_version": "60.0"
+			"strict_min_version": "74.0"
 		}
 	},
 
@@ -54,7 +54,7 @@
 
 	"name": "__MSG_extensionName__",
 
-	"optional_permissions": [ "*://*/*", "tabs" ],
+	"optional_permissions": [ "*://*/*" ],
 
 	"options_ui": {
 		"page": "options/options.html",
@@ -73,8 +73,8 @@
 			"768": "icons/icon-768.png",
 			"1536": "icons/icon-1536.png"
 		},
-		"default_panel": "sidebar/sidebar.html"
+		"default_panel": "index.html"
 	},
 
-	"version": "3.1.0"
+	"version": "3.2.0"
 }

@@ -1,7 +1,7 @@
 ﻿{
 	"additionalSearchEngine": "additionalSearchEngine",
 
-	"searchEngine": "SearchEngine",
+	"pageAction": "PageAction",
 
-	"pageAction": "PageAction"
+	"searchEngine": "SearchEngine"
 }
