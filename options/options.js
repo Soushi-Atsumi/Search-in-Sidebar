@@ -11,16 +11,10 @@
  */
 'use strict';
 
-var xmlHttpRequest = new XMLHttpRequest();
-xmlHttpRequest.open('GET', browser.runtime.getURL('/_values/PageActions.json'), false);
-xmlHttpRequest.send();
-const pageActions = JSON.parse(xmlHttpRequest.responseText);
-xmlHttpRequest.open('GET', browser.runtime.getURL('/_values/SearchEngines.json'), false);
-xmlHttpRequest.send();
-const searchEngines = JSON.parse(xmlHttpRequest.responseText);
-xmlHttpRequest.open('GET', browser.runtime.getURL('/_values/StorageKeys.json'), false);
-xmlHttpRequest.send();
-const storageKeys = JSON.parse(xmlHttpRequest.responseText);
+let searchEngines;
+let storageKeys;
+let pageActions;
+let additionalSearchEngineArray = [];
 
 const searcheEngineAdditionalId = 'searcheEngineAdditionalInputRadio';
 const searcheEngineAskId = 'searcheEngineAskInputRadio';
@@ -41,47 +35,46 @@ const searchEngineWhichIsWantedToBeAddedMainCheckbox = document.getElementById('
 const addSearchEngineButton = document.getElementById('addSearchEngineButton');
 const searchEngineWhichHasBeenAddedTableBody = document.getElementById('searchEngineWhichHasBeenAddedTableBody');
 
-document.getElementsByTagName('html')[0].lang = browser.i18n.getUILanguage();
-document.title = browser.i18n.getMessage('optionsHTMLTitle');
-document.getElementById('searchEnginesLegend').innerText = browser.i18n.getMessage('searchEngines');
-document.getElementById('askSearchEngineLabel').innerText = browser.i18n.getMessage('ask');
-document.getElementById('alwaysUseBingLabel').innerText = browser.i18n.getMessage('alwaysUseBing');
-document.getElementById('alwaysUseDuckDuckGoLabel').innerText = browser.i18n.getMessage('alwaysUseDuckDuckGo');
-document.getElementById('alwaysUseGoogleLabel').innerText = browser.i18n.getMessage('alwaysUseGoogle');
-document.getElementById('alwaysUseYahooLabel').innerText = browser.i18n.getMessage('alwaysUseYahoo');
-document.getElementById('alwaysUseYahooJapanLabel').innerText = browser.i18n.getMessage('alwaysUseYahooJapan');
-document.getElementById('alwaysUseAdditionalSearchEngineLabel').innerText = browser.i18n.getMessage('alwaysUseAdditionalSearchEngine');
-document.getElementById('additionalSearchEngineDescriptionLegend').innerText = browser.i18n.getMessage('additionalSearchEngines');
-document.getElementById('additionalSearchEngineTableHeaderCell').innerText = browser.i18n.getMessage('nameOfSearchEngine');
-document.getElementById('additionalSearchEngineUrlTableHeaderCell').innerText = browser.i18n.getMessage('urlOfSearchEngine');
-document.getElementById('additionalSearchEngineQueryTableHeaderCell').innerText = browser.i18n.getMessage('queryOfSearchEngine');
-document.getElementById('additionalSearchEngineMainTableHeaderCell').innerText = browser.i18n.getMessage('main');
-document.getElementById('searchEngineWhichHasBeenAddedTableHeaderCell').innerText = browser.i18n.getMessage('searchEngineWhichHasBeenAdded');
-document.getElementById('searchEngineWhichIsWantedToBeAddedTableHeaderCell').innerText = browser.i18n.getMessage('searchEngineWhichIsWantedToBeAdded');
-document.getElementById('addSearchEngineButton').innerText = browser.i18n.getMessage('add');
-document.getElementById('additionalSearchEngineCautionDivision').innerText = browser.i18n.getMessage('additionalSearchEngineCaution');
-document.getElementById('pageActionLegend').innerText = browser.i18n.getMessage('behaviorOfPageAction');
-document.getElementById('pageActionReloadLabel').innerText = browser.i18n.getMessage('reload');
-document.getElementById('pageActionGoBackToHomeLabel').innerText = browser.i18n.getMessage('goBackToHome');
+main();
 
-document.options.searchEngine.forEach((element) => {
-	element.addEventListener('click', searchEngineRadioButtonOnClick);
-});
+async function main() {
+	searchEngines = JSON.parse(await (await fetch(browser.runtime.getURL('/_values/SearchEngines.json'))).text());
+	storageKeys = JSON.parse(await (await fetch(browser.runtime.getURL('/_values/StorageKeys.json'))).text());
+	pageActions = JSON.parse(await (await fetch(browser.runtime.getURL('/_values/PageActions.json'))).text());
 
-document.options.searchEngineWhichIsWantedToBeAdded.forEach((element) => {
-	element.addEventListener('click', searchEngineWhichIsWantedToBeAddedInputTextOnClick);
-});
+	document.getElementsByTagName('html')[0].lang = browser.i18n.getUILanguage();
+	document.title = browser.i18n.getMessage('optionsHTMLTitle');
+	document.getElementById('searchEnginesLegend').innerText = browser.i18n.getMessage('searchEngines');
+	document.getElementById('askSearchEngineLabel').innerText = browser.i18n.getMessage('ask');
+	document.getElementById('alwaysUseBingLabel').innerText = browser.i18n.getMessage('alwaysUseBing');
+	document.getElementById('alwaysUseDuckDuckGoLabel').innerText = browser.i18n.getMessage('alwaysUseDuckDuckGo');
+	document.getElementById('alwaysUseGoogleLabel').innerText = browser.i18n.getMessage('alwaysUseGoogle');
+	document.getElementById('alwaysUseYahooLabel').innerText = browser.i18n.getMessage('alwaysUseYahoo');
+	document.getElementById('alwaysUseYahooJapanLabel').innerText = browser.i18n.getMessage('alwaysUseYahooJapan');
+	document.getElementById('alwaysUseAdditionalSearchEngineLabel').innerText = browser.i18n.getMessage('alwaysUseAdditionalSearchEngine');
+	document.getElementById('additionalSearchEngineDescriptionLegend').innerText = browser.i18n.getMessage('additionalSearchEngines');
+	document.getElementById('additionalSearchEngineTableHeaderCell').innerText = browser.i18n.getMessage('nameOfSearchEngine');
+	document.getElementById('additionalSearchEngineUrlTableHeaderCell').innerText = browser.i18n.getMessage('urlOfSearchEngine');
+	document.getElementById('additionalSearchEngineQueryTableHeaderCell').innerText = browser.i18n.getMessage('queryOfSearchEngine');
+	document.getElementById('additionalSearchEngineMainTableHeaderCell').innerText = browser.i18n.getMessage('main');
+	document.getElementById('searchEngineWhichHasBeenAddedTableHeaderCell').innerText = browser.i18n.getMessage('searchEngineWhichHasBeenAdded');
+	document.getElementById('searchEngineWhichIsWantedToBeAddedTableHeaderCell').innerText = browser.i18n.getMessage('searchEngineWhichIsWantedToBeAdded');
+	document.getElementById('addSearchEngineButton').innerText = browser.i18n.getMessage('add');
+	document.getElementById('additionalSearchEngineCautionDivision').innerText = browser.i18n.getMessage('additionalSearchEngineCaution');
+	document.getElementById('pageActionLegend').innerText = browser.i18n.getMessage('behaviorOfPageAction');
+	document.getElementById('pageActionReloadLabel').innerText = browser.i18n.getMessage('reload');
+	document.getElementById('pageActionGoBackToHomeLabel').innerText = browser.i18n.getMessage('goBackToHome');
 
-document.options.pageAction.forEach((element) => {
-	element.addEventListener('click', pageActionRadioButtonOnClick);
-});
+	document.options.searchEngine.forEach(element => element.addEventListener('click', searchEngineRadioButtonOnClick));
+	document.options.searchEngineWhichIsWantedToBeAdded.forEach(element => element.addEventListener('click', searchEngineWhichIsWantedToBeAddedInputTextOnClick));
+	document.options.pageAction.forEach(element => element.addEventListener('click', pageActionRadioButtonOnClick));
 
-addSearchEngineButton.addEventListener('click', addSearchEngineButtonOnClick);
+	addSearchEngineButton.addEventListener('click', addSearchEngineButtonOnClick);
 
-checkSearchEngine();
-checkPageAction();
-var additionalSearchEngineArray = [];
-refreshAdditionalSearchEngine();
+	checkSearchEngine();
+	checkPageAction();
+	refreshAdditionalSearchEngine();
+}
 
 function searchEngineRadioButtonOnClick(event) {
 	switch (event.target.id) {
@@ -108,6 +101,7 @@ function searchEngineRadioButtonOnClick(event) {
 			break;
 	}
 
+	browser.runtime.sendMessage({});
 	checkSearchEngine();
 }
 
@@ -169,7 +163,7 @@ function refreshAdditionalSearchEngine() {
 			searchEngineWhichHasBeenAddedUrlTableData.innerText = additionalSearchEngine.url;
 			searchEngineWhichHasBeenAddedQueryTableData.innerText = additionalSearchEngine.query;
 			searchEngineWhichHasBeenAddedChooseMainRadio.checked = additionalSearchEngine.isMain;
-			searchEngineWhichHasBeenAddedChooseMainRadio.type = 'radio'
+			searchEngineWhichHasBeenAddedChooseMainRadio.type = 'radio';
 			searchEngineWhichHasBeenAddedChooseMainRadio.addEventListener('change', searchEngineWhichHasBeenAddedChooseMainRadioOnChange);
 			searchEngineWhichHasBeenAddedChooseMainRadioTableData.appendChild(searchEngineWhichHasBeenAddedChooseMainRadio);
 			searchEngineWhichHasBeenAddedDeleteButton.innerText = browser.i18n.getMessage('delete');
@@ -193,9 +187,7 @@ function searchEngineWhichIsWantedToBeAddedInputTextOnClick(event) {
 
 function addSearchEngineButtonOnClick() {
 	let isAllValid = true;
-	document.options.searchEngineWhichIsWantedToBeAdded.forEach((element) => {
-		isAllValid = isInputTextValueValid(element) && isAllValid;
-	});
+	document.options.searchEngineWhichIsWantedToBeAdded.forEach(element => isAllValid = isInputTextValueValid(element) && isAllValid);
 
 	if (isAllValid) {
 		let isAlreadyAdded = false;
@@ -231,13 +223,10 @@ function addSearchEngineButtonOnClick() {
 			query: queryOfSearchEngine,
 			isMain: isMainSearchEngine
 		});
-		browser.storage.local.set({
-			[storageKeys.additionalSearchEngine]: additionalSearchEngineArray
-		});
 
-		document.options.searchEngineWhichIsWantedToBeAdded.forEach((element) => {
-			element.value = '';
-		});
+		browser.storage.local.set({ [storageKeys.additionalSearchEngine]: additionalSearchEngineArray }).then(() => browser.runtime.sendMessage({}));
+
+		document.options.searchEngineWhichIsWantedToBeAdded.forEach(element => element.value = '');
 		searchEngineWhichIsWantedToBeAddedMainCheckbox.checked = false;
 		refreshAdditionalSearchEngine();
 	}
@@ -249,11 +238,8 @@ function searchEngineWhichHasBeenAddedChooseMainRadioOnChange(event) {
 		additionalSearchEngineArray[i].isMain = i === index;
 	}
 
-	browser.storage.local.set({
-		[storageKeys.additionalSearchEngine]: additionalSearchEngineArray
-	});
-
-	refreshAdditionalSearchEngine()
+	browser.storage.local.set({ [storageKeys.additionalSearchEngine]: additionalSearchEngineArray }).then(() => browser.runtime.sendMessage({}));
+	refreshAdditionalSearchEngine();
 }
 
 function searchEngineWhichHasBeenAddedDeleteButtonOnClick(event) {
@@ -267,10 +253,7 @@ function searchEngineWhichHasBeenAddedDeleteButtonOnClick(event) {
 			additionalSearchEngineArray[0].isMain = true;
 		}
 
-		browser.storage.local.set({
-			[storageKeys.additionalSearchEngine]: additionalSearchEngineArray
-		});
-
+		browser.storage.local.set({ [storageKeys.additionalSearchEngine]: additionalSearchEngineArray }).then(() => browser.runtime.sendMessage({}));
 		refreshAdditionalSearchEngine();
 	}
 }
@@ -295,6 +278,7 @@ function pageActionRadioButtonOnClick(event) {
 			break;
 	}
 
+	browser.runtime.sendMessage({});
 	checkPageAction();
 }
 

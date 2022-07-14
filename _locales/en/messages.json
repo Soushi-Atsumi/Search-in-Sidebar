@@ -153,13 +153,13 @@
 		"message": "Search Engine which is wanted to be added"
 	},
 
-	"sidebarHTMLTitle": {
-		"message": "Tutorial",
-		"description": "The title of sidebar.html."
-	},
-
 	"thisSearchEngineHasAlreadyBeenAdded": {
 		"message": "This Search Engine has already been added."
+	},
+
+	"tutorial": {
+		"message": "Open a tutorial",
+		"description": "Open a link of a tutorial"
 	},
 
 	"tutorialTitle": {
