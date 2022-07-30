@@ -123,16 +123,6 @@
 		"description": "The title of options.html."
 	},
 
-	"permissionErrorTabs": {
-		"message": "An additional permission is required.",
-		"description": "A title of a page which is displayed when a user have not allowed tabs permission."
-	},
-
-	"permissionErrorTabsDescription": {
-		"message": "Seaching with a shortcut key requires a permission. Open permissions of this extension in a manager of extensions (about:addons) and allow permissions. This permission is used to get a selected text for searching.",
-		"description": "Description of a page which is displayed when a user have not allowed tabs permission."
-	},
-
 	"queryOfSearchEngine": {
 		"message": "Query of Search Engine"
 	},
