@@ -140,9 +140,6 @@ async function main() {
 						panel: `${searchEngine}${searchEngineQuery}${selectedText}`
 					});
 				}
-			}, error => {
-				console.error(error);
-				browser.sidebarAction.setPanel({ panel: browser.runtime.getURL('error/permission_error.html') });
 			});
 
 			browser.sidebarAction.open();
