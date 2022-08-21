@@ -4,7 +4,7 @@
 標準で搭載されている機能より使いやすい検索拡張機能です。 サイドバーの中で様々な検索エンジンを使って単語を検索できます。
 
 # インストール
-このページ行って [サイドバーで検索](https://addons.mozilla.org/ja/firefox/addon/search-in-sidebar/) Firefoxでこの拡張機能をインストールして下さい。
+このページに行って [サイドバーで検索](https://addons.mozilla.org/ja/firefox/addon/search-in-sidebar/) Firefoxでこの拡張機能をインストールして下さい。
 
 # 使い方
 拡張機能のインストール後、 ツールバーにあるアプリアイコンをクリックすることで使い方を確認することが出来ます。
