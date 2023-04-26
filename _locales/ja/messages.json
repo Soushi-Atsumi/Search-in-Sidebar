@@ -3,6 +3,10 @@
 		"message": "追加"
 	},
 
+	"additionalPermissions": {
+		"message": "追加の権限"
+	},
+
 	"additionalSearchEngines": {
 		"message": "追加の検索エンジン"
 	},
@@ -43,6 +47,10 @@
 		"message": "アイコンの動作"
 	},
 
+	"default": {
+		"message": "既定値"
+	},
+
 	"delete": {
 		"message": "削除"
 	},
@@ -65,14 +73,13 @@
 		"message": "最初に戻る（検索エンジンに依存）"
 	},
 
+	"host": {
+		"message": "ホスト"
+	},
+
 	"iconImageAlt": {
 		"message": "拡張機能のアイコン。",
 		"description": "この拡張機能の代替説明。"
-	},
-
-	"indexHTMLCaution": {
-		"message": "注意: DuckDuckGoはページを正しく表示しません。ページは表示されますがスクロールバーが表示されません。",
-		"description": "この拡張機能の注意。"
 	},
 
 	"indexHTMLHeading1": {
@@ -123,6 +130,14 @@
 		"description": "options.htmlの題名。"
 	},
 
+	"optionsUserAgentHTMLInformation": {
+		"message": "この機能はホスト権限を必要とします。"
+	},
+
+	"optionsUserAgentHTMLCaution": {
+		"message": "これはユーザーエージェントを上書きし、全ての拡張機能のページに影響します。"
+	},
+
 	"queryOfSearchEngine": {
 		"message": "検索エンジンのクエリ"
 	},
@@ -159,6 +174,10 @@
 
 	"urlOfSearchEngine": {
 		"message": "検索エンジンのURL"
+	},
+
+	"userAgent": {
+		"message": "ユーザーエージェント"
 	},
 
 	"watchTheVideo": {

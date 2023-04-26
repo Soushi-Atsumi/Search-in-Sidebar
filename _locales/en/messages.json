@@ -3,6 +3,10 @@
 		"message": "Add"
 	},
 
+	"additionalPermissions": {
+		"message": "Additional permissions"
+	},
+
 	"additionalSearchEngines": {
 		"message": "Additional Search Engines"
 	},
@@ -43,6 +47,10 @@
 		"message": "Behavior of the icon"
 	},
 
+	"default": {
+		"message": "Default"
+	},
+
 	"delete": {
 		"message": "Delete"
 	},
@@ -65,14 +73,13 @@
 		"message": "Go back to home (Depending on Search Engines)"
 	},
 
+	"host": {
+		"message": "host"
+	},
+
 	"iconImageAlt": {
 		"message": "The icon of this extension.",
 		"description": "The alternate description of the icon of this extention."
-	},
-
-	"indexHTMLCaution": {
-		"message": "Caution: DuckDuckGo does not show a page correctly. It shows a page but there is no scroll bar.",
-		"description": "Cautions of this extention."
 	},
 
 	"indexHTMLHeading1": {
@@ -123,6 +130,14 @@
 		"description": "The title of options.html."
 	},
 
+	"optionsUserAgentHTMLInformation": {
+		"message": "This feature requires the host permission."
+	},
+
+	"optionsUserAgentHTMLCaution": {
+		"message": "This overwrites the user agent and it effects a page of all extensions."
+	},
+
 	"queryOfSearchEngine": {
 		"message": "Query of Search Engine"
 	},
@@ -159,6 +174,10 @@
 
 	"urlOfSearchEngine": {
 		"message": "Url of Search Engine"
+	},
+
+	"userAgent": {
+		"message": "User agent"
 	},
 
 	"watchTheVideo": {

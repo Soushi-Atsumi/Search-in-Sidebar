@@ -70,6 +70,19 @@
 			<input type="radio" id="pageActionReloadInputRadio" name="pageAction" checked="checked"><label id="pageActionReloadLabel"></label><br>
 			<input type="radio" id="pageActionGoBackToHomeInputRadio" name="pageAction"><label id="pageActionGoBackToHomeLabel"></label>
 		</fieldset><br>
+		<fieldset>
+			<legend id="additionalPermissionsLegend"></legend>
+			<input type="checkbox" id="additional-permissions-host" name="additionalPermissions"><label id="hostLabel"></label>
+		</fieldset><br>
+		<fieldset>
+			<legend id="useragentLegend"></legend>
+			<input type="radio" id="user-agent-default" name="userAgent" checked disabled><label id="defaultLabel"></label><br>
+			<input type="radio" id="user-agent-firefoxos" name="userAgent" disabled><label id="firefoxosLabel">FirefoxOS</label><br>
+			<input type="radio" id="user-agent-android" name="userAgent" disabled><label id="androidLabel">Android</label><br>
+			<input type="radio" id="user-agent-ios" name="userAgent" disabled><label id="iosLabel">iOS</label><br>
+			<div id="informationDivision"></div>
+			<div class="caution" id="cautionDivision"></div>
+		</fieldset><br>
 	</form>
 	<script src="options.js"></script>
 </body>

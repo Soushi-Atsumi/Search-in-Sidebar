@@ -14,8 +14,8 @@
 let pageActions;
 let searchEngines;
 let storageKeys;
-let pageActionOptions;
-let searchEngineOptions;
+let userAgents;
+let currentSettings;
 
 const tutorialMenuItemId = 'tutorial';
 const bingMenuItemId = 'bing';
@@ -24,6 +24,7 @@ const googleMenuItemId = 'google';
 const mainAdditionalSearchEngineMenuItemId = 'mainAdditionalSearchEngine';
 const yahooMenuItemId = 'yahoo';
 const yahooJapanMenuItemId = 'yahooJapan';
+const hostPermissions = { origins: ['*://*/*'] };
 
 const additionalSearchEngine = {
 	all: [],
@@ -33,12 +34,11 @@ const additionalSearchEngine = {
 main();
 
 async function main() {
-	await readKeys();
+	await readValues();
 	await readOptions();
 
-	browser.runtime.onMessage.addListener((message, _, sendResponse) => readOptions());
-
-	browser.contextMenus.onClicked.addListener((info, tab) => {
+	browser.runtime.onMessage.addListener(readOptions);
+	browser.contextMenus.onClicked.addListener((info, _) => {
 		let searchEngine = '';
 		let searchEngineQuery = '';
 		let selectionText = info.selectionText?.trim() ?? '';
@@ -80,12 +80,11 @@ async function main() {
 		browser.sidebarAction.setPanel({ panel: `${searchEngine}${searchEngineQuery}${selectionText}` });
 		browser.sidebarAction.open();
 	});
-
-	browser.browserAction.onClicked.addListener((tab) => {
-		if (pageActionOptions?.[storageKeys.pageAction] === pageActions.goBackToHome) {
+	browser.browserAction.onClicked.addListener(() => {
+		if (currentSettings[storageKeys.pageAction] === pageActions.goBackToHome) {
 			let panelUrl;
 
-			switch (searchEngineOptions[storageKeys.searchEngine]) {
+			switch (currentSettings[storageKeys.searchEngine]) {
 				case searchEngines.additional.name:
 					panelUrl = additionalSearchEngine.main.url;
 					break;
@@ -116,22 +115,22 @@ async function main() {
 
 	browser.commands.onCommand.addListener(command => {
 		if (command === 'open_and_search') {
-			let tabId = browser.tabs.query({ currentWindow: true, active: true }).id;
+			const tabId = browser.tabs.query({ currentWindow: true, active: true }).id;
 			browser.tabs.executeScript(tabId, { code: 'window.getSelection().toString().trim();', }).then(text => {
-				let selectedText = text[0].trim();
+				const selectedText = text[0].trim();
 
 				if (selectedText.length !== 0) {
 					let searchEngine = '';
 					let searchEngineQuery = '';
 
-					if (searchEngineOptions[storageKeys.searchEngine] === undefined || searchEngineOptions[storageKeys.searchEngine] === searchEngines.ask.name) {
+					if (currentSettings[storageKeys.searchEngine] === undefined || currentSettings[storageKeys.searchEngine] === searchEngines.ask.name) {
 						searchEngine = searchEngines.google.url;
 						searchEngineQuery = searchEngines.google.query;
-					} else if (searchEngineOptions[storageKeys.searchEngine] === searchEngines.additional.name) {
+					} else if (currentSettings[storageKeys.searchEngine] === searchEngines.additional.name) {
 						searchEngine = additionalSearchEngine.main.url;
 						searchEngineQuery = additionalSearchEngine.main.query;
 					} else {
-						const key = Object.keys(searchEngines).filter(key => searchEngines[key].name === searchEngineOptions[storageKeys.searchEngine]);
+						const key = Object.keys(searchEngines).filter(key => searchEngines[key].name === currentSettings[storageKeys.searchEngine]);
 						searchEngine = searchEngines[key].url;
 						searchEngineQuery = searchEngines[key].query;
 					}
@@ -145,6 +144,47 @@ async function main() {
 			browser.sidebarAction.open();
 		}
 	});
+	browser.storage.local.get().then(item => {
+		currentSettings = item;
+		return createContextMenus();
+	});
+
+	const filter = { tabId: -1, urls: ['*://*/*'] };
+	const extraInfoSpec = ['blocking', 'requestHeaders'];
+	const onBeforeSendHeadersListener = details => {
+		details.requestHeaders.filter(requestHeader => requestHeader.name.toLowerCase() === 'user-agent').forEach(element => {
+			switch (currentSettings[storageKeys.userAgent]) {
+				case userAgents.android:
+					element.value = element.value.replace(/\(.+?;/, '(Android;');
+					break;
+				case userAgents.firefoxOS:
+					element.value = element.value.replace(/\(.+?;/, '(Mobile;');
+					break;
+				case userAgents.iOS:
+					element.value = element.value.replace(/\(.+?;/, '(iPhone;');
+					break;
+			}
+		});
+
+		return { requestHeaders: details.requestHeaders };
+	};
+	const permissionsOnAddedListener = permissions => {
+		if (hostPermissions.origins.every(origin => permissions.origins.includes(origin))) {
+			browser.webRequest.onBeforeSendHeaders.addListener(onBeforeSendHeadersListener, filter, extraInfoSpec);
+		}
+	};
+	const permissionsOnRemovedListener = permissions => {
+		if (hostPermissions.origins.every(origin => permissions.origins.includes(origin))) {
+			browser.webRequest.onBeforeSendHeaders.removeListener(onBeforeSendHeadersListener);
+		}
+	};
+	browser.permissions.onAdded.addListener(permissionsOnAddedListener);
+	browser.permissions.onRemoved.addListener(permissionsOnRemovedListener);
+
+
+	if (await browser.permissions.contains(hostPermissions)) {
+		browser.webRequest.onBeforeSendHeaders.addListener(onBeforeSendHeadersListener, filter, extraInfoSpec);
+	}
 }
 
 function createContextMenus(searchEngine) {
@@ -201,7 +241,7 @@ function createContextMenus(searchEngine) {
 	}
 
 	if (searchEngine === searchEngines.ask.name) {
-		for (let i in additionalSearchEngine.all) {
+		for (const i in additionalSearchEngine.all) {
 			browser.contextMenus.create({
 				contexts: ['selection'],
 				icons: { "16": `${new URL(additionalSearchEngine.all[i].url).origin}/favicon.ico` },
@@ -223,24 +263,31 @@ function createContextMenus(searchEngine) {
 	browser.contextMenus.refresh();
 }
 
-async function readKeys() {
-	return Promise.all([fetch(browser.runtime.getURL('/_values/PageActions.json')), fetch(browser.runtime.getURL('/_values/SearchEngines.json')), fetch(browser.runtime.getURL('/_values/StorageKeys.json'))]).then(values => {
+async function readOptions() {
+	currentSettings = await browser.storage.local.get();
+
+	// Issue#5
+	// I can remove this code after all users update to the latest version.
+	if (currentSettings[storageKeys.additionalSearchEngine] !== undefined) {
+		browser.storage.local.set({ 'AdditionalSearchEngine': currentSettings[storageKeys.additionalSearchEngine] });
+	}
+
+	if (Object.keys(currentSettings).includes(storageKeys.additionalSearchEngine)) {
+		additionalSearchEngine.all = currentSettings[storageKeys.additionalSearchEngine];
+	}
+
+	await browser.contextMenus.removeAll();
+	createContextMenus(currentSettings[storageKeys.searchEngine] ?? searchEngines.ask.name);
+}
+
+async function readValues() {
+	const keyFiles = ['PageActions.json', 'SearchEngines.json', 'StorageKeys.json', 'UserAgents.json'].map(keyFile => `/_values/${keyFile}`);
+	return Promise.all(keyFiles.map(keyFile => fetch(keyFile))).then(values => {
 		return Promise.all(values.map(value => value.text()));
 	}).then(values => {
 		pageActions = JSON.parse(values[0]);
 		searchEngines = JSON.parse(values[1]);
 		storageKeys = JSON.parse(values[2]);
+		userAgents = JSON.parse(values[3]);
 	});
-}
-
-async function readOptions() {
-	searchEngineOptions = await browser.storage.local.get([storageKeys.additionalSearchEngine, storageKeys.searchEngine]);
-	pageActionOptions = await browser.storage.local.get([storageKeys.pageAction]);
-
-	if (Object.keys(searchEngineOptions).includes(storageKeys.additionalSearchEngine)) {
-		additionalSearchEngine.all = searchEngineOptions[storageKeys.additionalSearchEngine];
-	}
-
-	await browser.contextMenus.removeAll();
-	createContextMenus(searchEngineOptions[storageKeys.searchEngine] ?? searchEngines.ask.name);
 }

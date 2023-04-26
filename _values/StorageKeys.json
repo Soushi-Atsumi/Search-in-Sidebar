@@ -3,5 +3,7 @@
 
 	"pageAction": "PageAction",
 
-	"searchEngine": "SearchEngine"
+	"searchEngine": "SearchEngine",
+
+	"userAgent": "UserAgent"
 }

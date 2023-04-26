@@ -15,19 +15,8 @@
     text-align: center;
 }
 
-#tutorialVideoDescriptionLabel {
-    color: blue;
-    cursor: pointer;
-    text-decoration: underline;
-}
-
 #informationDivision {
     background-color: lightskyblue;
-}
-
-#cautionDivision {
-    background-color: black;
-    color: yellow;
 }
 
 footer {

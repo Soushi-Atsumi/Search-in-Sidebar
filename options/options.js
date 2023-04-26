@@ -14,7 +14,9 @@
 let searchEngines;
 let storageKeys;
 let pageActions;
+let userAgents;
 let additionalSearchEngineArray = [];
+const hostPermissions = { origins: ['*://*/*'] };
 
 const searcheEngineAdditionalId = 'searcheEngineAdditionalInputRadio';
 const searcheEngineAskId = 'searcheEngineAskInputRadio';
@@ -34,79 +36,84 @@ const searchEngineWhichIsWantedToBeAddedQueryInputText = document.getElementById
 const searchEngineWhichIsWantedToBeAddedMainCheckbox = document.getElementById('searchEngineWhichIsWantedToBeAddedMainCheckbox');
 const addSearchEngineButton = document.getElementById('addSearchEngineButton');
 const searchEngineWhichHasBeenAddedTableBody = document.getElementById('searchEngineWhichHasBeenAddedTableBody');
+const additionalPermissionsHostCheckbox = document.getElementById('additional-permissions-host');
+const userAgentDefaultRadio = document.getElementById('user-agent-default');
+const userAgentFirefoxosRadio = document.getElementById('user-agent-firefoxos');
+const userAgentAndroidRadio = document.getElementById('user-agent-android');
+const userAgentIosRadio = document.getElementById('user-agent-ios');
 
 main();
 
 async function main() {
-	searchEngines = JSON.parse(await (await fetch(browser.runtime.getURL('/_values/SearchEngines.json'))).text());
-	storageKeys = JSON.parse(await (await fetch(browser.runtime.getURL('/_values/StorageKeys.json'))).text());
-	pageActions = JSON.parse(await (await fetch(browser.runtime.getURL('/_values/PageActions.json'))).text());
-
-	document.getElementsByTagName('html')[0].lang = browser.i18n.getUILanguage();
-	document.title = browser.i18n.getMessage('optionsHTMLTitle');
-	document.getElementById('searchEnginesLegend').innerText = browser.i18n.getMessage('searchEngines');
-	document.getElementById('askSearchEngineLabel').innerText = browser.i18n.getMessage('ask');
-	document.getElementById('alwaysUseBingLabel').innerText = browser.i18n.getMessage('alwaysUseBing');
-	document.getElementById('alwaysUseDuckDuckGoLabel').innerText = browser.i18n.getMessage('alwaysUseDuckDuckGo');
-	document.getElementById('alwaysUseGoogleLabel').innerText = browser.i18n.getMessage('alwaysUseGoogle');
-	document.getElementById('alwaysUseYahooLabel').innerText = browser.i18n.getMessage('alwaysUseYahoo');
-	document.getElementById('alwaysUseYahooJapanLabel').innerText = browser.i18n.getMessage('alwaysUseYahooJapan');
-	document.getElementById('alwaysUseAdditionalSearchEngineLabel').innerText = browser.i18n.getMessage('alwaysUseAdditionalSearchEngine');
-	document.getElementById('additionalSearchEngineDescriptionLegend').innerText = browser.i18n.getMessage('additionalSearchEngines');
-	document.getElementById('additionalSearchEngineTableHeaderCell').innerText = browser.i18n.getMessage('nameOfSearchEngine');
-	document.getElementById('additionalSearchEngineUrlTableHeaderCell').innerText = browser.i18n.getMessage('urlOfSearchEngine');
-	document.getElementById('additionalSearchEngineQueryTableHeaderCell').innerText = browser.i18n.getMessage('queryOfSearchEngine');
-	document.getElementById('additionalSearchEngineMainTableHeaderCell').innerText = browser.i18n.getMessage('main');
-	document.getElementById('searchEngineWhichHasBeenAddedTableHeaderCell').innerText = browser.i18n.getMessage('searchEngineWhichHasBeenAdded');
-	document.getElementById('searchEngineWhichIsWantedToBeAddedTableHeaderCell').innerText = browser.i18n.getMessage('searchEngineWhichIsWantedToBeAdded');
-	document.getElementById('addSearchEngineButton').innerText = browser.i18n.getMessage('add');
-	document.getElementById('additionalSearchEngineCautionDivision').innerText = browser.i18n.getMessage('additionalSearchEngineCaution');
-	document.getElementById('pageActionLegend').innerText = browser.i18n.getMessage('behaviorOfPageAction');
-	document.getElementById('pageActionReloadLabel').innerText = browser.i18n.getMessage('reload');
-	document.getElementById('pageActionGoBackToHomeLabel').innerText = browser.i18n.getMessage('goBackToHome');
-
-	document.options.searchEngine.forEach(element => element.addEventListener('click', searchEngineRadioButtonOnClick));
-	document.options.searchEngineWhichIsWantedToBeAdded.forEach(element => element.addEventListener('click', searchEngineWhichIsWantedToBeAddedInputTextOnClick));
-	document.options.pageAction.forEach(element => element.addEventListener('click', pageActionRadioButtonOnClick));
-
-	addSearchEngineButton.addEventListener('click', addSearchEngineButtonOnClick);
-
-	checkSearchEngine();
+	await readValues();
+	initDocuments();
+	addEventListeners();
 	checkPageAction();
+	checkPermissions();
+	checkSearchEngine();
+	checkUserAgents();
 	refreshAdditionalSearchEngine();
 }
 
-function searchEngineRadioButtonOnClick(event) {
-	switch (event.target.id) {
-		case searcheEngineAdditionalId:
-			browser.storage.local.set({ [storageKeys.searchEngine]: searchEngines.additional.name });
-			break;
-		case searcheEngineAskId:
-			browser.storage.local.set({ [storageKeys.searchEngine]: searchEngines.ask.name });
-			break;
-		case searcheEngineBingId:
-			browser.storage.local.set({ [storageKeys.searchEngine]: searchEngines.bing.name });
-			break;
-		case searcheEngineDuckDuckGoId:
-			browser.storage.local.set({ [storageKeys.searchEngine]: searchEngines.duckduckgo.name });
-			break;
-		case searcheEngineGoogleId:
-			browser.storage.local.set({ [storageKeys.searchEngine]: searchEngines.google.name });
-			break;
-		case searcheEngineYahooId:
-			browser.storage.local.set({ [storageKeys.searchEngine]: searchEngines.yahoo.name });
-			break;
-		case searcheEngineYahooJapanId:
-			browser.storage.local.set({ [storageKeys.searchEngine]: searchEngines.yahooJapan.name });
-			break;
-	}
+function addEventListeners() {
+	document.options.searchEngine.forEach(element => element.addEventListener('click', searchEngineRadioButtonOnClick));
+	document.options.searchEngineWhichIsWantedToBeAdded.forEach(element => element.addEventListener('click', searchEngineWhichIsWantedToBeAddedInputTextOnClick));
+	document.options.pageAction.forEach(element => element.addEventListener('click', pageActionRadioButtonOnClick));
+	addSearchEngineButton.addEventListener('click', addSearchEngineButtonOnClick);
+	document.options.additionalPermissions.addEventListener('click', requestPermission);
+	browser.permissions.onAdded.addListener(checkPermissions);
+	browser.permissions.onRemoved.addListener(checkPermissions);
+	document.options.userAgent.forEach(element => element.addEventListener('click', userAgentOnClick));
+}
 
-	browser.runtime.sendMessage({});
-	checkSearchEngine();
+function addSearchEngineButtonOnClick() {
+	let isAllValid = true;
+	document.options.searchEngineWhichIsWantedToBeAdded.forEach(element => isAllValid = isInputTextValueValid(element) && isAllValid);
+
+	if (isAllValid) {
+		let isAlreadyAdded = false;
+		const urlOfSearchEngine = `https://${searchEngineWhichIsWantedToBeAddedUrlInputText.value.replace(/^.*:\/+/, '').replace(/\/+$/, '')}`;
+		const queryOfSearchEngine = `/${searchEngineWhichIsWantedToBeAddedQueryInputText.value.replace(/^\/+/, '')}`;
+
+		for (const additionalSearchEngine of additionalSearchEngineArray) {
+			isAlreadyAdded = additionalSearchEngine.name === searchEngineWhichIsWantedToBeAddedNameInputText.value &&
+				additionalSearchEngine.url === urlOfSearchEngine &&
+				additionalSearchEngine.query === queryOfSearchEngine;
+			if (isAlreadyAdded) {
+				break;
+			}
+		}
+
+		if (isAlreadyAdded) {
+			window.alert(browser.i18n.getMessage('thisSearchEngineHasAlreadyBeenAdded'));
+			return;
+		}
+
+		let isMainSearchEngine = searchEngineWhichIsWantedToBeAddedMainCheckbox.checked;
+		if (additionalSearchEngineArray.length === 0) {
+			isMainSearchEngine = true;
+		} else if (isMainSearchEngine) {
+			for (const additionalSearchEngine of additionalSearchEngineArray) {
+				additionalSearchEngine.isMain = false;
+			}
+		}
+
+		additionalSearchEngineArray.push({
+			name: searchEngineWhichIsWantedToBeAddedNameInputText.value,
+			url: urlOfSearchEngine,
+			query: queryOfSearchEngine,
+			isMain: isMainSearchEngine
+		});
+
+		saveConfig({ [storageKeys.additionalSearchEngine]: additionalSearchEngineArray });
+		document.options.searchEngineWhichIsWantedToBeAdded.forEach(element => element.value = '');
+		searchEngineWhichIsWantedToBeAddedMainCheckbox.checked = false;
+		refreshAdditionalSearchEngine();
+	}
 }
 
 function checkSearchEngine() {
-	browser.storage.local.get(storageKeys.searchEngine).then((item) => {
+	browser.storage.local.get(storageKeys.searchEngine).then(item => {
 		if (Object.keys(item).includes(storageKeys.searchEngine)) {
 			switch (item[storageKeys.searchEngine]) {
 				case searchEngines.additional.name:
@@ -137,8 +144,115 @@ function checkSearchEngine() {
 	});
 }
 
+function checkPageAction() {
+	browser.storage.local.get(storageKeys.pageAction).then(item => {
+		switch (item[storageKeys.pageAction]) {
+			case pageActions.reload:
+				document.getElementById(pageActionReloadId).checked = true;
+				break;
+			case pageActions.goBackToHome:
+				document.getElementById(pageActionGoBackToHomeId).checked = true;
+				break;
+		}
+	});
+}
+
+async function checkPermissions() {
+	additionalPermissionsHostCheckbox.checked = await browser.permissions.contains(hostPermissions);
+	toggleUserAgentRadioDisabled(!additionalPermissionsHostCheckbox.checked);
+}
+
+function checkUserAgents() {
+	browser.storage.local.get(storageKeys.userAgent).then(item => {
+		switch (item[storageKeys.userAgent]) {
+			case userAgents.android:
+				userAgentAndroidRadio.checked = true;
+				break;
+			case userAgents.default:
+				userAgentDefaultRadio.checked = true;
+				break;
+			case userAgents.firefoxOS:
+				userAgentFirefoxosRadio.checked = true;
+				break;
+			case userAgents.iOS:
+				userAgentIosRadio.checked = true;
+				break;
+		}
+	});
+}
+
+function initDocuments() {
+	document.getElementsByTagName('html')[0].lang = browser.i18n.getUILanguage();
+	document.title = browser.i18n.getMessage('optionsHTMLTitle');
+	document.getElementById('searchEnginesLegend').innerText = browser.i18n.getMessage('searchEngines');
+	document.getElementById('askSearchEngineLabel').innerText = browser.i18n.getMessage('ask');
+	document.getElementById('alwaysUseBingLabel').innerText = browser.i18n.getMessage('alwaysUseBing');
+	document.getElementById('alwaysUseDuckDuckGoLabel').innerText = browser.i18n.getMessage('alwaysUseDuckDuckGo');
+	document.getElementById('alwaysUseGoogleLabel').innerText = browser.i18n.getMessage('alwaysUseGoogle');
+	document.getElementById('alwaysUseYahooLabel').innerText = browser.i18n.getMessage('alwaysUseYahoo');
+	document.getElementById('alwaysUseYahooJapanLabel').innerText = browser.i18n.getMessage('alwaysUseYahooJapan');
+	document.getElementById('alwaysUseAdditionalSearchEngineLabel').innerText = browser.i18n.getMessage('alwaysUseAdditionalSearchEngine');
+	document.getElementById('additionalSearchEngineDescriptionLegend').innerText = browser.i18n.getMessage('additionalSearchEngines');
+	document.getElementById('additionalSearchEngineTableHeaderCell').innerText = browser.i18n.getMessage('nameOfSearchEngine');
+	document.getElementById('additionalSearchEngineUrlTableHeaderCell').innerText = browser.i18n.getMessage('urlOfSearchEngine');
+	document.getElementById('additionalSearchEngineQueryTableHeaderCell').innerText = browser.i18n.getMessage('queryOfSearchEngine');
+	document.getElementById('additionalSearchEngineMainTableHeaderCell').innerText = browser.i18n.getMessage('main');
+	document.getElementById('searchEngineWhichHasBeenAddedTableHeaderCell').innerText = browser.i18n.getMessage('searchEngineWhichHasBeenAdded');
+	document.getElementById('searchEngineWhichIsWantedToBeAddedTableHeaderCell').innerText = browser.i18n.getMessage('searchEngineWhichIsWantedToBeAdded');
+	document.getElementById('addSearchEngineButton').innerText = browser.i18n.getMessage('add');
+	document.getElementById('additionalSearchEngineCautionDivision').innerText = browser.i18n.getMessage('additionalSearchEngineCaution');
+	document.getElementById('pageActionLegend').innerText = browser.i18n.getMessage('behaviorOfPageAction');
+	document.getElementById('pageActionReloadLabel').innerText = browser.i18n.getMessage('reload');
+	document.getElementById('pageActionGoBackToHomeLabel').innerText = browser.i18n.getMessage('goBackToHome');
+	document.getElementById('additionalPermissionsLegend').innerText = browser.i18n.getMessage('additionalPermissions');
+	document.getElementById('hostLabel').innerText = browser.i18n.getMessage('host');
+	document.getElementById('useragentLegend').innerText = browser.i18n.getMessage('useragent');
+	document.getElementById('defaultLabel').innerText = browser.i18n.getMessage('default');
+	document.getElementById('informationDivision').innerText = browser.i18n.getMessage('optionsUserAgentHTMLInformation');
+	document.getElementById('cautionDivision').innerText = browser.i18n.getMessage('optionsUserAgentHTMLCaution');
+}
+
+function isInputTextValueValid(inputText) {
+	if (inputText.value === '') {
+		inputText.style.backgroundColor = 'red';
+		return false;
+	} else {
+		inputText.style.backgroundColor = '';
+		return true;
+	}
+}
+
+function notifyRefreshing() {
+	browser.runtime.sendMessage({ action: 'refresh' });
+}
+
+function pageActionRadioButtonOnClick(event) {
+	switch (event.target.id) {
+		case pageActionReloadId:
+			saveConfig({ [storageKeys.pageAction]: pageActions.reload });
+			break;
+		case pageActionGoBackToHomeId:
+			saveConfig({ [storageKeys.pageAction]: pageActions.goBackToHome });
+			break;
+	}
+
+	checkPageAction();
+}
+
+async function readValues() {
+	const keyFiles = ['PageActions.json', 'SearchEngines.json', 'StorageKeys.json', 'UserAgents.json'].map(keyFile => `/_values/${keyFile}`);
+	return Promise.all(keyFiles.map(keyFile => fetch(keyFile))).then(values => {
+		return Promise.all(values.map(value => value.text()));
+	}).then(values => {
+		pageActions = JSON.parse(values[0]);
+		searchEngines = JSON.parse(values[1]);
+		storageKeys = JSON.parse(values[2]);
+		userAgents = JSON.parse(values[3]);
+	});
+}
+
 function refreshAdditionalSearchEngine() {
-	browser.storage.local.get(storageKeys.additionalSearchEngine).then((item) => {
+	browser.storage.local.get(storageKeys.additionalSearchEngine).then(item => {
 		if (Object.keys(item).includes(storageKeys.additionalSearchEngine)) {
 			additionalSearchEngineArray = item[storageKeys.additionalSearchEngine];
 		}
@@ -149,7 +263,7 @@ function refreshAdditionalSearchEngine() {
 		}
 
 		searchEngineWhichHasBeenAddedTableBody.textContent = '';
-		for (let additionalSearchEngine of additionalSearchEngineArray) {
+		for (const additionalSearchEngine of additionalSearchEngineArray) {
 			const searchEngineWhichHasBeenAddedTableRow = document.createElement('tr');
 			const searchEngineWhichHasBeenAddedNameTableData = document.createElement('td');
 			const searchEngineWhichHasBeenAddedUrlTableData = document.createElement('td');
@@ -181,55 +295,56 @@ function refreshAdditionalSearchEngine() {
 	});
 }
 
-function searchEngineWhichIsWantedToBeAddedInputTextOnClick(event) {
-	event.target.style.backgroundColor = '';
+function requestPermission(event) {
+	switch (event.originalTarget.id) {
+		case additionalPermissionsHostCheckbox.id:
+			if (additionalPermissionsHostCheckbox.checked) {
+				browser.permissions.request(hostPermissions).then(accepted => {
+					additionalPermissionsHostCheckbox.checked = accepted;
+					toggleUserAgentRadioDisabled(!accepted);
+				});
+			} else {
+				browser.permissions.remove(hostPermissions);
+				toggleUserAgentRadioDisabled(true);
+			}
+		default:
+	}
 }
 
-function addSearchEngineButtonOnClick() {
-	let isAllValid = true;
-	document.options.searchEngineWhichIsWantedToBeAdded.forEach(element => isAllValid = isInputTextValueValid(element) && isAllValid);
+function saveConfig(keys) {
+	browser.storage.local.set(keys).then(notifyRefreshing());
+}
 
-	if (isAllValid) {
-		let isAlreadyAdded = false;
-		const urlOfSearchEngine = `https://${searchEngineWhichIsWantedToBeAddedUrlInputText.value.replace(/^.*:\/+/, '').replace(/\/+$/, '')}`;
-		const queryOfSearchEngine = `/${searchEngineWhichIsWantedToBeAddedQueryInputText.value.replace(/^\/+/, '')}`;
-
-		for (let additionalSearchEngine of additionalSearchEngineArray) {
-			isAlreadyAdded = additionalSearchEngine.name === searchEngineWhichIsWantedToBeAddedNameInputText.value &&
-				additionalSearchEngine.url === urlOfSearchEngine &&
-				additionalSearchEngine.query === queryOfSearchEngine;
-			if (isAlreadyAdded) {
-				break;
-			}
-		}
-
-		if (isAlreadyAdded) {
-			window.alert(browser.i18n.getMessage('thisSearchEngineHasAlreadyBeenAdded'));
-			return;
-		}
-
-		let isMainSearchEngine = searchEngineWhichIsWantedToBeAddedMainCheckbox.checked;
-		if (additionalSearchEngineArray.length === 0) {
-			isMainSearchEngine = true;
-		} else if (isMainSearchEngine) {
-			for (let additionalSearchEngine of additionalSearchEngineArray) {
-				additionalSearchEngine.isMain = false;
-			}
-		}
-
-		additionalSearchEngineArray.push({
-			name: searchEngineWhichIsWantedToBeAddedNameInputText.value,
-			url: urlOfSearchEngine,
-			query: queryOfSearchEngine,
-			isMain: isMainSearchEngine
-		});
-
-		browser.storage.local.set({ [storageKeys.additionalSearchEngine]: additionalSearchEngineArray }).then(() => browser.runtime.sendMessage({}));
-
-		document.options.searchEngineWhichIsWantedToBeAdded.forEach(element => element.value = '');
-		searchEngineWhichIsWantedToBeAddedMainCheckbox.checked = false;
-		refreshAdditionalSearchEngine();
+function searchEngineRadioButtonOnClick(event) {
+	switch (event.target.id) {
+		case searcheEngineAdditionalId:
+			saveConfig({ [storageKeys.searchEngine]: searchEngines.additional.name });
+			break;
+		case searcheEngineAskId:
+			saveConfig({ [storageKeys.searchEngine]: searchEngines.ask.name });
+			break;
+		case searcheEngineBingId:
+			saveConfig({ [storageKeys.searchEngine]: searchEngines.bing.name });
+			break;
+		case searcheEngineDuckDuckGoId:
+			saveConfig({ [storageKeys.searchEngine]: searchEngines.duckduckgo.name });
+			break;
+		case searcheEngineGoogleId:
+			saveConfig({ [storageKeys.searchEngine]: searchEngines.google.name });
+			break;
+		case searcheEngineYahooId:
+			saveConfig({ [storageKeys.searchEngine]: searchEngines.yahoo.name });
+			break;
+		case searcheEngineYahooJapanId:
+			saveConfig({ [storageKeys.searchEngine]: searchEngines.yahooJapan.name });
+			break;
 	}
+
+	checkSearchEngine();
+}
+
+function searchEngineWhichIsWantedToBeAddedInputTextOnClick(event) {
+	event.target.style.backgroundColor = '';
 }
 
 function searchEngineWhichHasBeenAddedChooseMainRadioOnChange(event) {
@@ -238,13 +353,13 @@ function searchEngineWhichHasBeenAddedChooseMainRadioOnChange(event) {
 		additionalSearchEngineArray[i].isMain = i === index;
 	}
 
-	browser.storage.local.set({ [storageKeys.additionalSearchEngine]: additionalSearchEngineArray }).then(() => browser.runtime.sendMessage({}));
+	saveConfig({ [storageKeys.additionalSearchEngine]: additionalSearchEngineArray });
 	refreshAdditionalSearchEngine();
 }
 
 function searchEngineWhichHasBeenAddedDeleteButtonOnClick(event) {
 	const index = Array.from(searchEngineWhichHasBeenAddedTableBody.children).findIndex(e => e === event.target.parentElement.parentElement);
-	let isAccepted = window.confirm(`${browser.i18n.getMessage('DoYouReallyWantToDelete')}\n${additionalSearchEngineArray[index].url}${additionalSearchEngineArray[index].query}`);
+	const isAccepted = window.confirm(`${browser.i18n.getMessage('DoYouReallyWantToDelete')}\n${additionalSearchEngineArray[index].url}${additionalSearchEngineArray[index].query}`);
 
 	if (isAccepted) {
 		additionalSearchEngineArray.splice(index, 1);
@@ -253,44 +368,28 @@ function searchEngineWhichHasBeenAddedDeleteButtonOnClick(event) {
 			additionalSearchEngineArray[0].isMain = true;
 		}
 
-		browser.storage.local.set({ [storageKeys.additionalSearchEngine]: additionalSearchEngineArray }).then(() => browser.runtime.sendMessage({}));
+		saveConfig({ [storageKeys.additionalSearchEngine]: additionalSearchEngineArray });
 		refreshAdditionalSearchEngine();
 	}
 }
 
-function isInputTextValueValid(inputText) {
-	if (inputText.value === '') {
-		inputText.style.backgroundColor = 'red';
-		return false;
-	} else {
-		inputText.style.backgroundColor = '';
-		return true;
-	}
+function toggleUserAgentRadioDisabled(disabled) {
+	document.options.userAgent.forEach(element => element.disabled = disabled);
 }
 
-function pageActionRadioButtonOnClick(event) {
+function userAgentOnClick(event) {
 	switch (event.target.id) {
-		case pageActionReloadId:
-			browser.storage.local.set({ [storageKeys.pageAction]: pageActions.reload });
+		case userAgentAndroidRadio.id:
+			saveConfig({ [storageKeys.userAgent]: userAgents.android });
 			break;
-		case pageActionGoBackToHomeId:
-			browser.storage.local.set({ [storageKeys.pageAction]: pageActions.goBackToHome });
+		case userAgentDefaultRadio.id:
+			saveConfig({ [storageKeys.userAgent]: userAgents.default });
+			break;
+		case userAgentFirefoxosRadio.id:
+			saveConfig({ [storageKeys.userAgent]: userAgents.firefoxOS });
+			break;
+		case userAgentIosRadio.id:
+			saveConfig({ [storageKeys.userAgent]: userAgents.iOS });
 			break;
 	}
-
-	browser.runtime.sendMessage({});
-	checkPageAction();
-}
-
-function checkPageAction() {
-	browser.storage.local.get(storageKeys.pageAction).then((item) => {
-		switch (item[storageKeys.pageAction]) {
-			case pageActions.reload:
-				document.getElementById(pageActionReloadId).checked = true;
-				break;
-			case pageActions.goBackToHome:
-				document.getElementById(pageActionGoBackToHomeId).checked = true;
-				break;
-		}
-	});
 }
