@@ -23,4 +23,17 @@ table, td, th {
 .caution {
 	background-color: black;
 	color: yellow;
+	padding: 4px;
+}
+
+#initial-location {
+	border-width: 0px;
+	width: 100%;
+}
+
+#informationDivision {
+	background-color: lightskyblue;
+	margin-top: 4px;
+	margin-bottom: 4px;
+	padding: 4px;
 }
