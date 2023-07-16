@@ -26,6 +26,7 @@ const searcheEngineGoogleId = 'searcheEngineGoogleInputRadio';
 const searcheEngineYahooId = 'searcheEngineYahooInputRadio';
 const searcheEngineYahooJapanId = 'searcheEngineYahooJapanInputRadio';
 const pageActionReloadId = 'pageActionReloadInputRadio';
+const pageActionNavigateBackId = 'pageActionNavigateBackInputRadio';
 const pageActionGoBackToHomeId = 'pageActionGoBackToHomeInputRadio';
 
 const searcheEngineAskInputRadio = document.getElementById('searcheEngineAskInputRadio');
@@ -150,6 +151,9 @@ function checkPageAction() {
 			case pageActions.reload:
 				document.getElementById(pageActionReloadId).checked = true;
 				break;
+			case pageActions.navigateBack:
+				document.getElementById(pageActionNavigateBackId).checked = true;
+				break;
 			case pageActions.goBackToHome:
 				document.getElementById(pageActionGoBackToHomeId).checked = true;
 				break;
@@ -203,6 +207,7 @@ function initDocuments() {
 	document.getElementById('additionalSearchEngineCautionDivision').innerText = browser.i18n.getMessage('additionalSearchEngineCaution');
 	document.getElementById('pageActionLegend').innerText = browser.i18n.getMessage('behaviorOfPageAction');
 	document.getElementById('pageActionReloadLabel').innerText = browser.i18n.getMessage('reload');
+	document.getElementById('pageActionNavigateBackLabel').innerText = browser.i18n.getMessage('navigateBack');
 	document.getElementById('pageActionGoBackToHomeLabel').innerText = browser.i18n.getMessage('goBackToHome');
 	document.getElementById('additionalPermissionsLegend').innerText = browser.i18n.getMessage('additionalPermissions');
 	document.getElementById('hostLabel').innerText = browser.i18n.getMessage('host');
@@ -230,6 +235,9 @@ function pageActionRadioButtonOnClick(event) {
 	switch (event.target.id) {
 		case pageActionReloadId:
 			saveConfig({ [storageKeys.pageAction]: pageActions.reload });
+			break;
+		case pageActionNavigateBackId:
+			saveConfig({ [storageKeys.pageAction]: pageActions.navigateBack });
 			break;
 		case pageActionGoBackToHomeId:
 			saveConfig({ [storageKeys.pageAction]: pageActions.goBackToHome });

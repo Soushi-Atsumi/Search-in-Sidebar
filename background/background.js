@@ -16,6 +16,7 @@ let searchEngines;
 let storageKeys;
 let userAgents;
 let currentSettings;
+let previousPages = [];
 
 const tutorialMenuItemId = 'tutorial';
 const bingMenuItemId = 'bing';
@@ -25,6 +26,7 @@ const mainAdditionalSearchEngineMenuItemId = 'mainAdditionalSearchEngine';
 const yahooMenuItemId = 'yahoo';
 const yahooJapanMenuItemId = 'yahooJapan';
 const hostPermissions = { origins: ['*://*/*'] };
+const backNavigatableUrls = { urls: ['*://*/*'], types: ['main_frame'] };
 
 const additionalSearchEngine = {
 	all: [],
@@ -79,7 +81,19 @@ async function main() {
 
 		browser.sidebarAction.setPanel({ panel: `${searchEngine}${searchEngineQuery}${selectionText}` });
 		browser.sidebarAction.open();
+
+		// Clear navigation history when re-opening the sidebar for logical UX and to avoid issues.
+		previousPages = [`${searchEngine}${searchEngineQuery}${selectionText}`];
 	});
+
+	browser.webRequest.onBeforeSendHeaders.addListener(savePreviousPage, backNavigatableUrls);
+	function savePreviousPage(details) {
+		// Disallow navigating back to internal extension URLs as it causes issues and is pointless.
+		if (details.originUrl.includes("moz-extension") === false) {
+			previousPages.push(details.originUrl);
+		}
+	}
+
 	browser.browserAction.onClicked.addListener(() => {
 		if (currentSettings[storageKeys.pageAction] === pageActions.goBackToHome) {
 			let panelUrl;
@@ -108,6 +122,10 @@ async function main() {
 			}
 
 			browser.sidebarAction.setPanel({ panel: panelUrl });
+		}
+
+		if (currentSettings[storageKeys.pageAction] === pageActions.navigateBack) {
+			browser.sidebarAction.setPanel({ panel: previousPages.pop() })
 		}
 
 		browser.sidebarAction.open();

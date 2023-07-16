@@ -1,5 +1,7 @@
 ﻿{
 	"reload": "Reload",
 
+	"navigateBack": "NavigateBack",
+
 	"goBackToHome": "GoBackToHome"
 }

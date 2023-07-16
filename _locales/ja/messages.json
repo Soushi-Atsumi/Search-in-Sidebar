@@ -125,6 +125,10 @@
 		"message": "検索エンジンの名前"
 	},
 
+	"navigateBack": {
+		"message": "前のページに戻る（「既定値」 ユーザエージェントでは動作しません。）"
+	},
+
 	"optionsHTMLTitle": {
 		"message": "設定",
 		"description": "options.htmlの題名。"

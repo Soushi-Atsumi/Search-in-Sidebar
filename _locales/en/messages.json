@@ -125,6 +125,10 @@
 		"message": "Name of Search Engines"
 	},
 
+	"navigateBack": {
+		"message": "Navigate back to previous page (does not work on 'Default' user agent)"
+	},
+
 	"optionsHTMLTitle": {
 		"message": "Options",
 		"description": "The title of options.html."
