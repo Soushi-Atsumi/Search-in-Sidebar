@@ -163,7 +163,7 @@ function checkPageAction() {
 
 async function checkPermissions() {
 	additionalPermissionsHostCheckbox.checked = await browser.permissions.contains(hostPermissions);
-	toggleUserAgentRadioDisabled(!additionalPermissionsHostCheckbox.checked);
+	toggleHostControlledRadioDisabled(!additionalPermissionsHostCheckbox.checked);
 }
 
 function checkUserAgents() {
@@ -213,8 +213,9 @@ function initDocuments() {
 	document.getElementById('hostLabel').innerText = browser.i18n.getMessage('host');
 	document.getElementById('useragentLegend').innerText = browser.i18n.getMessage('useragent');
 	document.getElementById('defaultLabel').innerText = browser.i18n.getMessage('default');
-	document.getElementById('informationDivision').innerText = browser.i18n.getMessage('optionsUserAgentHTMLInformation');
-	document.getElementById('cautionDivision').innerText = browser.i18n.getMessage('optionsUserAgentHTMLCaution');
+	document.getElementById('navigateBackInformationDivision').innerText = browser.i18n.getMessage('optionsHostHTMLInformation');
+	document.getElementById('userAgentInformationDivision').innerText = browser.i18n.getMessage('optionsHostHTMLInformation');
+	document.getElementById('cautionDivision').innerText = browser.i18n.getMessage('optionsHostHTMLCaution');
 }
 
 function isInputTextValueValid(inputText) {
@@ -309,11 +310,11 @@ function requestPermission(event) {
 			if (additionalPermissionsHostCheckbox.checked) {
 				browser.permissions.request(hostPermissions).then(accepted => {
 					additionalPermissionsHostCheckbox.checked = accepted;
-					toggleUserAgentRadioDisabled(!accepted);
+					toggleHostControlledRadioDisabled(!accepted);
 				});
 			} else {
 				browser.permissions.remove(hostPermissions);
-				toggleUserAgentRadioDisabled(true);
+				toggleHostControlledRadioDisabled(true);
 			}
 		default:
 	}
@@ -381,8 +382,15 @@ function searchEngineWhichHasBeenAddedDeleteButtonOnClick(event) {
 	}
 }
 
-function toggleUserAgentRadioDisabled(disabled) {
+function toggleHostControlledRadioDisabled(disabled) {
 	document.options.userAgent.forEach(element => element.disabled = disabled);
+	
+	if (disabled && document.getElementById("pageActionNavigateBackInputRadio").checked)
+	{
+		document.getElementById("pageActionNavigateBackInputRadio").checked = false;
+		document.getElementById("pageActionReloadInputRadio").checked = true;
+	}
+	document.getElementById("pageActionNavigateBackInputRadio").disabled = disabled;
 }
 
 function userAgentOnClick(event) {

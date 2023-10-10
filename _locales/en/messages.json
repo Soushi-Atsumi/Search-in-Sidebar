@@ -126,7 +126,7 @@
 	},
 
 	"navigateBack": {
-		"message": "Navigate back to previous page (does not work on 'Default' user agent)"
+		"message": "Navigate back to previous page"
 	},
 
 	"optionsHTMLTitle": {
@@ -134,11 +134,11 @@
 		"description": "The title of options.html."
 	},
 
-	"optionsUserAgentHTMLInformation": {
+	"optionsHostHTMLInformation": {
 		"message": "This feature requires the host permission."
 	},
 
-	"optionsUserAgentHTMLCaution": {
+	"optionsHostHTMLCaution": {
 		"message": "This overwrites the user agent and it effects a page of all extensions."
 	},
 

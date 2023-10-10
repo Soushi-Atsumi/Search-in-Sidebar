@@ -68,8 +68,9 @@
 		<fieldset>
 			<legend id="pageActionLegend"></legend>
 			<input type="radio" id="pageActionReloadInputRadio" name="pageAction" checked="checked"><label id="pageActionReloadLabel"></label><br>
+			<input type="radio" id="pageActionGoBackToHomeInputRadio" name="pageAction"><label id="pageActionGoBackToHomeLabel"></label><br><br>
 			<input type="radio" id="pageActionNavigateBackInputRadio" name="pageAction" checked="checked"><label id="pageActionNavigateBackLabel"></label><br>
-			<input type="radio" id="pageActionGoBackToHomeInputRadio" name="pageAction"><label id="pageActionGoBackToHomeLabel"></label>
+			<div class="information" id="navigateBackInformationDivision"></div>
 		</fieldset><br>
 		<fieldset>
 			<legend id="additionalPermissionsLegend"></legend>
@@ -81,7 +82,7 @@
 			<input type="radio" id="user-agent-firefoxos" name="userAgent" disabled><label id="firefoxosLabel">FirefoxOS</label><br>
 			<input type="radio" id="user-agent-android" name="userAgent" disabled><label id="androidLabel">Android</label><br>
 			<input type="radio" id="user-agent-ios" name="userAgent" disabled><label id="iosLabel">iOS</label><br>
-			<div id="informationDivision"></div>
+			<div class="information" id="userAgentInformationDivision"></div>
 			<div class="caution" id="cautionDivision"></div>
 		</fieldset><br>
 	</form>

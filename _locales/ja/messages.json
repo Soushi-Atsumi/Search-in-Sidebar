@@ -126,7 +126,7 @@
 	},
 
 	"navigateBack": {
-		"message": "前のページに戻る（「既定値」 ユーザエージェントでは動作しません。）"
+		"message": "前のページに戻る"
 	},
 
 	"optionsHTMLTitle": {
@@ -134,11 +134,11 @@
 		"description": "options.htmlの題名。"
 	},
 
-	"optionsUserAgentHTMLInformation": {
+	"optionsHostHTMLInformation": {
 		"message": "この機能はホスト権限を必要とします。"
 	},
 
-	"optionsUserAgentHTMLCaution": {
+	"optionsHostHTMLCaution": {
 		"message": "これはユーザーエージェントを上書きし、全ての拡張機能のページに影響します。"
 	},
 

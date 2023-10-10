@@ -26,14 +26,16 @@ table, td, th {
 	padding: 4px;
 }
 
-#initial-location {
-	border-width: 0px;
-	width: 100%;
-}
-
-#informationDivision {
+.information {
 	background-color: lightskyblue;
 	margin-top: 4px;
 	margin-bottom: 4px;
 	padding: 4px;
 }
+
+#initial-location {
+	border-width: 0px;
+	width: 100%;
+}
+
+
