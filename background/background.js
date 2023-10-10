@@ -16,6 +16,7 @@ let searchEngines;
 let storageKeys;
 let userAgents;
 let currentSettings;
+let lastRequestTime;
 let previousPages = [];
 
 const tutorialMenuItemId = 'tutorial';
@@ -84,13 +85,22 @@ async function main() {
 
 		// Clear navigation history when re-opening the sidebar for logical UX and to avoid issues.
 		previousPages = [`${searchEngine}${searchEngineQuery}${selectionText}`];
+		lastRequestTime = 0;
 	});
 
 	browser.webRequest.onBeforeSendHeaders.addListener(savePreviousPage, backNavigatableUrls);
 	function savePreviousPage(details) {
-		// Disallow navigating back to internal extension URLs as it causes issues and is pointless.
-		if (details.originUrl.includes("moz-extension") === false) {
+		browser.sidebarAction.isOpen({}).then(isOpen => {
+			if (!isOpen) {
+				return;
+			}});
+		
+		// Disallow navigating back to internal extension URLs as it causes issues and is pointless. Guard against websites
+		// sending multiple web requests per navigation by only allowing the first one in 700ms to be saved, which avoids
+		// duplicate entries in previousPages.
+		if (details.originUrl.includes("moz-extension") === false && details.timeStamp - lastRequestTime > 700 ) {
 			previousPages.push(details.originUrl);
+			lastRequestTime = details.timeStamp;
 		}
 	}
 
@@ -125,7 +135,15 @@ async function main() {
 		}
 
 		if (currentSettings[storageKeys.pageAction] === pageActions.navigateBack) {
-			browser.sidebarAction.setPanel({ panel: previousPages.pop() })
+			browser.sidebarAction.isOpen({}).then(isOpen => {
+				if (isOpen && previousPages.length > 0) {
+					browser.sidebarAction.setPanel({ panel: previousPages.pop() });
+				} else if (isOpen) {
+					return;
+				} else {
+					browser.sidebarAction.setPanel({ panel: browser.runtime.getURL('index.html') });
+				}
+			});
 		}
 
 		browser.sidebarAction.open();
