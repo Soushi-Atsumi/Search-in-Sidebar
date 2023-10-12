@@ -26,8 +26,8 @@ const searcheEngineGoogleId = 'searcheEngineGoogleInputRadio';
 const searcheEngineYahooId = 'searcheEngineYahooInputRadio';
 const searcheEngineYahooJapanId = 'searcheEngineYahooJapanInputRadio';
 const pageActionReloadId = 'pageActionReloadInputRadio';
-const pageActionNavigateBackId = 'pageActionNavigateBackInputRadio';
 const pageActionGoBackToHomeId = 'pageActionGoBackToHomeInputRadio';
+const pageActionNavigateBackId = 'pageActionNavigateBackInputRadio';
 
 const searcheEngineAskInputRadio = document.getElementById('searcheEngineAskInputRadio');
 const searcheEngineAdditionalInputRadio = document.getElementById('searcheEngineAdditionalInputRadio');
@@ -151,11 +151,11 @@ function checkPageAction() {
 			case pageActions.reload:
 				document.getElementById(pageActionReloadId).checked = true;
 				break;
-			case pageActions.navigateBack:
-				document.getElementById(pageActionNavigateBackId).checked = true;
-				break;
 			case pageActions.goBackToHome:
 				document.getElementById(pageActionGoBackToHomeId).checked = true;
+				break;
+			case pageActions.navigateBack:
+				document.getElementById(pageActionNavigateBackId).checked = true;
 				break;
 		}
 	});
@@ -237,11 +237,11 @@ function pageActionRadioButtonOnClick(event) {
 		case pageActionReloadId:
 			saveConfig({ [storageKeys.pageAction]: pageActions.reload });
 			break;
-		case pageActionNavigateBackId:
-			saveConfig({ [storageKeys.pageAction]: pageActions.navigateBack });
-			break;
 		case pageActionGoBackToHomeId:
 			saveConfig({ [storageKeys.pageAction]: pageActions.goBackToHome });
+			break;
+		case pageActionNavigateBackId:
+			saveConfig({ [storageKeys.pageAction]: pageActions.navigateBack });
 			break;
 	}
 
