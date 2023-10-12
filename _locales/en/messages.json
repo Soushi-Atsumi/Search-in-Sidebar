@@ -133,12 +133,16 @@
 		"message": "Options",
 		"description": "The title of options.html."
 	},
+	
+	"optionsNavigateBackHTMLInformation": {
+		"message": "The \"navigate back to previous page\" feature requires the host permission."
+	},
 
-	"optionsHostHTMLInformation": {
+	"optionsUserAgentHTMLInformation": {
 		"message": "This feature requires the host permission."
 	},
 
-	"optionsHostHTMLCaution": {
+	"optionsUserAgentHTMLCaution": {
 		"message": "This overwrites the user agent and it effects a page of all extensions."
 	},
 

@@ -213,9 +213,9 @@ function initDocuments() {
 	document.getElementById('hostLabel').innerText = browser.i18n.getMessage('host');
 	document.getElementById('useragentLegend').innerText = browser.i18n.getMessage('useragent');
 	document.getElementById('defaultLabel').innerText = browser.i18n.getMessage('default');
-	document.getElementById('navigateBackInformationDivision').innerText = browser.i18n.getMessage('optionsHostHTMLInformation');
-	document.getElementById('userAgentInformationDivision').innerText = browser.i18n.getMessage('optionsHostHTMLInformation');
-	document.getElementById('cautionDivision').innerText = browser.i18n.getMessage('optionsHostHTMLCaution');
+	document.getElementById('navigateBackInformationDivision').innerText = browser.i18n.getMessage('optionsNavigateBackHTMLInformation');
+	document.getElementById('userAgentInformationDivision').innerText = browser.i18n.getMessage('optionsUserAgentHTMLInformation');
+	document.getElementById('cautionDivision').innerText = browser.i18n.getMessage('optionsUserAgentHTMLCaution');
 }
 
 function isInputTextValueValid(inputText) {

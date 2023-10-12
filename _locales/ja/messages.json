@@ -134,11 +134,15 @@
 		"description": "options.htmlの題名。"
 	},
 
-	"optionsHostHTMLInformation": {
+	"optionsNavigateBackHTMLInformation": {
+		"message": "「前のページに戻る」機能はホスト権限を必要とします。"
+	},
+
+	"optionsUserAgentHTMLInformation": {
 		"message": "この機能はホスト権限を必要とします。"
 	},
 
-	"optionsHostHTMLCaution": {
+	"optionsUserAgentHTMLCaution": {
 		"message": "これはユーザーエージェントを上書きし、全ての拡張機能のページに影響します。"
 	},
 
