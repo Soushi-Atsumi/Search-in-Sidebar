@@ -17,7 +17,9 @@ let storageKeys;
 let userAgents;
 let currentSettings;
 let lastRequestTime;
+let currentPage;
 let previousPages = [];
+let externalSidePanelOpen = false;
 
 const tutorialMenuItemId = 'tutorial';
 const bingMenuItemId = 'bing';
@@ -83,23 +85,42 @@ async function main() {
 		browser.sidebarAction.setPanel({ panel: `${searchEngine}${searchEngineQuery}${selectionText}` });
 		browser.sidebarAction.open();
 
-		// Clear navigation history when re-opening the sidebar for logical UX and to avoid issues.
+		// Clear history and global vars when making a new search from the context menu (= when starting a new session).
 		previousPages = [`${searchEngine}${searchEngineQuery}${selectionText}`];
 		lastRequestTime = 0;
+		externalSidePanelOpen = false;
 	});
 
 	browser.webRequest.onBeforeSendHeaders.addListener(savePreviousPage, backNavigatableUrls);
 	function savePreviousPage(details) {
+		// Web requests that aren't made in the side bar don't need to be saved; they don't have anything to do
+		// with Search in Sidebar.
 		browser.sidebarAction.isOpen({}).then(isOpen => {
-			if (!isOpen) {
+			if (isOpen === false) {
 				return;
 			}});
 		
-		// Disallow navigating back to internal extension URLs as it causes issues and is pointless. Guard against websites
-		// sending multiple web requests per navigation by only allowing the first one in 700ms to be saved, which avoids
-		// duplicate entries in previousPages.
-		if (details.originUrl.includes("moz-extension") === false && details.timeStamp - lastRequestTime > 700 ) {
+		// When a web request is made in the side bar by an extension, we compare the web request's origin against the
+		// local GUID of Search in Sidebar. If there's no match, the request is coming from a different extension which
+		// means it doesn't need to be saved. It also means Search in Sidebar is closed, which means we can keep
+		// ignoring requests until it is opened again (which is why this is a global var).
+		if (details.originUrl.includes("moz-extension") && details.originUrl !== browser.runtime.getURL('')) {
+			externalSidePanelOpen = true;
+			return;
+		}
+		
+			// Disallow saving Search in Sidebar's origin URL as it causes issues and is pointless.
+		if (details.originUrl.includes("moz-extension") === false &&
+			// Guard against websites sending multiple web requests per navigation by only allowing the first one in 
+			// 700ms to be saved, which avoids duplicate entries in previousPages.
+			details.timeStamp - lastRequestTime > 700 && 
+			// Only save web requests made with a tabId of -1. As far as I can tell, these requests are exclusively
+			// made from the side bar which are the ones we want to save.
+			details.tabId === -1 &&
+			// Only save Search in Sidebar's web requests, not requests made via other extensions that use the side bar.
+			externalSidePanelOpen === false) {
 			previousPages.push(details.originUrl);
+			currentPage = details.url;
 			lastRequestTime = details.timeStamp;
 		}
 	}
@@ -136,12 +157,17 @@ async function main() {
 
 		if (currentSettings[storageKeys.pageAction] === pageActions.navigateBack) {
 			browser.sidebarAction.isOpen({}).then(isOpen => {
+				// When Search in Sidebar is opened and there are items in the page history, navigate to previous page.
 				if (isOpen && previousPages.length > 0) {
-					browser.sidebarAction.setPanel({ panel: previousPages.pop() });
+					browser.sidebarAction.setPanel({ panel: currentPage = previousPages.pop() });
+				// When Search in Sidebar is opened but there aren't any items left in the page history to go back to,
+				// do nothing.
 				} else if (isOpen) {
 					return;
+				// When Search in Sidebar is closed, continue the session by opening the page last displayed before.
 				} else {
-					browser.sidebarAction.setPanel({ panel: browser.runtime.getURL('index.html') });
+					browser.sidebarAction.setPanel({ panel: currentPage });
+					externalSidePanelOpen = false;
 				}
 			});
 		}
