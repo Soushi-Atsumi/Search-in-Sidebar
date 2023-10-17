@@ -387,7 +387,6 @@ function toggleHostControlledRadioDisabled(disabled) {
 	
 	if (disabled && document.getElementById("pageActionNavigateBackInputRadio").checked)
 	{
-		document.getElementById("pageActionNavigateBackInputRadio").checked = false;
 		document.getElementById("pageActionReloadInputRadio").checked = true;
 		saveConfig({ [storageKeys.pageAction]: pageActions.reload });
 	}
