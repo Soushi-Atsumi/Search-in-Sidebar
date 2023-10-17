@@ -135,7 +135,7 @@
 	},
 	
 	"optionsNavigateBackHTMLInformation": {
-		"message": "The \"navigate back to previous page\" feature requires the host permission."
+		"message": "The \"Navigate back to previous page\" feature requires the host permission."
 	},
 
 	"optionsUserAgentHTMLInformation": {
