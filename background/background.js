@@ -97,7 +97,7 @@ async function main() {
 		// Web requests that aren't made in the side bar don't need to be saved; they don't have anything to do
 		// with Search in Sidebar.
 		browser.sidebarAction.isOpen({}).then(isOpen => {
-			if (isOpen === false) {
+			if (!isOpen) {
 				return;
 			}});
 		
@@ -118,7 +118,7 @@ async function main() {
 		}
 
 		// Only save Search in Sidebar's web requests, not requests made via other extensions.
-		if (navigatingViaSearchInSidebar === false) {
+		if (!navigatingViaSearchInSidebar) {
 			return;
 		}
 
@@ -127,7 +127,7 @@ async function main() {
 		currentPage = details.url;
 		
 			// Disallow saving Search in Sidebar's internal originUrl as it causes issues and is pointless.
-		if (details.originUrl.includes("moz-extension") == false &&
+		if (!details.originUrl.includes("moz-extension") &&
 			// Guard against websites sending multiple web requests per navigation by only allowing the first one in 
 			// 700ms to be saved, which avoids duplicate entries in previousPages.
 			details.timeStamp - lastRequestTime > 700) {
