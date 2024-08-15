@@ -3,37 +3,33 @@
 		"name": "Additional"
 	},
 
-	"ask": {
-		"name": "Ask"
-	},
-
 	"bing": {
 		"name": "Bing",
-		"url": "https://www.bing.com",
-		"query": "/search?q="
+		"query": "/search?q=",
+		"url": "https://www.bing.com"
 	},
 
-	"duckduckgo": {
+	"duckDuckGo": {
 		"name": "DuckDuckGo",
-		"url": "https://duckduckgo.com",
-		"query": "/?q="
+		"query": "/?q=",
+		"url": "https://duckduckgo.com"
 	},
 
 	"google": {
 		"name": "Google",
-		"url": "https://www.google.com",
-		"query": "/search?q="
+		"query": "/search?q=",
+		"url": "https://www.google.com"
 	},
 
 	"yahoo": {
 		"name": "Yahoo!",
-		"url": "https://search.yahoo.com",
-		"query": "/search?p="
+		"query": "/search?p=",
+		"url": "https://search.yahoo.com"
 	},
 
 	"yahooJapan": {
 		"name": "Yahoo Japan",
-		"url": "https://search.yahoo.co.jp",
-		"query": "/search?p="
+		"query": "/search?p=",
+		"url": "https://search.yahoo.co.jp"
 	}
 }

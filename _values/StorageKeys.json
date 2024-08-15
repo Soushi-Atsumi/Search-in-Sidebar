@@ -1,9 +1,25 @@
 ﻿{
-	"additionalSearchEngine": "additionalSearchEngine",
+	"additionalSearchEngine": "AdditionalSearchEngine",
+
+	"isAdditionalEnabled": "IsAdditionalEnabled",
+
+	"isBingEnabled": "IsBingEnabled",
+
+	"isDuckDuckGoEnabled": "IsDuckDuckGoEnabled",
+
+	"isGoogleEnabled": "IsGoogleEnabled",
+
+	"isYahooEnabled": "IsYahooEnabled",
+
+	"isYahooJapanEnabled": "IsYahooJapanEnabled",
 
 	"pageAction": "PageAction",
 
 	"searchEngine": "SearchEngine",
+
+	"searchEngineForShortcut": "SearchEngineForShortcut",
+
+	"shouldShowOnlyMainAdditional": "ShouldShowOnlyMainAdditional",
 
 	"userAgent": "UserAgent"
 }

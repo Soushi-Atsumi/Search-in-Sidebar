@@ -21,14 +21,23 @@
 <body>
 	<form name="options">
 		<fieldset>
-			<legend id="searchEnginesLegend"></legend>
-			<input type="radio" id="searcheEngineAskInputRadio" name="searchEngine"><label id="askSearchEngineLabel"></label><br>
-			<input type="radio" id="searcheEngineBingInputRadio" name="searchEngine"><label id="alwaysUseBingLabel"></label><br>
-			<input type="radio" id="searcheEngineDuckDuckGoInputRadio" name="searchEngine"><label id="alwaysUseDuckDuckGoLabel"></label><br>
-			<input type="radio" id="searcheEngineGoogleInputRadio" name="searchEngine"><label id="alwaysUseGoogleLabel"></label><br>
-			<input type="radio" id="searcheEngineYahooInputRadio" name="searchEngine"><label id="alwaysUseYahooLabel"></label><br>
-			<input type="radio" id="searcheEngineYahooJapanInputRadio" name="searchEngine"><label id="alwaysUseYahooJapanLabel"></label><br>
-			<input type="radio" id="searcheEngineAdditionalInputRadio" name="searchEngine" disabled><label id="alwaysUseAdditionalSearchEngineLabel"></label><br>
+			<legend id="searchEnginesToDisplayInContextMenuLegend"></legend>
+			<input type="checkbox" id="searcheEngineBingInputCheckbox" name="searchEngineCheckbox"><label class="bingLabel"></label><br>
+			<input type="checkbox" id="searcheEngineDuckDuckGoInputCheckbox" name="searchEngineCheckbox"><label class="duckDuckGoLabel"></label><br>
+			<input type="checkbox" id="searcheEngineGoogleInputCheckbox" name="searchEngineCheckbox"><label class="googleLabel"></label><br>
+			<input type="checkbox" id="searcheEngineYahooInputCheckbox" name="searchEngineCheckbox"><label class="yahooLabel"></label><br>
+			<input type="checkbox" id="searcheEngineYahooJapanInputCheckbox" name="searchEngineCheckbox"><label class="yahooJapanLabel"></label><br>
+			<input type="checkbox" id="searcheEngineAdditionalInputCheckbox" name="searchEngineCheckbox"><label class="additionalSearchEngineLabel"></label><br>
+			<input type="checkbox" id="searcheEngineShouldAdditionalShowOnlyMainInputCheckbox" name="searchEngineCheckbox"><label id="showOnlyMainAdditionalSearchEngineLabel"></label><br>
+		</fieldset><br>
+		<fieldset>
+			<legend id="searchEnginesToUseForShortcutLegend"></legend>
+			<input type="radio" id="searcheEngineBingInputRadio" name="searchEngineRadio"><label class="bingLabel"></label><br>
+			<input type="radio" id="searcheEngineDuckDuckGoInputRadio" name="searchEngineRadio"><label class="duckDuckGoLabel"></label><br>
+			<input type="radio" id="searcheEngineGoogleInputRadio" name="searchEngineRadio"><label class="googleLabel"></label><br>
+			<input type="radio" id="searcheEngineYahooInputRadio" name="searchEngineRadio"><label class="yahooLabel"></label><br>
+			<input type="radio" id="searcheEngineYahooJapanInputRadio" name="searchEngineRadio"><label class="yahooJapanLabel"></label><br>
+			<input type="radio" id="searcheEngineAdditionalInputRadio" name="searchEngineRadio" disabled><label class="additionalSearchEngineLabel"></label><br>
 		</fieldset><br>
 		<fieldset>
 			<legend id="additionalSearchEngineDescriptionLegend"></legend>

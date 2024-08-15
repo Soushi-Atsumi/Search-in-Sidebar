@@ -15,34 +15,6 @@
 		"message": "検索エンジンは https をサポートしていなければなりません。"
 	},
 
-	"ask": {
-		"message": "尋ねる"
-	},
-
-	"alwaysUseAdditionalSearchEngine": {
-		"message": "常に追加の検索エンジンを使用する"
-	},
-
-	"alwaysUseBing": {
-		"message": "常にBingを使用する"
-	},
-
-	"alwaysUseDuckDuckGo": {
-		"message": "常にDuckDuckGoを使用する"
-	},
-
-	"alwaysUseGoogle": {
-		"message": "常にGoogleを使用する"
-	},
-
-	"alwaysUseYahoo": {
-		"message": "常にYahooを使用する"
-	},
-
-	"alwaysUseYahooJapan": {
-		"message": "常にYahoo Japanを使用する"
-	},
-
 	"behaviorOfPageAction": {
 		"message": "アイコンの動作"
 	},
@@ -146,8 +118,12 @@
 		"message": "更新"
 	},
 
-	"searchEngines": {
-		"message": "検索エンジン"
+	"searchEnginesToDisplayInContextMenu": {
+		"message": "コンテキストメニューで表示する検索エンジン"
+	},
+
+	"searchEnginesToUseForShortcut": {
+		"message": "ショートカットキーで使用する検索エンジン"
 	},
 
 	"searchEngineWhichHasBeenAdded": {
@@ -158,8 +134,16 @@
 		"message": "追加したい検索エンジン"
 	},
 
+	"showOnlyMainAdditionalSearchEngine": {
+		"message": "追加した検索エンジンは主要のみ表示する"
+	},
+
 	"thisSearchEngineHasAlreadyBeenAdded": {
 		"message": "この検索エンジンは既に追加されています。"
+	},
+
+	"toggle": {
+		"message": "開閉します。"
 	},
 
 	"tutorial": {

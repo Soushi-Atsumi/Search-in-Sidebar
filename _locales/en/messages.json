@@ -15,34 +15,6 @@
 		"message": "A Search Engine must support https."
 	},
 
-	"ask": {
-		"message": "Ask"
-	},
-
-	"alwaysUseAdditionalSearchEngine": {
-		"message": "Always use an additional Search Engine"
-	},
-
-	"alwaysUseBing": {
-		"message": "Always use Bing"
-	},
-
-	"alwaysUseDuckDuckGo": {
-		"message": "Always use DuckDuckGo"
-	},
-
-	"alwaysUseGoogle": {
-		"message": "Always use Google"
-	},
-
-	"alwaysUseYahoo": {
-		"message": "Always use Yahoo"
-	},
-
-	"alwaysUseYahooJapan": {
-		"message": "Always use Yahoo Japan"
-	},
-
 	"behaviorOfPageAction": {
 		"message": "Behavior of the icon"
 	},
@@ -146,8 +118,12 @@
 		"message": "Reload"
 	},
 
-	"searchEngines": {
-		"message": "Search Engines"
+	"searchEnginesToDisplayInContextMenu": {
+		"message": "Search Engines to be displayed in the context menu"
+	},
+
+	"searchEnginesToUseForShortcut": {
+		"message": "Search Engines to use for the shortcut"
 	},
 
 	"searchEngineWhichHasBeenAdded": {
@@ -158,8 +134,16 @@
 		"message": "Search Engine which is wanted to be added"
 	},
 
+	"showOnlyMainAdditionalSearchEngine": {
+		"message": "Show only the main of additional Search Engines"
+	},
+
 	"thisSearchEngineHasAlreadyBeenAdded": {
 		"message": "This Search Engine has already been added."
+	},
+
+	"toggle": {
+		"message": "Toggle."
 	},
 
 	"tutorial": {

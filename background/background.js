@@ -19,7 +19,7 @@ let currentSettings;
 
 const tutorialMenuItemId = 'tutorial';
 const bingMenuItemId = 'bing';
-const duckduckgoMenuItemId = 'duckduckgo';
+const duckDuckGoMenuItemId = 'duckDuckGo';
 const googleMenuItemId = 'google';
 const mainAdditionalSearchEngineMenuItemId = 'mainAdditionalSearchEngine';
 const yahooMenuItemId = 'yahoo';
@@ -52,9 +52,9 @@ async function main() {
 				searchEngine = searchEngines.bing.url;
 				searchEngineQuery = searchEngines.bing.query;
 				break;
-			case duckduckgoMenuItemId:
-				searchEngine = searchEngines.duckduckgo.url;
-				searchEngineQuery = searchEngines.duckduckgo.query;
+			case duckDuckGoMenuItemId:
+				searchEngine = searchEngines.duckDuckGo.url;
+				searchEngineQuery = searchEngines.duckDuckGo.query;
 				break;
 			case googleMenuItemId:
 				searchEngine = searchEngines.google.url;
@@ -80,31 +80,25 @@ async function main() {
 		browser.sidebarAction.setPanel({ panel: `${searchEngine}${searchEngineQuery}${selectionText}` });
 		browser.sidebarAction.open();
 	});
+
 	browser.browserAction.onClicked.addListener(() => {
 		if (currentSettings[storageKeys.pageAction] === pageActions.goBackToHome) {
 			let panelUrl;
 
-			switch (currentSettings[storageKeys.searchEngine]) {
-				case searchEngines.additional.name:
-					panelUrl = additionalSearchEngine.main.url;
-					break;
-				case searchEngines.bing.name:
-					panelUrl = searchEngines.bing.url;
-					break;
-				case searchEngines.duckduckgo.name:
-					panelUrl = searchEngines.duckduckgo.url;
-					break;
-				case searchEngines.google.name:
-					panelUrl = searchEngines.google.url;
-					break;
-				case searchEngines.yahoo.name:
-					panelUrl = searchEngines.yahoo.url;
-					break;
-				case searchEngines.yahooJapan.name:
-					panelUrl = searchEngines.yahooJapan.url;
-					break;
-				default:
-					panelUrl = browser.runtime.getURL('index.html');
+			if ((currentSettings[storageKeys.isAdditionalEnabled] ?? true) && additionalSearchEngine.all.length !== 0) {
+				panelUrl = additionalSearchEngine.main.url;
+			} else if (currentSettings[storageKeys.isBingEnabled] ?? true) {
+				panelUrl = searchEngines.bing.url;
+			} else if (currentSettings[storageKeys.isDuckDuckGoEnabled] ?? true) {
+				panelUrl = searchEngines.duckDuckGo.url;
+			} else if (currentSettings[storageKeys.isGoogleEnabled] ?? true) {
+				panelUrl = searchEngines.google.url;
+			} else if (currentSettings[storageKeys.isYahooEnabled] ?? true) {
+				panelUrl = searchEngines.yahoo.url;
+			} else if (currentSettings[storageKeys.isYahooJapanEnabled] ?? true) {
+				panelUrl = searchEngines.yahooJapan.url;
+			} else {
+				panelUrl = browser.runtime.getURL('index.html');
 			}
 
 			browser.sidebarAction.setPanel({ panel: panelUrl });
@@ -113,41 +107,37 @@ async function main() {
 		browser.sidebarAction.open();
 	});
 
-	browser.commands.onCommand.addListener(command => {
-		if (command === 'open_and_search') {
-			const tabId = browser.tabs.query({ currentWindow: true, active: true }).id;
-			browser.tabs.executeScript(tabId, { code: 'window.getSelection().toString().trim();', }).then(text => {
-				const selectedText = text[0].trim();
-
-				if (selectedText.length !== 0) {
-					let searchEngine = '';
-					let searchEngineQuery = '';
-
-					if (currentSettings[storageKeys.searchEngine] === undefined || currentSettings[storageKeys.searchEngine] === searchEngines.ask.name) {
-						searchEngine = searchEngines.google.url;
-						searchEngineQuery = searchEngines.google.query;
-					} else if (currentSettings[storageKeys.searchEngine] === searchEngines.additional.name) {
-						searchEngine = additionalSearchEngine.main.url;
-						searchEngineQuery = additionalSearchEngine.main.query;
-					} else {
-						const key = Object.keys(searchEngines).filter(key => searchEngines[key].name === currentSettings[storageKeys.searchEngine]);
-						searchEngine = searchEngines[key].url;
-						searchEngineQuery = searchEngines[key].query;
-					}
-
-					browser.sidebarAction.setPanel({
-						panel: `${searchEngine}${searchEngineQuery}${selectedText}`
-					});
-				}
-			});
-
+	browser.commands.onCommand.addListener(async (name, tab) => {
+		if (name === 'open_and_search') {
 			browser.sidebarAction.open();
+			const text = await browser.tabs.executeScript(tab.id, { code: 'window.getSelection().toString().trim();', });
+			const selectedText = text[0].trim();
+
+			if (selectedText.length !== 0) {
+				let searchEngine = '';
+				let searchEngineQuery = '';
+
+				if (currentSettings[storageKeys.searchEngineForShortcut] === undefined) {
+					searchEngine = searchEngines.google.url;
+					searchEngineQuery = searchEngines.google.query;
+				} else if (currentSettings[storageKeys.searchEngineForShortcut] === searchEngines.additional.name) {
+					searchEngine = additionalSearchEngine.main.url;
+					searchEngineQuery = additionalSearchEngine.main.query;
+				} else {
+					const key = Object.keys(searchEngines).filter(key => searchEngines[key].name === currentSettings[storageKeys.searchEngineForShortcut]);
+					searchEngine = searchEngines[key].url;
+					searchEngineQuery = searchEngines[key].query;
+				}
+
+				browser.sidebarAction.setPanel({
+					panel: `${searchEngine}${searchEngineQuery}${selectedText}`
+				});
+			}
 		}
 	});
-	browser.storage.local.get().then(item => {
-		currentSettings = item;
-		return createContextMenus();
-	});
+
+	currentSettings = await browser.storage.local.get();
+	return createContextMenus();
 
 	const filter = { tabId: -1, urls: ['*://*/*'] };
 	const extraInfoSpec = ['blocking', 'requestHeaders'];
@@ -187,7 +177,7 @@ async function main() {
 	}
 }
 
-function createContextMenus(searchEngine) {
+function createContextMenus() {
 	browser.contextMenus.create({
 		contexts: ['browser_action'],
 		icons: { "1536": "icons/icon-1536.png" },
@@ -195,7 +185,7 @@ function createContextMenus(searchEngine) {
 		title: browser.i18n.getMessage("tutorial")
 	});
 
-	if (searchEngine === searchEngines.ask.name || searchEngine === searchEngines.bing.name) {
+	if (currentSettings[storageKeys.isBingEnabled] ?? true) {
 		browser.contextMenus.create({
 			contexts: ['selection'],
 			icons: { "16": `${searchEngines.bing.url}/favicon.ico` },
@@ -204,16 +194,16 @@ function createContextMenus(searchEngine) {
 		});
 	}
 
-	if (searchEngine === searchEngines.ask.name || searchEngine === searchEngines.duckduckgo.name) {
+	if (currentSettings[storageKeys.isDuckDuckGoEnabled] ?? true) {
 		browser.contextMenus.create({
 			contexts: ['selection'],
-			icons: { "16": `${searchEngines.duckduckgo.url}/favicon.ico` },
-			id: duckduckgoMenuItemId,
-			title: searchEngines.duckduckgo.name
+			icons: { "16": `${searchEngines.duckDuckGo.url}/favicon.ico` },
+			id: duckDuckGoMenuItemId,
+			title: searchEngines.duckDuckGo.name
 		});
 	}
 
-	if (searchEngine === searchEngines.ask.name || searchEngine === searchEngines.google.name) {
+	if (currentSettings[storageKeys.isGoogleEnabled] ?? true) {
 		browser.contextMenus.create({
 			contexts: ['selection'],
 			icons: { "16": `${searchEngines.google.url}/favicon.ico` },
@@ -222,7 +212,7 @@ function createContextMenus(searchEngine) {
 		});
 	}
 
-	if (searchEngine === searchEngines.ask.name || searchEngine === searchEngines.yahoo.name) {
+	if (currentSettings[storageKeys.isYahooEnabled] ?? true) {
 		browser.contextMenus.create({
 			contexts: ['selection'],
 			icons: { "16": `${searchEngines.yahoo.url}/favicon.ico` },
@@ -231,7 +221,7 @@ function createContextMenus(searchEngine) {
 		});
 	}
 
-	if (searchEngine === searchEngines.ask.name || searchEngine === searchEngines.yahooJapan.name) {
+	if (currentSettings[storageKeys.isYahooJapanEnabled] ?? true) {
 		browser.contextMenus.create({
 			contexts: ['selection'],
 			icons: { "16": `${searchEngines.yahooJapan.url}/favicon.ico` },
@@ -240,24 +230,24 @@ function createContextMenus(searchEngine) {
 		});
 	}
 
-	if (searchEngine === searchEngines.ask.name) {
-		for (const i in additionalSearchEngine.all) {
+	if ((currentSettings[storageKeys.isAdditionalEnabled] ?? true) && additionalSearchEngine.all.length !== 0) {
+		if (currentSettings[storageKeys.shouldShowOnlyMainAdditional] ?? false) {
 			browser.contextMenus.create({
 				contexts: ['selection'],
-				icons: { "16": `${new URL(additionalSearchEngine.all[i].url).origin}/favicon.ico` },
-				id: i,
-				title: additionalSearchEngine.all[i].name
+				icons: { "16": `${new URL(additionalSearchEngine.main.url).origin}/favicon.ico` },
+				id: mainAdditionalSearchEngineMenuItemId,
+				title: additionalSearchEngine.main.name
 			});
+		} else {
+			for (const i in additionalSearchEngine.all) {
+				browser.contextMenus.create({
+					contexts: ['selection'],
+					icons: { "16": `${new URL(additionalSearchEngine.all[i].url).origin}/favicon.ico` },
+					id: i,
+					title: additionalSearchEngine.all[i].name
+				});
+			}
 		}
-	}
-
-	if (searchEngine === searchEngines.additional.name) {
-		browser.contextMenus.create({
-			contexts: ['selection'],
-			icons: { "16": `${new URL(additionalSearchEngine.main.url).origin}/favicon.ico` },
-			id: mainAdditionalSearchEngineMenuItemId,
-			title: additionalSearchEngine.main.name
-		});
 	}
 
 	browser.contextMenus.refresh();
@@ -268,26 +258,39 @@ async function readOptions() {
 
 	// Issue#5
 	// I can remove this code after all users update to the latest version.
-	if (currentSettings[storageKeys.additionalSearchEngine] !== undefined) {
-		browser.storage.local.set({ 'AdditionalSearchEngine': currentSettings[storageKeys.additionalSearchEngine] });
+	if (currentSettings['additionalSearchEngine'] !== undefined) {
+		await browser.storage.local.set({ [storageKeys.additionalSearchEngine]: currentSettings['additionalSearchEngine'] });
+		browser.storage.local.remove('additionalSearchEngine');
+	}
+
+	// Issue#9
+	// I can remove this code after all users update to the latest version.
+	if (currentSettings['SearchEngine'] !== undefined && currentSettings['SearchEngine'] !== "Ask") {
+		await browser.storage.local.set({
+			[storageKeys.isAdditionalEnabled]: currentSettings['SearchEngine'] === searchEngines.additional.name,
+			[storageKeys.isBingEnabled]: currentSettings['SearchEngine'] === searchEngines.bing.name,
+			[storageKeys.isDuckDuckGoEnabled]: currentSettings['SearchEngine'] === searchEngines.duckDuckGo.name,
+			[storageKeys.isGoogleEnabled]: currentSettings['SearchEngine'] === searchEngines.google.name,
+			[storageKeys.isYahooEnabled]: currentSettings['SearchEngine'] === searchEngines.yahoo.name,
+			[storageKeys.isYahooJapanEnabled]: currentSettings['SearchEngine'] === searchEngines.yahooJapan.name
+		});
+		browser.storage.local.remove('SearchEngine');
 	}
 
 	if (Object.keys(currentSettings).includes(storageKeys.additionalSearchEngine)) {
 		additionalSearchEngine.all = currentSettings[storageKeys.additionalSearchEngine];
+	} else {
+		additionalSearchEngine.all = [];
 	}
 
 	await browser.contextMenus.removeAll();
-	createContextMenus(currentSettings[storageKeys.searchEngine] ?? searchEngines.ask.name);
+	createContextMenus();
 }
 
 async function readValues() {
 	const keyFiles = ['PageActions.json', 'SearchEngines.json', 'StorageKeys.json', 'UserAgents.json'].map(keyFile => `/_values/${keyFile}`);
-	return Promise.all(keyFiles.map(keyFile => fetch(keyFile))).then(values => {
-		return Promise.all(values.map(value => value.text()));
-	}).then(values => {
-		pageActions = JSON.parse(values[0]);
-		searchEngines = JSON.parse(values[1]);
-		storageKeys = JSON.parse(values[2]);
-		userAgents = JSON.parse(values[3]);
-	});
+	pageActions = await (await fetch(keyFiles[0])).json();
+	searchEngines = await (await fetch(keyFiles[1])).json();
+	storageKeys = await (await fetch(keyFiles[2])).json();
+	userAgents = await (await fetch(keyFiles[3])).json();
 }
