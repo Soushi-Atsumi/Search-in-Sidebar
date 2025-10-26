@@ -15,8 +15,24 @@
 		"message": "検索エンジンは https をサポートしていなければなりません。"
 	},
 
+	"additionalSearchEngineInformation": {
+		"message": "拡張クエリを有効にすると、全ての{q}が検索文字で置換されます。"
+	},
+
+	"autoSearch": {
+		"message": "自動検索"
+	},
+
+	"autoSearchInformation2": {
+		"message": "この機能はサイドバーが開いている場合のみ動作します。"
+	},
+
 	"behaviorOfPageAction": {
 		"message": "アイコンの動作"
+	},
+
+	"checkInterval": {
+		"message": "確認間隔[秒]"
 	},
 
 	"default": {
@@ -29,6 +45,14 @@
 
 	"doYouReallyWantToDelete": {
 		"message": "本当に削除しますか？"
+	},
+
+	"enabled": {
+		"message": "有効"
+	},
+
+	"extendedQuery": {
+		"message": "拡張クエリ"
 	},
 
 	"extensionDescription": {
@@ -93,8 +117,17 @@
 		"message": "主要"
 	},
 
-	"nameOfSearchEngine": {
-		"message": "検索エンジンの名前"
+	"name": {
+		"message": "名前"
+	},
+
+	"openOptions": {
+		"message": "設定を開く"
+	},
+
+	"openTutorial": {
+		"message": "使い方を開く",
+		"description": "拡張機能の使い方へのリンクを開く"
 	},
 
 	"optionsHTMLTitle": {
@@ -102,16 +135,12 @@
 		"description": "options.htmlの題名。"
 	},
 
-	"optionsUserAgentHTMLInformation": {
-		"message": "この機能はホスト権限を必要とします。"
-	},
-
 	"optionsUserAgentHTMLCaution": {
 		"message": "これはユーザーエージェントを上書きし、全ての拡張機能のページに影響します。"
 	},
 
-	"queryOfSearchEngine": {
-		"message": "検索エンジンのクエリ"
+	"query": {
+		"message": "クエリ"
 	},
 
 	"reload": {
@@ -135,7 +164,11 @@
 	},
 
 	"showOnlyMainAdditionalSearchEngine": {
-		"message": "追加した検索エンジンは主要のみ表示する"
+		"message": "追加の検索エンジンは主要のみ表示する"
+	},
+
+	"thisFeatureRequiresHostPermission": {
+		"message": "この機能はホスト権限を必要とします。"
 	},
 
 	"thisSearchEngineHasAlreadyBeenAdded": {
@@ -146,18 +179,9 @@
 		"message": "開閉します。"
 	},
 
-	"tutorial": {
-		"message": "使い方を開く",
-		"description": "拡張機能の使い方へのリンクを開く"
-	},
-
 	"tutorialTitle": {
 		"message": "サイドバーで検索 - 使い方",
 		"description": "使い方の題名。"
-	},
-
-	"urlOfSearchEngine": {
-		"message": "検索エンジンのURL"
 	},
 
 	"userAgent": {

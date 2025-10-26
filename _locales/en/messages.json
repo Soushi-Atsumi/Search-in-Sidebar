@@ -15,8 +15,24 @@
 		"message": "A Search Engine must support https."
 	},
 
+	"additionalSearchEngineInformation": {
+		"message": "{q} is replaced by search keywords when Extended Query is enabled."
+	},
+
+	"autoSearch": {
+		"message": "Auto Search"
+	},
+
+	"autoSearchInformation2": {
+		"message": "This feature works only while the sidebar is open."
+	},
+
 	"behaviorOfPageAction": {
 		"message": "Behavior of the icon"
+	},
+
+	"checkInterval": {
+		"message": "Check Interval[second]"
 	},
 
 	"default": {
@@ -29,6 +45,14 @@
 
 	"doYouReallyWantToDelete": {
 		"message": "Do you really want to delete?"
+	},
+
+	"enabled": {
+		"message": "Enabled"
+	},
+
+	"extendedQuery": {
+		"message": "Extended Query"
 	},
 
 	"extensionDescription": {
@@ -93,8 +117,17 @@
 		"message": "Main"
 	},
 
-	"nameOfSearchEngine": {
-		"message": "Name of Search Engines"
+	"name": {
+		"message": "Name"
+	},
+
+	"openOptions": {
+		"message": "Open options"
+	},
+
+	"openTutorial": {
+		"message": "Open a tutorial",
+		"description": "Open a link of a tutorial"
 	},
 
 	"optionsHTMLTitle": {
@@ -102,16 +135,12 @@
 		"description": "The title of options.html."
 	},
 
-	"optionsUserAgentHTMLInformation": {
-		"message": "This feature requires the host permission."
-	},
-
 	"optionsUserAgentHTMLCaution": {
 		"message": "This overwrites the user agent and it effects a page of all extensions."
 	},
 
-	"queryOfSearchEngine": {
-		"message": "Query of Search Engine"
+	"query": {
+		"message": "Query"
 	},
 
 	"reload": {
@@ -138,6 +167,10 @@
 		"message": "Show only the main of additional Search Engines"
 	},
 
+	"thisFeatureRequiresHostPermission": {
+		"message": "This feature requires the host permission."
+	},
+
 	"thisSearchEngineHasAlreadyBeenAdded": {
 		"message": "This Search Engine has already been added."
 	},
@@ -146,18 +179,9 @@
 		"message": "Toggle."
 	},
 
-	"tutorial": {
-		"message": "Open a tutorial",
-		"description": "Open a link of a tutorial"
-	},
-
 	"tutorialTitle": {
 		"message": "Search in Sidebar - Tutorial",
 		"description": "The title of the tutorial."
-	},
-
-	"urlOfSearchEngine": {
-		"message": "Url of Search Engine"
 	},
 
 	"userAgent": {

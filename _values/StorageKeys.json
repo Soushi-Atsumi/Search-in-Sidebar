@@ -1,6 +1,12 @@
 ﻿{
 	"additionalSearchEngine": "AdditionalSearchEngine",
 
+	"autoSearch": "AutoSearch",
+
+	"autoSearchIntervalValue": "AutoSearchIntervalValue",
+
+	"isAutoSearchEnabled": "IsAutoSearchEnabled",
+
 	"isAdditionalEnabled": "IsAdditionalEnabled",
 
 	"isBingEnabled": "IsBingEnabled",

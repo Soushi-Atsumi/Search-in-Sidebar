@@ -10,6 +10,20 @@
  * defined by the Mozilla Public License, v. 2.0.
  */
 
+input {
+	vertical-align: middle;
+}
+
+label {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+table {
+	table-layout: auto;
+	width: 100%;
+}
+
 table, td, th {
 	border: 1px solid black;
 }
@@ -26,14 +40,20 @@ table, td, th {
 	padding: 4px;
 }
 
-#initial-location {
-	border-width: 0px;
-	width: 100%;
-}
-
-#informationDivision {
+.information {
 	background-color: lightskyblue;
 	margin-top: 4px;
 	margin-bottom: 4px;
 	padding: 4px;
+}
+
+.inputValueLabel {
+	margin-left: 8px;
+	margin-right: 16px;
+	width: 16px;
+}
+
+#initial-location {
+	border-width: 0px;
+	width: 100%;
 }

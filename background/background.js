@@ -17,6 +17,7 @@ let storageKeys;
 let userAgents;
 let currentSettings;
 
+const optionsMenuItemId = 'options';
 const tutorialMenuItemId = 'tutorial';
 const bingMenuItemId = 'bing';
 const duckDuckGoMenuItemId = 'duckDuckGo';
@@ -25,27 +26,42 @@ const mainAdditionalSearchEngineMenuItemId = 'mainAdditionalSearchEngine';
 const yahooMenuItemId = 'yahoo';
 const yahooJapanMenuItemId = 'yahooJapan';
 const hostPermissions = { origins: ['*://*/*'] };
+let optionsUrl;
 
 const additionalSearchEngine = {
 	all: [],
 	get main() { return this.all.filter(e => e.isMain)[0]; }
 };
 
+let autoSearchSetTimeoutID = 0;
+
 main();
 
 async function main() {
+	optionsUrl = (await browser.management.getSelf()).optionsUrl;
 	await readValues();
 	await readOptions();
 
-	browser.runtime.onMessage.addListener(readOptions);
+	browser.storage.local.onChanged.addListener(async changes => {
+		await readOptions();
+		if (Object.keys(changes).some(element => element === storageKeys.isAutoSearchEnabled || element ===  storageKeys.autoSearchIntervalValue)) {
+			stopAutoSearch();
+			startAutoSearch();
+		}
+	});
 	browser.contextMenus.onClicked.addListener((info, _) => {
 		let searchEngine = '';
 		let searchEngineQuery = '';
+		let shouldAdditionalSearchEngineUseExtendedQuery = false;
 		let selectionText = info.selectionText?.trim() ?? '';
 
 		switch (info.menuItemId) {
 			case tutorialMenuItemId:
 				searchEngine = browser.runtime.getURL('index.html');
+				selectionText = '';
+				break;
+			case optionsMenuItemId:
+				searchEngine = optionsUrl;
 				selectionText = '';
 				break;
 			case bingMenuItemId:
@@ -75,9 +91,11 @@ async function main() {
 			default:
 				searchEngine = additionalSearchEngine.all[info.menuItemId].url;
 				searchEngineQuery = additionalSearchEngine.all[info.menuItemId].query;
+				shouldAdditionalSearchEngineUseExtendedQuery = additionalSearchEngine.all[info.menuItemId].isExtendedQuery ?? false;
 		}
 
-		browser.sidebarAction.setPanel({ panel: `${searchEngine}${searchEngineQuery}${selectionText}` });
+		const panelUrl = shouldAdditionalSearchEngineUseExtendedQuery ? `${searchEngine}${searchEngineQuery.replaceAll('{q}', selectionText)}` : `${searchEngine}${searchEngineQuery}${selectionText}`;
+		browser.sidebarAction.setPanel({ panel: panelUrl });
 		browser.sidebarAction.open();
 	});
 
@@ -107,15 +125,15 @@ async function main() {
 		browser.sidebarAction.open();
 	});
 
-	browser.commands.onCommand.addListener(async (name, tab) => {
+	browser.commands.onCommand.addListener(async (name, _) => {
 		if (name === 'open_and_search') {
 			browser.sidebarAction.open();
-			const text = await browser.tabs.executeScript(tab.id, { code: 'window.getSelection().toString().trim();', });
-			const selectedText = text[0].trim();
+			const selectedText = (await browser.tabs.executeScript({ code: 'window.getSelection().toString().trim();', }))[0]?.trim() ?? '';
 
 			if (selectedText.length !== 0) {
 				let searchEngine = '';
 				let searchEngineQuery = '';
+				let shouldAdditionalSearchEngineUseExtendedQuery = false;
 
 				if (currentSettings[storageKeys.searchEngineForShortcut] === undefined) {
 					searchEngine = searchEngines.google.url;
@@ -123,21 +141,18 @@ async function main() {
 				} else if (currentSettings[storageKeys.searchEngineForShortcut] === searchEngines.additional.name) {
 					searchEngine = additionalSearchEngine.main.url;
 					searchEngineQuery = additionalSearchEngine.main.query;
+					shouldAdditionalSearchEngineUseExtendedQuery = additionalSearchEngine.main.isExtendedQuery ?? false;
 				} else {
 					const key = Object.keys(searchEngines).filter(key => searchEngines[key].name === currentSettings[storageKeys.searchEngineForShortcut]);
 					searchEngine = searchEngines[key].url;
 					searchEngineQuery = searchEngines[key].query;
 				}
 
-				browser.sidebarAction.setPanel({
-					panel: `${searchEngine}${searchEngineQuery}${selectedText}`
-				});
+				const panelUrl = shouldAdditionalSearchEngineUseExtendedQuery ? `${searchEngine}${searchEngineQuery.replaceAll('{q}', selectedText)}` : `${searchEngine}${searchEngineQuery}${selectedText}`;
+				browser.sidebarAction.setPanel({ panel: panelUrl });
 			}
 		}
 	});
-
-	currentSettings = await browser.storage.local.get();
-	return createContextMenus();
 
 	const filter = { tabId: -1, urls: ['*://*/*'] };
 	const extraInfoSpec = ['blocking', 'requestHeaders'];
@@ -161,28 +176,43 @@ async function main() {
 	const permissionsOnAddedListener = permissions => {
 		if (hostPermissions.origins.every(origin => permissions.origins.includes(origin))) {
 			browser.webRequest.onBeforeSendHeaders.addListener(onBeforeSendHeadersListener, filter, extraInfoSpec);
+			startAutoSearch();
 		}
 	};
 	const permissionsOnRemovedListener = permissions => {
 		if (hostPermissions.origins.every(origin => permissions.origins.includes(origin))) {
 			browser.webRequest.onBeforeSendHeaders.removeListener(onBeforeSendHeadersListener);
+			stopAutoSearch();
 		}
 	};
 	browser.permissions.onAdded.addListener(permissionsOnAddedListener);
 	browser.permissions.onRemoved.addListener(permissionsOnRemovedListener);
 
+	currentSettings = await browser.storage.local.get();
 
 	if (await browser.permissions.contains(hostPermissions)) {
 		browser.webRequest.onBeforeSendHeaders.addListener(onBeforeSendHeadersListener, filter, extraInfoSpec);
+		startAutoSearch();
 	}
+
+	return createContextMenus();
 }
 
-function createContextMenus() {
+async function createContextMenus() {
+	const manifest = await (await fetch('manifest.json')).json();
+
 	browser.contextMenus.create({
 		contexts: ['browser_action'],
-		icons: { "1536": "icons/icon-1536.png" },
+		icons: manifest.icons,
 		id: tutorialMenuItemId,
-		title: browser.i18n.getMessage("tutorial")
+		title: browser.i18n.getMessage("openTutorial")
+	});
+
+	browser.contextMenus.create({
+		contexts: ['browser_action'],
+		icons: manifest.icons,
+		id: optionsMenuItemId,
+		title: browser.i18n.getMessage('openOptions')
 	});
 
 	if (currentSettings[storageKeys.isBingEnabled] ?? true) {
@@ -256,27 +286,6 @@ function createContextMenus() {
 async function readOptions() {
 	currentSettings = await browser.storage.local.get();
 
-	// Issue#5
-	// I can remove this code after all users update to the latest version.
-	if (currentSettings['additionalSearchEngine'] !== undefined) {
-		await browser.storage.local.set({ [storageKeys.additionalSearchEngine]: currentSettings['additionalSearchEngine'] });
-		browser.storage.local.remove('additionalSearchEngine');
-	}
-
-	// Issue#9
-	// I can remove this code after all users update to the latest version.
-	if (currentSettings['SearchEngine'] !== undefined && currentSettings['SearchEngine'] !== "Ask") {
-		await browser.storage.local.set({
-			[storageKeys.isAdditionalEnabled]: currentSettings['SearchEngine'] === searchEngines.additional.name,
-			[storageKeys.isBingEnabled]: currentSettings['SearchEngine'] === searchEngines.bing.name,
-			[storageKeys.isDuckDuckGoEnabled]: currentSettings['SearchEngine'] === searchEngines.duckDuckGo.name,
-			[storageKeys.isGoogleEnabled]: currentSettings['SearchEngine'] === searchEngines.google.name,
-			[storageKeys.isYahooEnabled]: currentSettings['SearchEngine'] === searchEngines.yahoo.name,
-			[storageKeys.isYahooJapanEnabled]: currentSettings['SearchEngine'] === searchEngines.yahooJapan.name
-		});
-		browser.storage.local.remove('SearchEngine');
-	}
-
 	if (Object.keys(currentSettings).includes(storageKeys.additionalSearchEngine)) {
 		additionalSearchEngine.all = currentSettings[storageKeys.additionalSearchEngine];
 	} else {
@@ -289,8 +298,47 @@ async function readOptions() {
 
 async function readValues() {
 	const keyFiles = ['PageActions.json', 'SearchEngines.json', 'StorageKeys.json', 'UserAgents.json'].map(keyFile => `/_values/${keyFile}`);
-	pageActions = await (await fetch(keyFiles[0])).json();
-	searchEngines = await (await fetch(keyFiles[1])).json();
-	storageKeys = await (await fetch(keyFiles[2])).json();
-	userAgents = await (await fetch(keyFiles[3])).json();
+	let index = 0;
+	pageActions = await (await fetch(keyFiles[index++])).json();
+	searchEngines = await (await fetch(keyFiles[index++])).json();
+	storageKeys = await (await fetch(keyFiles[index++])).json();
+	userAgents = await (await fetch(keyFiles[index++])).json();
+}
+
+async function startAutoSearch() {
+	if (!(currentSettings[storageKeys.isAutoSearchEnabled] ?? false) || !await browser.permissions.contains(hostPermissions) || autoSearchSetTimeoutID !== 0) {
+		return;
+	}
+
+	autoSearchSetTimeoutID = setTimeout(async () => {
+		const selectedText = (await browser.tabs.executeScript({ code: 'window.getSelection().toString().trim();', }))[0]?.trim() ?? '';
+		if (selectedText.length !== 0) {
+			let searchEngine = '';
+			let searchEngineQuery = '';
+			let shouldAdditionalSearchEngineUseExtendedQuery = false;
+
+			if (currentSettings[storageKeys.searchEngineForShortcut] === undefined) {
+				searchEngine = searchEngines.google.url;
+				searchEngineQuery = searchEngines.google.query;
+			} else if (currentSettings[storageKeys.searchEngineForShortcut] === searchEngines.additional.name) {
+				searchEngine = additionalSearchEngine.main.url;
+				searchEngineQuery = additionalSearchEngine.main.query;
+				shouldAdditionalSearchEngineUseExtendedQuery = additionalSearchEngine.main.isExtendedQuery ?? false;
+			} else {
+				const key = Object.keys(searchEngines).filter(key => searchEngines[key].name === currentSettings[storageKeys.searchEngineForShortcut]);
+				searchEngine = searchEngines[key].url;
+				searchEngineQuery = searchEngines[key].query;
+			}
+
+			const panelUrl = shouldAdditionalSearchEngineUseExtendedQuery ? `${searchEngine}${searchEngineQuery.replaceAll('{q}', selectedText)}` : `${searchEngine}${searchEngineQuery}${selectedText}`;
+			browser.sidebarAction.setPanel({ panel: panelUrl });
+		}
+		autoSearchSetTimeoutID = 0;
+		startAutoSearch();
+	}, currentSettings[storageKeys.autoSearchIntervalValue] * 1000);
+}
+
+function stopAutoSearch() {
+	clearTimeout(autoSearchSetTimeoutID);
+	autoSearchSetTimeoutID = 0;
 }

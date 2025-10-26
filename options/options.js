@@ -18,46 +18,50 @@ let userAgents;
 let additionalSearchEngineArray = [];
 const hostPermissions = { origins: ['*://*/*'] };
 
-const searcheEngineBingInputCheckboxId = 'searcheEngineBingInputCheckbox';
-const searcheEngineDuckDuckGoInputCheckboxId = 'searcheEngineDuckDuckGoInputCheckbox';
-const searcheEngineGoogleInputCheckboxId = 'searcheEngineGoogleInputCheckbox';
-const searcheEngineYahooInputCheckboxId = 'searcheEngineYahooInputCheckbox';
-const searcheEngineYahooJapanInputCheckboxId = 'searcheEngineYahooJapanInputCheckbox';
-const searcheEngineAdditionalInputCheckboxId = 'searcheEngineAdditionalInputCheckbox';
-const searcheEngineShouldAdditionalShowOnlyMainId = 'searcheEngineShouldAdditionalShowOnlyMainInputCheckbox';
-const searcheEngineBingInputRadioId = 'searcheEngineBingInputRadio';
-const searcheEngineDuckDuckGoInputRadioId = 'searcheEngineDuckDuckGoInputRadio';
-const searcheEngineGoogleInputRadioId = 'searcheEngineGoogleInputRadio';
-const searcheEngineYahooInputRadioId = 'searcheEngineYahooInputRadio';
-const searcheEngineYahooJapanInputRadioId = 'searcheEngineYahooJapanInputRadio';
-const searcheEngineAdditionalInputRadioId = 'searcheEngineAdditionalInputRadio';
+const searchEngineBingInputCheckboxId = 'searchEngineBingInputCheckbox';
+const searchEngineDuckDuckGoInputCheckboxId = 'searchEngineDuckDuckGoInputCheckbox';
+const searchEngineGoogleInputCheckboxId = 'searchEngineGoogleInputCheckbox';
+const searchEngineYahooInputCheckboxId = 'searchEngineYahooInputCheckbox';
+const searchEngineYahooJapanInputCheckboxId = 'searchEngineYahooJapanInputCheckbox';
+const searchEngineAdditionalInputCheckboxId = 'searchEngineAdditionalInputCheckbox';
+const searchEngineShouldAdditionalShowOnlyMainId = 'searchEngineShouldAdditionalShowOnlyMainInputCheckbox';
+const searchEngineBingInputRadioId = 'searchEngineBingInputRadio';
+const searchEngineDuckDuckGoInputRadioId = 'searchEngineDuckDuckGoInputRadio';
+const searchEngineGoogleInputRadioId = 'searchEngineGoogleInputRadio';
+const searchEngineYahooInputRadioId = 'searchEngineYahooInputRadio';
+const searchEngineYahooJapanInputRadioId = 'searchEngineYahooJapanInputRadio';
+const searchEngineAdditionalInputRadioId = 'searchEngineAdditionalInputRadio';
 const pageActionReloadId = 'pageActionReloadInputRadio';
 const pageActionGoBackToHomeId = 'pageActionGoBackToHomeInputRadio';
 
-const searcheEngineBingInputCheckbox = document.getElementById(searcheEngineBingInputCheckboxId);
-const searcheEngineDuckDuckGoInputCheckbox = document.getElementById(searcheEngineDuckDuckGoInputCheckboxId);
-const searcheEngineGoogleInputCheckbox = document.getElementById(searcheEngineGoogleInputCheckboxId);
-const searcheEngineYahooInputCheckbox = document.getElementById(searcheEngineYahooInputCheckboxId);
-const searcheEngineYahooJapanInputCheckbox = document.getElementById(searcheEngineYahooJapanInputCheckboxId);
-const searcheEngineAdditionalInputCheckbox = document.getElementById(searcheEngineAdditionalInputCheckboxId);
-const searcheEngineShouldAdditionalShowOnlyMainInputCheckbox = document.getElementById(searcheEngineShouldAdditionalShowOnlyMainId);
-const searcheEngineBingInputRadio = document.getElementById(searcheEngineBingInputRadioId);
-const searcheEngineDuckDuckGoInputRadio = document.getElementById(searcheEngineDuckDuckGoInputRadioId);
-const searcheEngineGoogleInputRadio = document.getElementById(searcheEngineGoogleInputRadioId);
-const searcheEngineYahooInputRadio = document.getElementById(searcheEngineYahooInputRadioId);
-const searcheEngineYahooJapanInputRadio = document.getElementById(searcheEngineYahooJapanInputRadioId);
-const searcheEngineAdditionalInputRadio = document.getElementById(searcheEngineAdditionalInputRadioId);
+const searchEngineBingInputCheckbox = document.getElementById(searchEngineBingInputCheckboxId);
+const searchEngineDuckDuckGoInputCheckbox = document.getElementById(searchEngineDuckDuckGoInputCheckboxId);
+const searchEngineGoogleInputCheckbox = document.getElementById(searchEngineGoogleInputCheckboxId);
+const searchEngineYahooInputCheckbox = document.getElementById(searchEngineYahooInputCheckboxId);
+const searchEngineYahooJapanInputCheckbox = document.getElementById(searchEngineYahooJapanInputCheckboxId);
+const searchEngineAdditionalInputCheckbox = document.getElementById(searchEngineAdditionalInputCheckboxId);
+const searchEngineShouldAdditionalShowOnlyMainInputCheckbox = document.getElementById(searchEngineShouldAdditionalShowOnlyMainId);
+const searchEngineBingInputRadio = document.getElementById(searchEngineBingInputRadioId);
+const searchEngineDuckDuckGoInputRadio = document.getElementById(searchEngineDuckDuckGoInputRadioId);
+const searchEngineGoogleInputRadio = document.getElementById(searchEngineGoogleInputRadioId);
+const searchEngineYahooInputRadio = document.getElementById(searchEngineYahooInputRadioId);
+const searchEngineYahooJapanInputRadio = document.getElementById(searchEngineYahooJapanInputRadioId);
+const searchEngineAdditionalInputRadio = document.getElementById(searchEngineAdditionalInputRadioId);
 const searchEngineWhichIsWantedToBeAddedNameInputText = document.getElementById('searchEngineWhichIsWantedToBeAddedNameInputText');
 const searchEngineWhichIsWantedToBeAddedUrlInputText = document.getElementById('searchEngineWhichIsWantedToBeAddedUrlInputText');
 const searchEngineWhichIsWantedToBeAddedQueryInputText = document.getElementById('searchEngineWhichIsWantedToBeAddedQueryInputText');
+const searchEngineWhichIsWantedToBeAddedExtendedQueryCheckbox = document.getElementById('searchEngineWhichIsWantedToBeAddedExtendedQueryCheckbox');
 const searchEngineWhichIsWantedToBeAddedMainCheckbox = document.getElementById('searchEngineWhichIsWantedToBeAddedMainCheckbox');
 const addSearchEngineButton = document.getElementById('addSearchEngineButton');
 const searchEngineWhichHasBeenAddedTableBody = document.getElementById('searchEngineWhichHasBeenAddedTableBody');
-const additionalPermissionsHostCheckbox = document.getElementById('additional-permissions-host');
-const userAgentDefaultRadio = document.getElementById('user-agent-default');
-const userAgentFirefoxosRadio = document.getElementById('user-agent-firefoxos');
-const userAgentAndroidRadio = document.getElementById('user-agent-android');
-const userAgentIosRadio = document.getElementById('user-agent-ios');
+const additionalPermissionsHostCheckbox = document.getElementById('additionalPermissionsHostCheckbox');
+const userAgentDefaultRadio = document.getElementById('userAgentDefaultRadio');
+const userAgentFirefoxosRadio = document.getElementById('userAgentFirefoxosRadio');
+const userAgentAndroidRadio = document.getElementById('userAgentAndroidRadio');
+const userAgentIosRadio = document.getElementById('userAgentIosRadio');
+const autoSearchEnabledCheckbox = document.getElementById('autoSearchEnabledCheckbox');
+const autoSearchIntervalRange = document.getElementById('autoSearchIntervalRange');
+const autoSearchIntervalRangeValueLabel = document.getElementById('autoSearchIntervalRangeValueLabel');
 
 main();
 
@@ -69,6 +73,7 @@ async function main() {
 	checkPermissions();
 	checkSearchEngine();
 	checkUserAgents();
+	checkAutoSearch();
 	refreshAdditionalSearchEngine();
 }
 
@@ -77,11 +82,14 @@ function addEventListeners() {
 	document.options.searchEngineRadio.forEach(element => element.addEventListener('click', searchEngineRadioButtonOnClick));
 	document.options.searchEngineWhichIsWantedToBeAdded.forEach(element => element.addEventListener('click', searchEngineWhichIsWantedToBeAddedInputTextOnClick));
 	document.options.pageAction.forEach(element => element.addEventListener('click', pageActionRadioButtonOnClick));
+	searchEngineWhichIsWantedToBeAddedExtendedQueryCheckbox.addEventListener('input', searchEngineWhichIsWantedToBeAddedExtendedQueryCheckboxOnChange);
 	addSearchEngineButton.addEventListener('click', addSearchEngineButtonOnClick);
 	document.options.additionalPermissions.addEventListener('click', requestPermission);
 	browser.permissions.onAdded.addListener(checkPermissions);
 	browser.permissions.onRemoved.addListener(checkPermissions);
 	document.options.userAgent.forEach(element => element.addEventListener('click', userAgentOnClick));
+	autoSearchEnabledCheckbox.addEventListener('input', autoSearchEnabledCheckboxOnInput);
+	autoSearchIntervalRange.addEventListener('input', autoSearchIntervalRangeOnInput);
 }
 
 function addSearchEngineButtonOnClick() {
@@ -120,47 +128,66 @@ function addSearchEngineButtonOnClick() {
 			name: searchEngineWhichIsWantedToBeAddedNameInputText.value,
 			url: urlOfSearchEngine,
 			query: queryOfSearchEngine,
+			isExtendedQuery: searchEngineWhichIsWantedToBeAddedExtendedQueryCheckbox.checked,
 			isMain: isMainSearchEngine
 		});
 
 		saveConfig({ [storageKeys.additionalSearchEngine]: additionalSearchEngineArray });
 		document.options.searchEngineWhichIsWantedToBeAdded.forEach(element => element.value = '');
+		searchEngineWhichIsWantedToBeAddedQueryInputText.placeholder = '/search?q=';
+		searchEngineWhichIsWantedToBeAddedExtendedQueryCheckbox.checked = false;
 		searchEngineWhichIsWantedToBeAddedMainCheckbox.checked = false;
 		refreshAdditionalSearchEngine();
 	}
 }
 
+async function autoSearchEnabledCheckboxOnInput(event) {
+	await saveConfig({ [storageKeys.isAutoSearchEnabled]: event.target.checked });
+}
+
+async function autoSearchIntervalRangeOnInput(event) {
+	autoSearchIntervalRangeValueLabel.textContent = event.target.value;
+	await saveConfig({ [storageKeys.autoSearchIntervalValue]: event.target.value });
+}
+
+async function checkAutoSearch() {
+	const item = await browser.storage.local.get();
+	autoSearchEnabledCheckbox.checked = item[storageKeys.isAutoSearchEnabled] ?? false;
+	autoSearchIntervalRange.value = item[storageKeys.autoSearchIntervalValue] ?? 1;
+	autoSearchIntervalRangeValueLabel.textContent = item[storageKeys.autoSearchIntervalValue] ?? 1;
+}
+
 async function checkSearchEngine() {
 	const item = await browser.storage.local.get();
-	searcheEngineAdditionalInputCheckbox.checked = item[storageKeys.isAdditionalEnabled] ?? true;
-	searcheEngineBingInputCheckbox.checked = item[storageKeys.isBingEnabled] ?? true;
-	searcheEngineDuckDuckGoInputCheckbox.checked = item[storageKeys.isDuckDuckGoEnabled] ?? true;
-	searcheEngineGoogleInputCheckbox.checked = item[storageKeys.isGoogleEnabled] ?? true;
-	searcheEngineShouldAdditionalShowOnlyMainInputCheckbox.checked = item[storageKeys.shouldShowOnlyMainAdditional] ?? false;
-	searcheEngineYahooInputCheckbox.checked = item[storageKeys.isYahooEnabled] ?? true;
-	searcheEngineYahooJapanInputCheckbox.checked = item[storageKeys.isYahooJapanEnabled] ?? true;
+	searchEngineAdditionalInputCheckbox.checked = item[storageKeys.isAdditionalEnabled] ?? true;
+	searchEngineBingInputCheckbox.checked = item[storageKeys.isBingEnabled] ?? true;
+	searchEngineDuckDuckGoInputCheckbox.checked = item[storageKeys.isDuckDuckGoEnabled] ?? true;
+	searchEngineGoogleInputCheckbox.checked = item[storageKeys.isGoogleEnabled] ?? true;
+	searchEngineShouldAdditionalShowOnlyMainInputCheckbox.checked = item[storageKeys.shouldShowOnlyMainAdditional] ?? false;
+	searchEngineYahooInputCheckbox.checked = item[storageKeys.isYahooEnabled] ?? true;
+	searchEngineYahooJapanInputCheckbox.checked = item[storageKeys.isYahooJapanEnabled] ?? true;
 
 	switch (item[storageKeys.searchEngineForShortcut]) {
 		case searchEngines.additional.name:
-			searcheEngineAdditionalInputRadio.checked = true;
+			searchEngineAdditionalInputRadio.checked = true;
 			break;
 		case searchEngines.bing.name:
-			searcheEngineBingInputRadio.checked = true;
+			searchEngineBingInputRadio.checked = true;
 			break;
 		case searchEngines.duckDuckGo.name:
-			searcheEngineDuckDuckGoInputRadio.checked = true;
+			searchEngineDuckDuckGoInputRadio.checked = true;
 			break;
 		case searchEngines.google.name:
-			searcheEngineGoogleInputRadio.checked = true;
+			searchEngineGoogleInputRadio.checked = true;
 			break;
 		case searchEngines.yahoo.name:
-			searcheEngineYahooInputRadio.checked = true;
+			searchEngineYahooInputRadio.checked = true;
 			break;
 		case searchEngines.yahooJapan.name:
-			searcheEngineYahooJapanInputRadio.checked = true;
+			searchEngineYahooJapanInputRadio.checked = true;
 			break;
 		default:
-			searcheEngineGoogleInputRadio.checked = true;
+			searchEngineGoogleInputRadio.checked = true;
 	}
 }
 
@@ -179,6 +206,7 @@ async function checkPageAction() {
 async function checkPermissions() {
 	additionalPermissionsHostCheckbox.checked = await browser.permissions.contains(hostPermissions);
 	toggleUserAgentRadioDisabled(!additionalPermissionsHostCheckbox.checked);
+	toggleAutoSearchInputDisabled(!additionalPermissionsHostCheckbox.checked);
 }
 
 async function checkUserAgents() {
@@ -202,33 +230,40 @@ async function checkUserAgents() {
 function initDocuments() {
 	document.getElementsByTagName('html')[0].lang = browser.i18n.getUILanguage();
 	document.title = browser.i18n.getMessage('optionsHTMLTitle');
-	document.getElementById('searchEnginesToDisplayInContextMenuLegend').innerText = browser.i18n.getMessage('searchEnginesToDisplayInContextMenu');
-	document.getElementById('searchEnginesToUseForShortcutLegend').innerText = browser.i18n.getMessage('searchEnginesToUseForShortcut');
-	[...document.getElementsByClassName('bingLabel')].forEach(e => e.innerText = searchEngines.bing.name);
-	[...document.getElementsByClassName('duckDuckGoLabel')].forEach(e => e.innerText = searchEngines.duckDuckGo.name);
-	[...document.getElementsByClassName('googleLabel')].forEach(e => e.innerText = searchEngines.google.name);
-	[...document.getElementsByClassName('yahooLabel')].forEach(e => e.innerText = searchEngines.yahoo.name);
-	[...document.getElementsByClassName('yahooJapanLabel')].forEach(e => e.innerText = searchEngines.yahooJapan.name);
-	[...document.getElementsByClassName('additionalSearchEngineLabel')].forEach(e => e.innerText = browser.i18n.getMessage('additionalSearchEngines'));
-	document.getElementById('showOnlyMainAdditionalSearchEngineLabel').innerText = browser.i18n.getMessage('showOnlyMainAdditionalSearchEngine');
-	document.getElementById('additionalSearchEngineDescriptionLegend').innerText = browser.i18n.getMessage('additionalSearchEngines');
-	document.getElementById('additionalSearchEngineTableHeaderCell').innerText = browser.i18n.getMessage('nameOfSearchEngine');
-	document.getElementById('additionalSearchEngineUrlTableHeaderCell').innerText = browser.i18n.getMessage('urlOfSearchEngine');
-	document.getElementById('additionalSearchEngineQueryTableHeaderCell').innerText = browser.i18n.getMessage('queryOfSearchEngine');
-	document.getElementById('additionalSearchEngineMainTableHeaderCell').innerText = browser.i18n.getMessage('main');
-	document.getElementById('searchEngineWhichHasBeenAddedTableHeaderCell').innerText = browser.i18n.getMessage('searchEngineWhichHasBeenAdded');
-	document.getElementById('searchEngineWhichIsWantedToBeAddedTableHeaderCell').innerText = browser.i18n.getMessage('searchEngineWhichIsWantedToBeAdded');
-	document.getElementById('addSearchEngineButton').innerText = browser.i18n.getMessage('add');
-	document.getElementById('additionalSearchEngineCautionDivision').innerText = browser.i18n.getMessage('additionalSearchEngineCaution');
-	document.getElementById('pageActionLegend').innerText = browser.i18n.getMessage('behaviorOfPageAction');
-	document.getElementById('pageActionReloadLabel').innerText = browser.i18n.getMessage('reload');
-	document.getElementById('pageActionGoBackToHomeLabel').innerText = browser.i18n.getMessage('goBackToHome');
-	document.getElementById('additionalPermissionsLegend').innerText = browser.i18n.getMessage('additionalPermissions');
-	document.getElementById('hostLabel').innerText = browser.i18n.getMessage('host');
-	document.getElementById('useragentLegend').innerText = browser.i18n.getMessage('useragent');
-	document.getElementById('defaultLabel').innerText = browser.i18n.getMessage('default');
-	document.getElementById('informationDivision').innerText = browser.i18n.getMessage('optionsUserAgentHTMLInformation');
-	document.getElementById('cautionDivision').innerText = browser.i18n.getMessage('optionsUserAgentHTMLCaution');
+	document.getElementById('searchEnginesToDisplayInContextMenuLegend').textContent = browser.i18n.getMessage('searchEnginesToDisplayInContextMenu');
+	document.getElementById('searchEnginesToUseForShortcutLegend').textContent = browser.i18n.getMessage('searchEnginesToUseForShortcut');
+	[...document.getElementsByClassName('bingLabel')].forEach(e => e.textContent = searchEngines.bing.name);
+	[...document.getElementsByClassName('duckDuckGoLabel')].forEach(e => e.textContent = searchEngines.duckDuckGo.name);
+	[...document.getElementsByClassName('googleLabel')].forEach(e => e.textContent = searchEngines.google.name);
+	[...document.getElementsByClassName('yahooLabel')].forEach(e => e.textContent = searchEngines.yahoo.name);
+	[...document.getElementsByClassName('yahooJapanLabel')].forEach(e => e.textContent = searchEngines.yahooJapan.name);
+	[...document.getElementsByClassName('additionalSearchEngineLabel')].forEach(e => e.textContent = browser.i18n.getMessage('additionalSearchEngines'));
+	document.getElementById('showOnlyMainAdditionalSearchEngineLabel').textContent = browser.i18n.getMessage('showOnlyMainAdditionalSearchEngine');
+	document.getElementById('additionalSearchEngineDescriptionLegend').textContent = browser.i18n.getMessage('additionalSearchEngines');
+	document.getElementById('additionalSearchEngineTableHeaderCell').textContent = browser.i18n.getMessage('name');
+	document.getElementById('additionalSearchEngineUrlTableHeaderCell').textContent = 'URL';
+	document.getElementById('additionalSearchEngineQueryTableHeaderCell').textContent = browser.i18n.getMessage('query');
+	document.getElementById('additionalSearchEngineExtendedQueryTableHeaderCell').textContent = browser.i18n.getMessage('extendedQuery');
+	document.getElementById('additionalSearchEngineMainTableHeaderCell').textContent = browser.i18n.getMessage('main');
+	document.getElementById('searchEngineWhichHasBeenAddedTableHeaderCell').textContent = browser.i18n.getMessage('searchEngineWhichHasBeenAdded');
+	document.getElementById('searchEngineWhichIsWantedToBeAddedTableHeaderCell').textContent = browser.i18n.getMessage('searchEngineWhichIsWantedToBeAdded');
+	document.getElementById('addSearchEngineButton').textContent = browser.i18n.getMessage('add');
+	document.getElementById('additionalSearchEngineInformationDivision').textContent = browser.i18n.getMessage('additionalSearchEngineInformation');
+	document.getElementById('additionalSearchEngineCautionDivision').textContent = browser.i18n.getMessage('additionalSearchEngineCaution');
+	document.getElementById('pageActionLegend').textContent = browser.i18n.getMessage('behaviorOfPageAction');
+	document.getElementById('pageActionReloadLabel').textContent = browser.i18n.getMessage('reload');
+	document.getElementById('pageActionGoBackToHomeLabel').textContent = browser.i18n.getMessage('goBackToHome');
+	document.getElementById('additionalPermissionsLegend').textContent = browser.i18n.getMessage('additionalPermissions');
+	document.getElementById('hostLabel').textContent = browser.i18n.getMessage('host');
+	document.getElementById('useragentLegend').textContent = browser.i18n.getMessage('useragent');
+	document.getElementById('defaultLabel').textContent = browser.i18n.getMessage('default');
+	document.getElementById('useragentInformationDivision').textContent = browser.i18n.getMessage('thisFeatureRequiresHostPermission');
+	document.getElementById('useragentCautionDivision').textContent = browser.i18n.getMessage('optionsUserAgentHTMLCaution');
+	document.getElementById('autoSearchLegend').textContent = browser.i18n.getMessage('autoSearch');
+	document.getElementById('autoSearchEnabledCheckboxLabel').textContent = browser.i18n.getMessage('enabled');
+	document.getElementById('autoSearchIntervalRangeLabel').textContent = browser.i18n.getMessage('checkInterval');
+	document.getElementById('autoSearchInformationDivision').textContent = browser.i18n.getMessage('thisFeatureRequiresHostPermission');
+	document.getElementById('autoSearchInformationDivision2').textContent = browser.i18n.getMessage('autoSearchInformation2');
 }
 
 function isInputTextValueValid(inputText) {
@@ -239,10 +274,6 @@ function isInputTextValueValid(inputText) {
 		inputText.style.backgroundColor = '';
 		return true;
 	}
-}
-
-function notifyRefreshing() {
-	browser.runtime.sendMessage({ action: 'refresh' });
 }
 
 function pageActionRadioButtonOnClick(event) {
@@ -260,10 +291,11 @@ function pageActionRadioButtonOnClick(event) {
 
 async function readValues() {
 	const keyFiles = ['PageActions.json', 'SearchEngines.json', 'StorageKeys.json', 'UserAgents.json'].map(keyFile => `/_values/${keyFile}`);
-	pageActions = await (await fetch(keyFiles[0])).json();
-	searchEngines = await (await fetch(keyFiles[1])).json();
-	storageKeys = await (await fetch(keyFiles[2])).json();
-	userAgents = await (await fetch(keyFiles[3])).json();
+	let index = 0;
+	pageActions = await (await fetch(keyFiles[index++])).json();
+	searchEngines = await (await fetch(keyFiles[index++])).json();
+	storageKeys = await (await fetch(keyFiles[index++])).json();
+	userAgents = await (await fetch(keyFiles[index++])).json();
 }
 
 async function refreshAdditionalSearchEngine() {
@@ -278,19 +310,25 @@ async function refreshAdditionalSearchEngine() {
 		const searchEngineWhichHasBeenAddedNameTableData = document.createElement('td');
 		const searchEngineWhichHasBeenAddedUrlTableData = document.createElement('td');
 		const searchEngineWhichHasBeenAddedQueryTableData = document.createElement('td');
+		const searchEngineWhichHasBeenAddedToggleExtendedQueryCheckboxTableData = document.createElement('td');
+		const searchEngineWhichHasBeenAddedToggleExtendedQueryCheckbox = document.createElement('input');
 		const searchEngineWhichHasBeenAddedChooseMainRadioTableData = document.createElement('td');
 		const searchEngineWhichHasBeenAddedChooseMainRadio = document.createElement('input');
 		const searchEngineWhichHasBeenAddedDeleteButtonTableData = document.createElement('td');
 		const searchEngineWhichHasBeenAddedDeleteButton = document.createElement('button');
 
-		searchEngineWhichHasBeenAddedNameTableData.innerText = additionalSearchEngine.name;
-		searchEngineWhichHasBeenAddedUrlTableData.innerText = additionalSearchEngine.url;
-		searchEngineWhichHasBeenAddedQueryTableData.innerText = additionalSearchEngine.query;
+		searchEngineWhichHasBeenAddedNameTableData.textContent = additionalSearchEngine.name;
+		searchEngineWhichHasBeenAddedUrlTableData.textContent = additionalSearchEngine.url;
+		searchEngineWhichHasBeenAddedQueryTableData.textContent = additionalSearchEngine.query;
+		searchEngineWhichHasBeenAddedToggleExtendedQueryCheckbox.checked = additionalSearchEngine.isExtendedQuery ?? false;
+		searchEngineWhichHasBeenAddedToggleExtendedQueryCheckbox.type = 'checkbox';
+		searchEngineWhichHasBeenAddedToggleExtendedQueryCheckbox.addEventListener('input', searchEngineWhichHasBeenAddedToggleExtendedQueryCheckboxOnChange);
+		searchEngineWhichHasBeenAddedToggleExtendedQueryCheckboxTableData.appendChild(searchEngineWhichHasBeenAddedToggleExtendedQueryCheckbox);
 		searchEngineWhichHasBeenAddedChooseMainRadio.checked = additionalSearchEngine.isMain;
 		searchEngineWhichHasBeenAddedChooseMainRadio.type = 'radio';
-		searchEngineWhichHasBeenAddedChooseMainRadio.addEventListener('change', searchEngineWhichHasBeenAddedChooseMainRadioOnChange);
+		searchEngineWhichHasBeenAddedChooseMainRadio.addEventListener('input', searchEngineWhichHasBeenAddedChooseMainRadioOnChange);
 		searchEngineWhichHasBeenAddedChooseMainRadioTableData.appendChild(searchEngineWhichHasBeenAddedChooseMainRadio);
-		searchEngineWhichHasBeenAddedDeleteButton.innerText = browser.i18n.getMessage('delete');
+		searchEngineWhichHasBeenAddedDeleteButton.textContent = browser.i18n.getMessage('delete');
 		searchEngineWhichHasBeenAddedDeleteButton.type = 'button';
 		searchEngineWhichHasBeenAddedDeleteButton.addEventListener('click', searchEngineWhichHasBeenAddedDeleteButtonOnClick);
 		searchEngineWhichHasBeenAddedDeleteButtonTableData.appendChild(searchEngineWhichHasBeenAddedDeleteButton);
@@ -298,14 +336,15 @@ async function refreshAdditionalSearchEngine() {
 		searchEngineWhichHasBeenAddedTableRow.appendChild(searchEngineWhichHasBeenAddedNameTableData);
 		searchEngineWhichHasBeenAddedTableRow.appendChild(searchEngineWhichHasBeenAddedUrlTableData);
 		searchEngineWhichHasBeenAddedTableRow.appendChild(searchEngineWhichHasBeenAddedQueryTableData);
+		searchEngineWhichHasBeenAddedTableRow.appendChild(searchEngineWhichHasBeenAddedToggleExtendedQueryCheckboxTableData);
 		searchEngineWhichHasBeenAddedTableRow.appendChild(searchEngineWhichHasBeenAddedChooseMainRadioTableData);
 		searchEngineWhichHasBeenAddedTableRow.appendChild(searchEngineWhichHasBeenAddedDeleteButtonTableData);
 		searchEngineWhichHasBeenAddedTableBody.appendChild(searchEngineWhichHasBeenAddedTableRow);
 	}
 
-	searcheEngineAdditionalInputRadio.disabled = additionalSearchEngineArray.length === 0;
+	searchEngineAdditionalInputRadio.disabled = additionalSearchEngineArray.length === 0;
 
-	if (searcheEngineAdditionalInputRadio.disabled && item[storageKeys.searchEngineForShortcut] === searchEngines.additional.name) {
+	if (searchEngineAdditionalInputRadio.disabled && item[storageKeys.searchEngineForShortcut] === searchEngines.additional.name) {
 		await saveConfig({ [storageKeys.searchEngineForShortcut]: searchEngines.google.name });
 		checkSearchEngine();
 	}
@@ -318,41 +357,43 @@ async function requestPermission(event) {
 				const accepted = await browser.permissions.request(hostPermissions);
 				additionalPermissionsHostCheckbox.checked = accepted;
 				toggleUserAgentRadioDisabled(!accepted);
+				toggleAutoSearchInputDisabled(!accepted);
 			} else {
 				browser.permissions.remove(hostPermissions);
 				toggleUserAgentRadioDisabled(true);
+				toggleAutoSearchInputDisabled(true);
 			}
+			break;
 		default:
 	}
 }
 
 async function saveConfig(keys) {
 	await browser.storage.local.set(keys);
-	notifyRefreshing();
 }
 
 async function searchEngineCheckboxButtonOnClick(event) {
 	switch (event.target.id) {
-		case searcheEngineAdditionalInputCheckboxId:
-			saveConfig({ [storageKeys.isAdditionalEnabled]: searcheEngineAdditionalInputCheckbox.checked });
+		case searchEngineAdditionalInputCheckboxId:
+			saveConfig({ [storageKeys.isAdditionalEnabled]: searchEngineAdditionalInputCheckbox.checked });
 			break;
-		case searcheEngineBingInputCheckboxId:
-			saveConfig({ [storageKeys.isBingEnabled]: searcheEngineBingInputCheckbox.checked });
+		case searchEngineBingInputCheckboxId:
+			saveConfig({ [storageKeys.isBingEnabled]: searchEngineBingInputCheckbox.checked });
 			break;
-		case searcheEngineDuckDuckGoInputCheckboxId:
-			saveConfig({ [storageKeys.isDuckDuckGoEnabled]: searcheEngineDuckDuckGoInputCheckbox.checked });
+		case searchEngineDuckDuckGoInputCheckboxId:
+			saveConfig({ [storageKeys.isDuckDuckGoEnabled]: searchEngineDuckDuckGoInputCheckbox.checked });
 			break;
-		case searcheEngineGoogleInputCheckboxId:
-			saveConfig({ [storageKeys.isGoogleEnabled]: searcheEngineGoogleInputCheckbox.checked });
+		case searchEngineGoogleInputCheckboxId:
+			saveConfig({ [storageKeys.isGoogleEnabled]: searchEngineGoogleInputCheckbox.checked });
 			break;
-		case searcheEngineShouldAdditionalShowOnlyMainId:
-			saveConfig({ [storageKeys.shouldShowOnlyMainAdditional]: searcheEngineShouldAdditionalShowOnlyMainInputCheckbox.checked });
+		case searchEngineShouldAdditionalShowOnlyMainId:
+			saveConfig({ [storageKeys.shouldShowOnlyMainAdditional]: searchEngineShouldAdditionalShowOnlyMainInputCheckbox.checked });
 			break;
-		case searcheEngineYahooInputCheckboxId:
-			saveConfig({ [storageKeys.isYahooEnabled]: searcheEngineYahooInputCheckbox.checked });
+		case searchEngineYahooInputCheckboxId:
+			saveConfig({ [storageKeys.isYahooEnabled]: searchEngineYahooInputCheckbox.checked });
 			break;
-		case searcheEngineYahooJapanInputCheckboxId:
-			saveConfig({ [storageKeys.isYahooJapanEnabled]: searcheEngineYahooJapanInputCheckbox.checked });
+		case searchEngineYahooJapanInputCheckboxId:
+			saveConfig({ [storageKeys.isYahooJapanEnabled]: searchEngineYahooJapanInputCheckbox.checked });
 			break;
 	}
 
@@ -361,22 +402,22 @@ async function searchEngineCheckboxButtonOnClick(event) {
 
 function searchEngineRadioButtonOnClick(event) {
 	switch (event.target.id) {
-		case searcheEngineAdditionalInputRadioId:
+		case searchEngineAdditionalInputRadioId:
 			saveConfig({ [storageKeys.searchEngineForShortcut]: searchEngines.additional.name });
 			break;
-		case searcheEngineBingInputRadioId:
+		case searchEngineBingInputRadioId:
 			saveConfig({ [storageKeys.searchEngineForShortcut]: searchEngines.bing.name });
 			break;
-		case searcheEngineDuckDuckGoInputRadioId:
+		case searchEngineDuckDuckGoInputRadioId:
 			saveConfig({ [storageKeys.searchEngineForShortcut]: searchEngines.duckDuckGo.name });
 			break;
-		case searcheEngineGoogleInputRadioId:
+		case searchEngineGoogleInputRadioId:
 			saveConfig({ [storageKeys.searchEngineForShortcut]: searchEngines.google.name });
 			break;
-		case searcheEngineYahooInputRadioId:
+		case searchEngineYahooInputRadioId:
 			saveConfig({ [storageKeys.searchEngineForShortcut]: searchEngines.yahoo.name });
 			break;
-		case searcheEngineYahooJapanInputRadioId:
+		case searchEngineYahooJapanInputRadioId:
 			saveConfig({ [storageKeys.searchEngineForShortcut]: searchEngines.yahooJapan.name });
 			break;
 	}
@@ -384,8 +425,19 @@ function searchEngineRadioButtonOnClick(event) {
 	checkSearchEngine();
 }
 
+function searchEngineWhichIsWantedToBeAddedExtendedQueryCheckboxOnChange(event) {
+	searchEngineWhichIsWantedToBeAddedQueryInputText.placeholder = event.target.checked ? '/search/{q}' : '/search?q=';
+}
+
 function searchEngineWhichIsWantedToBeAddedInputTextOnClick(event) {
 	event.target.style.backgroundColor = '';
+}
+
+function searchEngineWhichHasBeenAddedToggleExtendedQueryCheckboxOnChange(event) {
+	const index = Array.from(searchEngineWhichHasBeenAddedTableBody.children).findIndex(e => e === event.target.parentElement.parentElement);
+	additionalSearchEngineArray[index].isExtendedQuery = event.target.checked;
+	saveConfig({ [storageKeys.additionalSearchEngine]: additionalSearchEngineArray });
+	refreshAdditionalSearchEngine();
 }
 
 function searchEngineWhichHasBeenAddedChooseMainRadioOnChange(event) {
@@ -412,6 +464,10 @@ function searchEngineWhichHasBeenAddedDeleteButtonOnClick(event) {
 		saveConfig({ [storageKeys.additionalSearchEngine]: additionalSearchEngineArray });
 		refreshAdditionalSearchEngine();
 	}
+}
+
+function toggleAutoSearchInputDisabled(disabled) {
+	document.options.autoSearch.forEach(element => element.disabled = disabled);
 }
 
 function toggleUserAgentRadioDisabled(disabled) {

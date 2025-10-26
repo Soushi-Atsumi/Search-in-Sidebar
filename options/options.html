@@ -22,56 +22,59 @@
 	<form name="options">
 		<fieldset>
 			<legend id="searchEnginesToDisplayInContextMenuLegend"></legend>
-			<input type="checkbox" id="searcheEngineBingInputCheckbox" name="searchEngineCheckbox"><label class="bingLabel"></label><br>
-			<input type="checkbox" id="searcheEngineDuckDuckGoInputCheckbox" name="searchEngineCheckbox"><label class="duckDuckGoLabel"></label><br>
-			<input type="checkbox" id="searcheEngineGoogleInputCheckbox" name="searchEngineCheckbox"><label class="googleLabel"></label><br>
-			<input type="checkbox" id="searcheEngineYahooInputCheckbox" name="searchEngineCheckbox"><label class="yahooLabel"></label><br>
-			<input type="checkbox" id="searcheEngineYahooJapanInputCheckbox" name="searchEngineCheckbox"><label class="yahooJapanLabel"></label><br>
-			<input type="checkbox" id="searcheEngineAdditionalInputCheckbox" name="searchEngineCheckbox"><label class="additionalSearchEngineLabel"></label><br>
-			<input type="checkbox" id="searcheEngineShouldAdditionalShowOnlyMainInputCheckbox" name="searchEngineCheckbox"><label id="showOnlyMainAdditionalSearchEngineLabel"></label><br>
+			<input type="checkbox" id="searchEngineBingInputCheckbox" name="searchEngineCheckbox"><label class="bingLabel"></label><br>
+			<input type="checkbox" id="searchEngineDuckDuckGoInputCheckbox" name="searchEngineCheckbox"><label class="duckDuckGoLabel"></label><br>
+			<input type="checkbox" id="searchEngineGoogleInputCheckbox" name="searchEngineCheckbox"><label class="googleLabel"></label><br>
+			<input type="checkbox" id="searchEngineYahooInputCheckbox" name="searchEngineCheckbox"><label class="yahooLabel"></label><br>
+			<input type="checkbox" id="searchEngineYahooJapanInputCheckbox" name="searchEngineCheckbox"><label class="yahooJapanLabel"></label><br>
+			<input type="checkbox" id="searchEngineAdditionalInputCheckbox" name="searchEngineCheckbox"><label class="additionalSearchEngineLabel"></label><br>
+			<input type="checkbox" id="searchEngineShouldAdditionalShowOnlyMainInputCheckbox" name="searchEngineCheckbox"><label id="showOnlyMainAdditionalSearchEngineLabel"></label><br>
 		</fieldset><br>
 		<fieldset>
 			<legend id="searchEnginesToUseForShortcutLegend"></legend>
-			<input type="radio" id="searcheEngineBingInputRadio" name="searchEngineRadio"><label class="bingLabel"></label><br>
-			<input type="radio" id="searcheEngineDuckDuckGoInputRadio" name="searchEngineRadio"><label class="duckDuckGoLabel"></label><br>
-			<input type="radio" id="searcheEngineGoogleInputRadio" name="searchEngineRadio"><label class="googleLabel"></label><br>
-			<input type="radio" id="searcheEngineYahooInputRadio" name="searchEngineRadio"><label class="yahooLabel"></label><br>
-			<input type="radio" id="searcheEngineYahooJapanInputRadio" name="searchEngineRadio"><label class="yahooJapanLabel"></label><br>
-			<input type="radio" id="searcheEngineAdditionalInputRadio" name="searchEngineRadio" disabled><label class="additionalSearchEngineLabel"></label><br>
+			<input type="radio" id="searchEngineBingInputRadio" name="searchEngineRadio"><label class="bingLabel"></label><br>
+			<input type="radio" id="searchEngineDuckDuckGoInputRadio" name="searchEngineRadio"><label class="duckDuckGoLabel"></label><br>
+			<input type="radio" id="searchEngineGoogleInputRadio" name="searchEngineRadio"><label class="googleLabel"></label><br>
+			<input type="radio" id="searchEngineYahooInputRadio" name="searchEngineRadio"><label class="yahooLabel"></label><br>
+			<input type="radio" id="searchEngineYahooJapanInputRadio" name="searchEngineRadio"><label class="yahooJapanLabel"></label><br>
+			<input type="radio" id="searchEngineAdditionalInputRadio" name="searchEngineRadio" disabled><label class="additionalSearchEngineLabel"></label><br>
 		</fieldset><br>
 		<fieldset>
 			<legend id="additionalSearchEngineDescriptionLegend"></legend>
 			<table>
 				<thead>
 					<tr>
-						<th id="additionalSearchEngineTableHeaderCell"></th>
+						<th style="width: 20%" id="additionalSearchEngineTableHeaderCell"></th>
 						<th id="additionalSearchEngineUrlTableHeaderCell"></th>
 						<th id="additionalSearchEngineQueryTableHeaderCell"></th>
-						<th id="additionalSearchEngineMainTableHeaderCell"></th>
+						<th style="width: 1%; white-space: nowrap" id="additionalSearchEngineExtendedQueryTableHeaderCell"></th>
+						<th style="width: 1%; white-space: nowrap" id="additionalSearchEngineMainTableHeaderCell"></th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<th id="searchEngineWhichHasBeenAddedTableHeaderCell" colspan="5"></th>
+						<th id="searchEngineWhichHasBeenAddedTableHeaderCell" colspan="6"></th>
 					</tr>
 				</tbody>
 				<tbody id="searchEngineWhichHasBeenAddedTableBody"></tbody>
 				<tbody>
 					<tr>
-						<th id="searchEngineWhichIsWantedToBeAddedTableHeaderCell" colspan="5"></th>
+						<th id="searchEngineWhichIsWantedToBeAddedTableHeaderCell" colspan="6"></th>
 					</tr>
 				</tbody>
 				<tbody id="searchEngineWhichIsWantedToBeAddedTableBody">
 					<tr>
-						<td><input type="text" class="tableInputText" id="searchEngineWhichIsWantedToBeAddedNameInputText" name="searchEngineWhichIsWantedToBeAdded" placeholder="Google"></td>
+						<td><input style="width: 100%;" type="text" class="tableInputText" id="searchEngineWhichIsWantedToBeAddedNameInputText" name="searchEngineWhichIsWantedToBeAdded" placeholder="Google"></td>
 						<td><input type="text" class="tableInputText" id="searchEngineWhichIsWantedToBeAddedUrlInputText" name="searchEngineWhichIsWantedToBeAdded" placeholder="www.google.com"></td>
 						<td><input type="text" class="tableInputText" id="searchEngineWhichIsWantedToBeAddedQueryInputText" name="searchEngineWhichIsWantedToBeAdded" placeholder="/search?q="></td>
+						<td><input type="checkbox" id="searchEngineWhichIsWantedToBeAddedExtendedQueryCheckbox"></td>
 						<td><input type="checkbox" id="searchEngineWhichIsWantedToBeAddedMainCheckbox"></td>
-						<td><button type="button" id="addSearchEngineButton"></button></td>
+						<td style="width: 1%"><button type="button" id="addSearchEngineButton" style="white-space: nowrap"></button></td>
 					</tr>
 				</tbody>
-			</table><br>
+			</table>
+			<div class="information" id="additionalSearchEngineInformationDivision"></div>
 			<div class="caution" id="additionalSearchEngineCautionDivision"></div>
 		</fieldset><br>
 		<fieldset>
@@ -81,16 +84,23 @@
 		</fieldset><br>
 		<fieldset>
 			<legend id="additionalPermissionsLegend"></legend>
-			<input type="checkbox" id="additional-permissions-host" name="additionalPermissions"><label id="hostLabel"></label>
+			<input type="checkbox" id="additionalPermissionsHostCheckbox" name="additionalPermissions"><label id="hostLabel"></label>
 		</fieldset><br>
 		<fieldset>
 			<legend id="useragentLegend"></legend>
-			<input type="radio" id="user-agent-default" name="userAgent" checked disabled><label id="defaultLabel"></label><br>
-			<input type="radio" id="user-agent-firefoxos" name="userAgent" disabled><label id="firefoxosLabel">FirefoxOS</label><br>
-			<input type="radio" id="user-agent-android" name="userAgent" disabled><label id="androidLabel">Android</label><br>
-			<input type="radio" id="user-agent-ios" name="userAgent" disabled><label id="iosLabel">iOS</label><br>
-			<div id="informationDivision"></div>
-			<div class="caution" id="cautionDivision"></div>
+			<input type="radio" id="userAgentDefaultRadio" name="userAgent" checked disabled><label id="defaultLabel"></label><br>
+			<input type="radio" id="userAgentFirefoxosRadio" name="userAgent" disabled><label id="firefoxosLabel">FirefoxOS</label><br>
+			<input type="radio" id="userAgentAndroidRadio" name="userAgent" disabled><label id="androidLabel">Android</label><br>
+			<input type="radio" id="userAgentIosRadio" name="userAgent" disabled><label id="iosLabel">iOS</label><br>
+			<div class="information" id="useragentInformationDivision"></div>
+			<div class="caution" id="useragentCautionDivision"></div>
+		</fieldset><br>
+		<fieldset>
+			<legend id="autoSearchLegend"></legend>
+			<input type="checkbox" id="autoSearchEnabledCheckbox" name="autoSearch" disabled><label id="autoSearchEnabledCheckboxLabel"></label><br>
+			<input type="range" id="autoSearchIntervalRange" name="autoSearch" disabled min="1" max="10" step="0.25"><label class="inputValueLabel" id="autoSearchIntervalRangeValueLabel"></label><label id="autoSearchIntervalRangeLabel"></label><br>
+			<div class="information" id="autoSearchInformationDivision"></div>
+			<div class="information" id="autoSearchInformationDivision2"></div>
 		</fieldset><br>
 	</form>
 	<script src="options.js"></script>
