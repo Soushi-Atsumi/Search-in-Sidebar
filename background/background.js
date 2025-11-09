@@ -335,7 +335,7 @@ async function startAutoSearch() {
 		}
 		autoSearchSetTimeoutID = 0;
 		startAutoSearch();
-	}, currentSettings[storageKeys.autoSearchIntervalValue] * 1000);
+	}, (currentSettings[storageKeys.autoSearchIntervalValue] ?? 1) * 1000);
 }
 
 function stopAutoSearch() {
